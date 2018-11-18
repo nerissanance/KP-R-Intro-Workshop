@@ -1,7 +1,7 @@
 # KP-R-Intro-Workshop
 
 Welcome to the R introductory training! This training is 6 training hours, and by the end of it we hope that you will be able to do the following: 
-<br/> *Connecting and setting up*
+<br/> <br/> *Connecting and setting up*
 - connect GitHub to R Server 
 - create repositories, pull and commit changes 
 - create a project in R
@@ -9,12 +9,12 @@ Welcome to the R introductory training! This training is 6 training hours, and b
 - import an existing dataset from a .tsv or .sas file
 - download, install packages and read them into your library
 - find, read, and understand help files and other key documentation (eg. cran)
-- save and restore projects &nbsp;
+- save and restore projects  <br/> <br/>
 *Manipulating data*
 - understand the basic types of data
 - employ basic data manipulation techniques
 - produce descriptive/summary statistics
-- understand the different types of missing data  &nbsp;
+- understand the different types of missing data  <br/> <br/>
 *If there is time, we might also cover*
 - graphing with ggplot
 
