@@ -1,6 +1,6 @@
 # KP-R-Intro-Workshop
 
-Welcome to the R introductory training! This training is 6 training hours, and by the end of it we hope that you will be able to do the following: 
+Welcome to the R introductory training! This training consists of three two-hour sessions, and by the end of it we hope that you will be able to do the following: 
 <br/> <br/>
 *Connecting and setting up*
 - connect GitHub to R Server 
