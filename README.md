@@ -28,3 +28,13 @@ Since everyone already has access to an R server for the training, the
 STEP 1: Install Github http://happygitwithr.com/installation-pain.html
 STEP 2: Set up SSH keys: http://happygitwithr.com/ssh-keys.html
 STEP 3: 
+
+<br/> <br/> 
+*Some useful resources:
+<br/> 
+- [UCLA idre](http://www.ats.ucla.edu/stat/r/)  
+- [Quick-R](http://statmethods.net/)  
+- [R-bloggers](https://www.r-bloggers.com/)  
+- [Stack Overflow - R](http://stackoverflow.com/questions/tagged/r)  
+<br/> <br/> 
+
