@@ -25,10 +25,6 @@ Day 2 learning objectives:
 5. Merging data frames in dplyr  
 
 # Loading data from files
-Set your working directory to the R-Fundamentals data folder by clicking "Session" --> "Set working directory" --> "Choose directory". 
-
-This is what a [hierarchical file system (Mac)](https://en.wikipedia.org/wiki/Hierarchical_File_System) looks like:
-![Hierarchical File System (Mac)](/Users/evan.admin/Desktop/R-Fundamentals/hfs.png)  
 
 Load the animals dataset from the data folder inside the R-Fundamentals data folder. 
 ```{r, eval = F}
@@ -435,7 +431,7 @@ animals_t
 ### reshaping basics with dplyr 
 For a full version of this tutorial, see the dplyr CRAN page: [https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html]
 
-
+```{r dplyr tutorial}
 library(dplyr)
 library(tidyr)
 #load data, in this case, it comes as a package
@@ -462,10 +458,6 @@ flights$date <- unite(flights, date, month, day, year, sep="/")
 names(flights)
 
 
-
-
-
-
 ###FILTER for month
 
 flights1 <- dplyr::filter(flights, month==1, day==1)
@@ -483,7 +475,7 @@ otherway <- select(flights, -(year:day))
 frankenstein <- dplyr::left_join(small, otherway, by= c("flight"))
 
 
-###Try it on your own!  (then explain it to the class)
+###Try it on your own!  
 
 # Acknowledgements
 [Wickham H, Grolemund G. 2016. R for Data Science](http://r4ds.had.co.nz/)  
