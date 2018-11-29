@@ -25,8 +25,8 @@ D-Lab works with Berkeley faculty, research staff, and students to advance data-
 Some of this also came from Chris Kennedy's "Concise R" series, accessed here: [https://github.com/ck37/concise-r]
  
 # Workshop goals
-Part 1) introduction to R, R Markdown, data types, data structures
-Part 2) Importing, subsetting, and merging data; type coercion, identifying missing data  
+Day 1) introduction to R, R Markdown, data types, data structures
+Day 2) Importing, subsetting, and merging data; type coercion, identifying missing data  
 Part 3) data exploration, statistical testing and graphing
 Part 4) For-loops and functions 
 
@@ -58,7 +58,7 @@ Easy Challenge: close your project and then re-open it.
 
 When we start RStudio we have no files open by default. Click File -> New File -> RScript to start a new R script (or program). This is a text file with all of the R commands you want to run for an analysis.
 
-As an alternative to an R script we can use a markdown file. R Markdown files combine R scripts with simple text formatting, which makes reports  (PDFs or HTMLs) easy to generate with embedded R output. If you don't already have R Markdown run `install.packages("markdown")` to install it and its dependencies. 
+As an alternative to an R script we can use a markdown file. R Markdown files combine R scripts with simple text formatting, which makes reports  (PDFs or HTMLs) easy to generate with embedded R output. If you don't already have R Markdown run `install.packages("markdown")` to install it. 
 
 Try making a new R script and R markdown right now, and save the files. 
 
@@ -94,7 +94,7 @@ Packages can also be installed through the command line using `install.packages(
 > It is generally good to keep RStudio and your packages up to date! Install the packages we will use in the workshop: 
 
 ```{r, eval=FALSE}
-install.packages(c("ggplot2", "knitr", "psych", "rmarkdown", "reshape2", "swirl"), dependencies=TRUE)
+install.packages(c("ggplot2", "knitr", "psych", "rmarkdown", "reshape2", "swirl"))
 ```
 
 ### The `library` function  
@@ -762,7 +762,10 @@ The syntax looks like this:
 ```
 Check your working directory to see if it worked!  
 
-> We will talk about saving plots as .PDF and .TIFF file types in Part 3!  
+
+#Loading in SAS data files
+
+[ADD HERE]
 
 # **Challenge 5** Homework (optional)
 swirl is a package that helps you learn R by using R. Visit the [swirl](http://swirlstats.com/) homepage to learn more

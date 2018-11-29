@@ -44,12 +44,12 @@ str(animals)
 > `header = TRUE` will include the header row; `header = FALSE` will turn your header row into the first row of actual data. `na.strings = c(" ", 999)` indicates that blank cells and cells coded 999 allows you to specify data that should be automatically converted to `NA` upon importation. We do not have any here, so nothing is altered. 
 
 # **Challenge 1**
-1. Load the mammals "sleep_VIM" dataset from the data folder using `read.csv` (what is shown is another way to load datasets that are included in R and packages). Save it in a variable named "Sleep_VIM"
+1. Load the mammals "sleep_VIM" dataset from the data folder using `read.csv` (what is shown is another way to load datasets that are included in R and packages). Save it in a variable named "Sleep_vim"
 2. Remember what `ls()` does? What does `dir()` do? 
 ```{r}
 library(VIM)
 data(sleep)
-sleep_VIM = sleep
+sleep_vim = sleep
 ## YOUR CODE HERE
 ```
 
@@ -62,12 +62,12 @@ When dealing with Microsoft Excel files (.xlsx), you will find it more convenien
 # Inspecting the data frame
 Remember from Part 1 that we can learn a lot about data in R. For dataframes, the following functions are useful:
 ```{r, eval=FALSE}
-str(sleep_VIM)    # returns the structure of the dataframe
-dim(sleep_VIM)    # dataframe dimensions; remember, we want 62 rows and 10 columns! 
+str(sleep_vim)    # returns the structure of the dataframe
+dim(sleep_vim)    # dataframe dimensions; remember, we want 62 rows and 10 columns! 
 
-rownames(sleep_VIM)   #row names (they have not been named and default to character type)
+rownames(sleep_vim)   #row names (they have not been named and default to character type)
 
-class(rownames(sleep_VIM)) # returns character type, even though they are numbers! 
+class(rownames(sleep_vim)) # returns character type, even though they are numbers! 
 
 nrow(sleep_VIM)   # number of rows
 ncol(sleep_VIM)   # number of columns
