@@ -3,12 +3,12 @@ title: "KP R Intro, Day 1"
 author: "Nerissa Nance"
 date: "November 20, 2018"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     number_sections: yes
     toc: yes
     toc_float: yes
+  pdf_document:
+    toc: yes
   word_document:
     toc: yes
 ---
@@ -25,9 +25,9 @@ D-Lab works with Berkeley faculty, research staff, and students to advance data-
 Some of this also came from Chris Kennedy's "Concise R" series, accessed here: [https://github.com/ck37/concise-r]
  
 # Workshop goals
-Part 1) Introduction to R, R Markdown, data types, data structures
+Part 1) introduction to R, R Markdown, data types, data structures
 Part 2) Importing, subsetting, and merging data; type coercion, identifying missing data  
-Part 3) Research design, data exploration, and statistical testing  
+Part 3) data exploration, statistical testing and graphing
 Part 4) For-loops and functions 
 
 
