@@ -11,10 +11,14 @@ output:
     toc: yes
 ---
  #Citations:
-Most of this material came directly from D-lab training materials authored by D-Lab staff. The original content can be accessed here: [https://github.com/dlab-berkeley/R-Fundamentals]
+A lot of this material came directly from D-lab training materials authored by D-Lab staff. The original content can be accessed here: [https://github.com/dlab-berkeley/R-Fundamentals]
 Contributions by Dlab staff: Evan Muzzall, Shinhye Choi, Rochelle Terman, Dillon Niederhut, Sam Abdel-Ghaffar.
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+#rm(list=ls())
+
+#install.packages("mlbench")
+library(mlbench)
 ```
 
 Day 2 learning objectives:  
@@ -31,57 +35,46 @@ Load the animals dataset from the data folder inside the R-Fundamentals data fol
 ?read.csv
 ```
 ```{r}
-animals <- read.csv("animals.csv", 
-                    header = TRUE, 
-                    stringsAsFactors = T,
-                    na.strings = " ")
-animals
-str(animals)
+
+# Load the PimaIndiansDiabetes2 dataset from the mlbench package
+data("PimaIndiansDiabetes2") 
+#I like to rename it so it's easier ot type
+assign("df.pid", PimaIndiansDiabetes2)
+
+#can compare them using the "all.equal" command, just to double check
+all.equal(df.pid, PimaIndiansDiabetes2)
+
+# Read background information and variable descriptions.
+?PimaIndiansDiabetes2
+
 ```
 
-> Notice that `stringsAsFactors = FALSE`. If set to `TRUE`, R will try to guess which **character** vectors should automatically be converted to factors. This is problematic because 1) R is not always good at guessing and 2) R defaults to alphabetical and increasing numeric factor level sorting. This might not matter for your data, but it is recommended to set `stringsAsFactors = FALSE` and manually convert your desired character vectors to factors. See the Part 1 help file to review these instructions.  
-
-> `header = TRUE` will include the header row; `header = FALSE` will turn your header row into the first row of actual data. `na.strings = c(" ", 999)` indicates that blank cells and cells coded 999 allows you to specify data that should be automatically converted to `NA` upon importation. We do not have any here, so nothing is altered. 
-
-# **Challenge 1**
-1. Load the mammals "sleep_VIM" dataset from the data folder using `read.csv` (what is shown is another way to load datasets that are included in R and packages). Save it in a variable named "Sleep_vim"
-2. Remember what `ls()` does? What does `dir()` do? 
-```{r}
-library(VIM)
-data(sleep)
-sleep_vim = sleep
-## YOUR CODE HERE
-```
-
-This dataset is part of the [VIM package](https://cran.r-project.org/web/packages/VIM/VIM.pdf). It looks at sleep patterns in various mammal species and contains missing (`NA`) values. Click  [here](http://science.sciencemag.org/content/194/4266/732) to see the original research article. 
-
-> NOTE: you DO NOT want to load the Student's Sleep Dataset from the "datasets" library. Your sleep dataset should have **62 rows and 10 columns**.  
-
-When dealing with Microsoft Excel files (.xlsx), you will find it more convenient to save them first as .csv files in Excel and then import them using `read.csv()`. However, you can also install the "foreign" package to load data from SPSS, Stata, Weka, Systat, Minitab, SAS, S, and MATLAB. See [this helpful rio documentation as well](https://cran.r-project.org/web/packages/rio/vignettes/rio.html). 
 
 # Inspecting the data frame
 Remember from Part 1 that we can learn a lot about data in R. For dataframes, the following functions are useful:
 ```{r, eval=FALSE}
-str(sleep_vim)    # returns the structure of the dataframe
-dim(sleep_vim)    # dataframe dimensions; remember, we want 62 rows and 10 columns! 
+str(df.pid)    # returns the structure of the dataframe
+dim(df.pid)    # dataframe dimensions
 
-rownames(sleep_vim)   #row names (they have not been named and default to character type)
 
-class(rownames(sleep_vim)) # returns character type, even though they are numbers! 
+colnames(df.pid)   #column names
+names(df.pid)    
+rownames(df.pid)  #rownames
 
-nrow(sleep_VIM)   # number of rows
-ncol(sleep_VIM)   # number of columns
-unique(sleep_VIM)   # show rows with unique data
+class(rownames(df.pid)) # returns character type, even though they are numbers! 
 
-head(sleep_VIM, n = 10) # show the first "n" rows
-tail(sleep_VIM, n = 4) # show the last "n" rows
+nrow(df.pid)   # number of rows
+ncol(df.pid)   # number of columns
+unique(df.pid)   # show rows with unique data
+
+# if you want to know how many unique values there are, you can use this:
+length(unique(df.pid$age))
+
+
+head(df.pid, n = 10) # show the first "n" rows
+tail(df.pid, n = 4) # show the last "n" rows
 ```
 
-`names()` and `colnames()` both return column names of the data frame:
-```{r}
-names(sleep_VIM)  
-colnames(sleep_VIM)
-```
 
 # Subsetting in base R
 Efficiently subsetting your data will save you time and stress. Fortunately, there are several different ways to subset data in base R.
@@ -92,19 +85,19 @@ Remember from Part 1 that the dollar sign operator `$` will extract only a singl
 ?"$" # Remember to wrap symbols in quotation marks to view their help pages
 ```
 ```{r}
-sleep_VIM$Dream #Returns only the "Dream" vector from the `sleep_VIM` data frame.
+df.pid$age #Returns only the "age" vector from the `df.pid` data frame.
 ```
 
-> Type sleep_VIM$ and press the TAB key - a handy list of the columns in your data will appear! 
+> Type df.pid$ and press the TAB key - a handy list of the columns in your data will appear! 
 
 ```{r, eval = F}
-sleep_VIM$
+df.pid$
 ```
 
 # **Challenge 2**
-1. Practice extracting a few variables from the `animals` dataframe using the dollar sign `$`
+1. Practice extracting a few variables from the `df.pid` dataframe using the dollar sign `$`
 2. Plot them in a histogram using the `hist()` function. How do you do this? 
-3. Can all data types be visualized with histograms? Why or why not?
+
 ```{r}
 ## YOUR CODE HERE
 ```
@@ -126,12 +119,12 @@ We can create a new dataframe object `sleep_varnames` that includes only "BodyWg
 ?"["
 ```
 ```{r}
-sleep_varnames <- sleep_VIM[ , c("BodyWgt", "BrainWgt")]
+sleep_varnames <- sleep_vim[ , c("BodyWgt", "BrainWgt")]
 str(sleep_varnames)
 head(sleep_varnames)
 
-# compare this to "sleep_VIM", which remains unchanged!
-sleep_VIM
+# compare this to "sleep_vim", which remains unchanged!
+sleep_vim
 ```
 
 > Notice that the comma is still included within the bracket notation before the vector of column names. This indicates that we want ALL of the rows corresponding to these two columns. This is the same when we only want to subset rows and include ALL columns (see below).  
@@ -145,8 +138,8 @@ Create an object `sleep_posint` that includes only "NonD", "Sleep", and "Exp" co
 
 First use `str()` or `colnames` to see which integer values these columns represent. Because we only want the 3rd, 5th, and 9th columns, we type:  
 ```{r, eval=FALSE}
-str(sleep_VIM)
-sleep_posint <- sleep_VIM[ , c(3, 5, 9)] # why does our vector go after the comma?
+str(sleep_vim)
+sleep_posint <- sleep_vim[ , c(3, 5, 9)] # why does our vector go after the comma?
 str(sleep_posint)
 head(sleep_posint)
 ```
@@ -156,10 +149,10 @@ Subsetting by **negative** integers will **exclude** the specified columns. Noti
 
 We can create an object called `sleep_negint` that includes everything **except** columns 1 and 2 ("BodyWgt" and "BrainWgt"):
 ```{r}
-str(sleep_VIM)
-sleep_negint_VIM <- sleep_VIM[ , -c(1, 2)]
-str(sleep_negint_VIM)
-head(sleep_negint_VIM, n = 3)
+str(sleep_vim)
+sleep_negint_vim <- sleep_vim[ , -c(1, 2)]
+str(sleep_negint_vim)
+head(sleep_negint_vim, n = 3)
 ```
 
 ### Subsetting with logical tests
@@ -168,7 +161,7 @@ We can also use logical tests to subset our data. For example, what if we want t
 ?"=="
 ```
 ```{r}
-sleep_logical <- sleep_VIM[sleep_VIM$Exp == 4 , 8:10 ] # why is the comma included? 
+sleep_logical <- sleep_vim[sleep_vim$Exp == 4 , 8:10 ] # why is the comma included? 
 sleep_logical
 ```
 Only rows with values of 4 for "Exp" are returned! 
@@ -182,11 +175,11 @@ What if we want to include rows where "Exp" is equal to 1 **_or_** "Danger" is e
 ```
 ```{r}
 # & (and) = all conditions must be TRUE
-sleep_logical_and <- sleep_VIM[sleep_VIM$Exp == 1 & sleep_VIM$Danger == 2, ] 
+sleep_logical_and <- sleep_vim[sleep_vim$Exp == 1 & sleep_vim$Danger == 2, ] 
 sleep_logical_and
 
 # | (or) = just one of the conditions must be TRUE
-sleep_logical_or <- sleep_VIM[sleep_VIM$Exp == 1 | sleep_VIM$Danger == 2, ]
+sleep_logical_or <- sleep_vim[sleep_vim$Exp == 1 | sleep_vim$Danger == 2, ]
 sleep_logical_or
 
 dim(sleep_logical_and) # 5 rows x 10 columns
@@ -236,26 +229,26 @@ Identifying missing data can be important for subsetting purposes. R codes missi
 ?mean # Scroll down to `na.rm`
 ```
 ```{r}
-mean(sleep_VIM$NonD) # This returns NA because R is unsure how to deal with NA cells for the `mean` computation.
+mean(sleep_vim$NonD) # This returns NA because R is unsure how to deal with NA cells for the `mean` computation.
 ```
 
 Look at the "Usage" portion of the help file - we know what `rm` is, and we now know what `NA` is, so what do you think the logical argument `na.rm =` will do? That's right! We can use `na.rm = TRUE` to properly calculate the mean of the NonD column by now excluding the NAs. 
 ```{r}
-mean(sleep_VIM$NonD, na.rm = TRUE) #Now `mean()` returns the mean!
+mean(sleep_vim$NonD, na.rm = TRUE) #Now `mean()` returns the mean!
 ```
 
 While `na.rm()` nor `str()` will not tell us which data are missing in a convenient way, `is.na()` does. Wrap the name of your data frame in `is.na()` to return logical values. Missing data is coded as `TRUE`, while present data are coded as `FALSE`
 ```{r, eval=FALSE}
 ?is.na
-sum(is.na(sleep_VIM))
+sum(is.na(sleep_vim))
 ```
 
 People code data in very strange ways besides `NA`, so don't be surprised if you see some other signifier. But, whatever you do, do not use the number zero! 
 
 ## Missing data (`NA`) - recoding missing data
-Make a copy of `sleep_VIM` named sv so we do not alter the original, then recode NA values in place to say "NONE":
+Make a copy of `sleep_vim` named sv so we do not alter the original, then recode NA values in place to say "NONE":
 ```{r}
-sv <- sleep_VIM
+sv <- sleep_vim
 
 sv[is.na(sv)] <- "PIZZA"
 sv
@@ -278,7 +271,7 @@ We can also subset only rows without any missing data using bracket notation. `c
 ?complete.cases
 ```
 ```{r}
-s_complete <- sleep_VIM[complete.cases(sleep_VIM) , ]  
+s_complete <- sleep_vim[complete.cases(sleep_vim) , ]  
 s_complete
 ```
 
@@ -289,12 +282,12 @@ is.na(s_complete)
 sum(is.na(s_complete)) # what did we do here?
 ```
 
-Conversely, we can subset the sleep_VIM data to include only rows with missing data by adding the logical bash operator `!` (not). 
+Conversely, we can subset the sleep_vim data to include only rows with missing data by adding the logical bash operator `!` (not). 
 ```{r, eval=FALSE}
 ?"!"
 ```
 ```{r}
-s_NA <- sleep_VIM[!complete.cases(sleep_VIM),]
+s_NA <- sleep_vim[!complete.cases(sleep_vim),]
 ```
 ```{r, eval=FALSE}
 s_NA # All rows have at least one cell with missing data
@@ -302,7 +295,7 @@ is.na(s_NA) # We see TRUE values where data is missing
 sum(is.na(s_NA)) # 38 cells have missing data
 
 # Do the number of missing cases in s_NA equal that to the whole data set? 
-sum(is.na(s_NA)) == sum(is.na(sleep_VIM)) # ... yes! Both data objects contain 38 NA values! 
+sum(is.na(s_NA)) == sum(is.na(sleep_vim)) # ... yes! Both data objects contain 38 NA values! 
 ```
 
 # Subset with `subset`
@@ -312,7 +305,7 @@ sum(is.na(s_NA)) == sum(is.na(sleep_VIM)) # ... yes! Both data objects contain 3
 ```
 ```{r}
 # subset rows where "BrainWgt" is less than 5 and "Danger" equals 4 and "Exp" equals 3:
-subset_1 <- subset(x = sleep_VIM, 
+subset_1 <- subset(x = sleep_vim, 
                    subset = BrainWgt < 60 & Danger == 4 & Exp == 3,
                    select = c("Sleep", "Span"))
 subset_1
@@ -320,7 +313,7 @@ subset_1
 # or
 
 # subset all rows where BrainWgt is less than 100 or Danger equals 4 along with the "BrainWgt", "Danger", and "Exp" columns:
-subset_2 <- subset(sleep_VIM, BrainWgt < 100 | Danger == 4, select = c(BrainWgt, Danger, Exp))
+subset_2 <- subset(sleep_vim, BrainWgt < 100 | Danger == 4, select = c(BrainWgt, Danger, Exp))
 subset_2
 ```
 
@@ -337,26 +330,6 @@ Subset the `animals` dataframe:
 Merging data is useful when we want to combine two different dataframes that share a vector/column. We "merge" by that column. The first two arguments in `merge()` are the names of the two data frames, followed by `by` where we tell which column names we want to match.  
 
 Also note this shorthand way for creating a dataframe. For example: 
-```{r, eval=FALSE}
-?merge
-```
-```{r}
-df1 <- data.frame(Name = c("Joe", "Susan", "Jack", "Kelly"),
-                  City = c("Berkeley", "Berkeley", "Oakland", "Oakland"),
-                  Math = c(42, 48, 50, 46),
-                  Reading = c(8, 10, 10, 10))
-df1
-
-df2 <- data.frame(Name = c("Joe", "Susan", "Jack", "Kelly"),
-                    Science = c(99, 100, 99, 100),
-                    Music = c(19, 18, 20, 20),
-                    Art = c(20, 20, 19, 18))
-df2
-
-df_merge <- merge(df1, df2, by = "Name")
-df_merge
-#What happened here? 
-```
 
 ### Merging data - `cbind()` and `rbind()`
 Other useful functions include `cbind()` and `rbind()`.  

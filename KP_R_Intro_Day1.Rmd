@@ -763,11 +763,32 @@ The syntax looks like this:
 Check your working directory to see if it worked!  
 
 
-#Loading in SAS data files
+#Loading in csv and SAS data files
+```{r loading}
+animals <- read.csv("animals.csv", 
+                    header = TRUE, 
+                    stringsAsFactors = T,
+                    na.strings = " ")
+animals
+str(animals)
+```
+> Notice that `stringsAsFactors = FALSE`. If set to `TRUE`, R will try to guess which **character** vectors should automatically be converted to factors. This is problematic because 1) R is not always good at guessing and 2) R defaults to alphabetical and increasing numeric factor level sorting. This might not matter for your data, but it is recommended to set `stringsAsFactors = FALSE` and manually convert your desired character vectors to factors. See the Part 1 help file to review these instructions.  
 
-[ADD HERE]
+> `header = TRUE` will include the header row; `header = FALSE` will turn your header row into the first row of actual data. `na.strings = c(" ", 999)` indicates that blank cells and cells coded 999 allows you to specify data that should be automatically converted to `NA` upon importation. We do not have any here, so nothing is altered. 
 
-# **Challenge 5** Homework (optional)
+# **Challenge 5**
+1. Load the mammals "sleep_vim" dataset from the data folder using `read.csv` (what is shown is another way to load datasets that are included in R and packages). Save it in a variable named "Sleep_vim"
+2. Remember what `ls()` does? What does `dir()` do? 
+```{r}
+library(VIM)
+data(sleep)
+sleep_vim = sleep
+## YOUR CODE HERE
+```
+When dealing with Microsoft Excel files (.xlsx), you will find it more convenient to save them first as .csv files in Excel and then import them using `read.csv()`. However, you can also install the "foreign" package to load data from SPSS, Stata, Weka, Systat, Minitab, SAS, S, and MATLAB. See [this helpful rio documentation as well](https://cran.r-project.org/web/packages/rio/vignettes/rio.html). 
+
+
+# **Challenge 6** Homework (optional)
 swirl is a package that helps you learn R by using R. Visit the [swirl](http://swirlstats.com/) homepage to learn more
 ```{r, eval=FALSE}
 library(swirl)
