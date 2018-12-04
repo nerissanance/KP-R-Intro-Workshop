@@ -1,5 +1,5 @@
 ---
-title: 'R Fundamentals Part 2: Subsetting and reshaping'
+title: 'KP R Intro Day 2: Subsetting and reshaping'
 author: "Nerissa Nance"
 date: "September 5, 2018"
 output:
@@ -11,7 +11,7 @@ output:
     toc: yes
 ---
  #Citations:
-A lot of this material came directly from D-lab training materials authored by D-Lab staff. The original content can be accessed here: [https://github.com/dlab-berkeley/R-Fundamentals]
+A lot of the source code for this material came from D-lab training materials authored by D-Lab staff. The original content can be accessed here: [https://github.com/dlab-berkeley/R-Fundamentals]
 Contributions by Dlab staff: Evan Muzzall, Shinhye Choi, Rochelle Terman, Dillon Niederhut, Sam Abdel-Ghaffar.
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -22,11 +22,9 @@ library(mlbench)
 ```
 
 Day 2 learning objectives:  
-1. Set your working directory  
-2. Loading data from files  
-3. Subsetting in base R  
-4. Missing data (NA)  
-5. Merging data frames in dplyr  
+1. Subsetting in base R  
+2. Missing data (NA)  
+3. Merging data frames in base R and in dplyr  
 
 # Loading data from files
 
@@ -95,8 +93,7 @@ df.pid$
 ```
 
 # **Challenge 2**
-1. Practice extracting a few variables from the `df.pid` dataframe using the dollar sign `$`
-2. Plot them in a histogram using the `hist()` function. How do you do this? 
+1. Practice extracting a few variables from the `df.pid` dataframe using the dollar sign `$` and plot them in a histogram using the `hist()` function.
 
 ```{r}
 ## YOUR CODE HERE
@@ -114,81 +111,92 @@ Let's start just with the columns!
 ### Variable names (`[ , c("Variable Names")]`)
 You can subset your data by specifying variable names within bracket notation and using the `c()` function to create a column name character vector of names you want to keep.
 
-We can create a new dataframe object `sleep_varnames` that includes only "BodyWgt" and "BrainWgt" variable names from the `sleep` data frame:
+We can create a new dataframe object `diab` that includes only "glucose" , "insulin" and "diabetes" variable names from the `df.pid` data frame:
 ```{r, eval=FALSE}
 ?"["
 ```
 ```{r}
-sleep_varnames <- sleep_vim[ , c("BodyWgt", "BrainWgt")]
-str(sleep_varnames)
-head(sleep_varnames)
+diab <- df.pid[ , c("glucose", "insulin", "diabetes")]
+str(diab)
+head(diab)
 
-# compare this to "sleep_vim", which remains unchanged!
-sleep_vim
+# compare this to "df.pid", which remains unchanged
+df.pid
+
 ```
 
 > Notice that the comma is still included within the bracket notation before the vector of column names. This indicates that we want ALL of the rows corresponding to these two columns. This is the same when we only want to subset rows and include ALL columns (see below).  
 
-##### Remember that in bracket notation `[ , ]` everything **before** the comma refers to rows, and everything **after** the comma refers to columns!
+##### Remember that in bracket notation `[ , ]` everything **before** the comma refers to rows, and everything **after** the comma refers to columns.
 
-### Subsetting with positive integers `[ , c()]`
-Subsetting by **positive** integers works as well. This will **include** only the specified columns as referenced by their indicies - we do not have to type out their names!  
+### Subsetting with integers
+Subsetting by **positive** integers will **include** only the specified columns as referenced by their indicies - we do not have to type out their names!  
 
-Create an object `sleep_posint` that includes only "NonD", "Sleep", and "Exp" columns.  
+Create an object `subsetted` that includes only the first 50 observations of the "age", "pressure" and "pregnant" variables
 
 First use `str()` or `colnames` to see which integer values these columns represent. Because we only want the 3rd, 5th, and 9th columns, we type:  
 ```{r, eval=FALSE}
-str(sleep_vim)
-sleep_posint <- sleep_vim[ , c(3, 5, 9)] # why does our vector go after the comma?
-str(sleep_posint)
-head(sleep_posint)
+str(df.pid)
+subsetted <- df.pid[1:50 , c(1, 3, 8)] # why does our vector go after the comma?
+str(subsetted)
+head(subsetted)
+dim(subsetted)
 ```
 
-### Subsetting with negative integers `[ , -c()]`
 Subsetting by **negative** integers will **exclude** the specified columns. Notice the `-` symbol before `c()` inside our bracket notation.
 
-We can create an object called `sleep_negint` that includes everything **except** columns 1 and 2 ("BodyWgt" and "BrainWgt"):
+This is useful when you only want to exclude a few things:
 ```{r}
-str(sleep_vim)
-sleep_negint_vim <- sleep_vim[ , -c(1, 2)]
-str(sleep_negint_vim)
-head(sleep_negint_vim, n = 3)
+str(df.pid)
+noage <- df.pid[ , -c(8)]
+str(noage)
+head(noage)
 ```
 
 ### Subsetting with logical tests
-We can also use logical tests to subset our data. For example, what if we want to include only the _**rows**_ that have a value of 4 for "Exp"? We can use the relational operator `==`:
+We can also use logical tests to subset our data. For example, what if we want to include only the _**rows**_ that have a value of 35 for "age"? We can use the relational operator `==`:
 ```{r, eval=FALSE}
 ?"=="
 ```
 ```{r}
-sleep_logical <- sleep_vim[sleep_vim$Exp == 4 , 8:10 ] # why is the comma included? 
-sleep_logical
+all35yos <- df.pid[df.pid$age == 35 ,] # why is the comma included? 
+
+#check that this worked:
+table(all35yos$age)
 ```
-Only rows with values of 4 for "Exp" are returned! 
 
-What if we want to subset the data so it includes only the rows where "Exp" equals 1 **_and_** "Danger" is equal to 2? We would use the "and" `&` logical operator.  
-
-What if we want to include rows where "Exp" is equal to 1 **_or_** "Danger" is equal to 2? We would use the "or" `|` logical operator: 
+You can also add more conditions using the "and" `&` logical operator or the "or" `|` logical operator: 
 ```{r, eval=FALSE}
 ?"&"
 ?"|"
 ```
 ```{r}
 # & (and) = all conditions must be TRUE
-sleep_logical_and <- sleep_vim[sleep_vim$Exp == 1 & sleep_vim$Danger == 2, ] 
-sleep_logical_and
+all41diab <- df.pid[df.pid$age == 41 & df.pid$diabetes == "pos", ] 
+all41diab
 
 # | (or) = just one of the conditions must be TRUE
-sleep_logical_or <- sleep_vim[sleep_vim$Exp == 1 | sleep_vim$Danger == 2, ]
-sleep_logical_or
+all41ordiab <- df.pid[df.pid$age == 41 | df.pid$diabetes == "pos", ]
+all41ordiab
 
-dim(sleep_logical_and) # 5 rows x 10 columns
-dim(sleep_logical_or) # 36 rows x 10 columns
+dim(all41diab) 
+dim(all41ordiab)
 ```
 
-In `sleep_logical_and`, "Exp" must equal 1 _and_ "Danger" must equal 2 to be included - both conditions must be TRUE.  
+In `all41diab`, "age" must equal 41 _and_ "diabetes" must equal "pos" to be included - both conditions must be TRUE.  
 
-In `sleep_logical_or`, "Exp" must equal 1 _or_ "Danger" can equal 2 to be included - only one of these two conditions must be TRUE, hence the greater number of rows returned by "or".  
+In `all41ordiab`, "age" must equal 41 _or_ "diabetes" can equal "pos" to be included - only one of these two conditions must be TRUE, hence the greater number of rows returned by "or".  
+
+We can also subset the  data to include only rows that do _not_ meet a certain condition by using the logical bash operator `!` (not). 
+```{r, eval=FALSE}
+?"!"
+```
+```{r}
+#say you wanted to exclude the 41 year olds instead:
+no41s <- df.pid[df.pid$age!=41,]
+table(df.pid$age)
+```
+
 
 ### Subsetting lists with double bracket notation `[[ ]]`
 You can also subset lists. 
@@ -216,10 +224,15 @@ example_list[[1]]
 # **Challenge 3**
 1. Load the `iris` dataset! Type `data(iris)` to load it.  
 2. What is this dataset? How do you find out?  
-3. Subset the `iris` dataset in three ways using column names and positive and negative integers.  
-4. Subset `iris` using logical tests, `&`, and `|`    
+3. Subset the `iris` dataset:
+
+    * to a data frame named "vv" with only the observations from the versicolor or virginica species 
+    * to a data frame called "petals20" that has only the first 20 observations of the  "Petal.Length" and "Petal.Width" variables
+   
 ```{r}
 ## YOUR CODE HERE
+
+
 ```
 
 # Missing data (`NA`)
@@ -229,74 +242,49 @@ Identifying missing data can be important for subsetting purposes. R codes missi
 ?mean # Scroll down to `na.rm`
 ```
 ```{r}
-mean(sleep_vim$NonD) # This returns NA because R is unsure how to deal with NA cells for the `mean` computation.
+mean(df.pid$pressure) # This returns NA because R is unsure how to deal with NA cells for the `mean` computation.
 ```
 
 Look at the "Usage" portion of the help file - we know what `rm` is, and we now know what `NA` is, so what do you think the logical argument `na.rm =` will do? That's right! We can use `na.rm = TRUE` to properly calculate the mean of the NonD column by now excluding the NAs. 
 ```{r}
-mean(sleep_vim$NonD, na.rm = TRUE) #Now `mean()` returns the mean!
+mean(df.pid$pressure, na.rm = TRUE) #Now `mean()` returns the mean!
 ```
 
 While `na.rm()` nor `str()` will not tell us which data are missing in a convenient way, `is.na()` does. Wrap the name of your data frame in `is.na()` to return logical values. Missing data is coded as `TRUE`, while present data are coded as `FALSE`
 ```{r, eval=FALSE}
 ?is.na
-sum(is.na(sleep_vim))
+colSums(is.na(df.pid))
+
+#or for a specific variable 
+table(is.na(df.pid$pressure))
+
+
 ```
 
-People code data in very strange ways besides `NA`, so don't be surprised if you see some other signifier. But, whatever you do, do not use the number zero! 
 
 ## Missing data (`NA`) - recoding missing data
-Make a copy of `sleep_vim` named sv so we do not alter the original, then recode NA values in place to say "NONE":
+Make a copy of `df.pid` named df.copy so we do not alter the original, then recode NA values and replace them with the median value:
 ```{r}
-sv <- sleep_vim
+df.copy <- df.pid
 
-sv[is.na(sv)] <- "PIZZA"
-sv
+df.copy$pressure[is.na(df.copy$pressure)] <- median(df.copy$pressure, na.rm=TRUE)
+
+table(is.na(df.copy$pressure))
 ```
 
-They now say `NONE`.
-
-However, for R to handle them correctly, we want to recode them to say `NA`. We can do this with a combination of the name of our data set, bracket notation, our relational operator `==` and our old friend the assignment operator `<-` ! Can we still use the `is.na` function? Why or why not?  
-```{r}
-sv[sv == "PIZZA"] <- NA
-```
-```{r, eval=FALSE}
-sv
-```
-
-> NOTE: here `<NA>` and `NA` are virtually synonymous and R will treat them both as missing.  
 
 We can also subset only rows without any missing data using bracket notation. `complete.cases()` will find rows with no missing values.
 ```{r, eval=FALSE}
 ?complete.cases
 ```
 ```{r}
-s_complete <- sleep_vim[complete.cases(sleep_vim) , ]  
+s_complete <- df.pid[complete.cases(df.pid) , ]  
 s_complete
+
+
 ```
 
-Remember to include the comma here to tell R you want ALL of the columns for these rows :) 
-Then, test it to see if it contains missing values. All cells are `FALSE`
-```{r,eval=FALSE}
-is.na(s_complete)
-sum(is.na(s_complete)) # what did we do here?
-```
 
-Conversely, we can subset the sleep_vim data to include only rows with missing data by adding the logical bash operator `!` (not). 
-```{r, eval=FALSE}
-?"!"
-```
-```{r}
-s_NA <- sleep_vim[!complete.cases(sleep_vim),]
-```
-```{r, eval=FALSE}
-s_NA # All rows have at least one cell with missing data
-is.na(s_NA) # We see TRUE values where data is missing
-sum(is.na(s_NA)) # 38 cells have missing data
-
-# Do the number of missing cases in s_NA equal that to the whole data set? 
-sum(is.na(s_NA)) == sum(is.na(sleep_vim)) # ... yes! Both data objects contain 38 NA values! 
-```
 
 # Subset with `subset`
 `subset` can also be used to subset your data. How do you use the help (hint `?subset`) to see what the `x`, `subset`, and `select` arguments do?For example:
@@ -312,18 +300,18 @@ subset_1
 
 # or
 
-# subset all rows where BrainWgt is less than 100 or Danger equals 4 along with the "BrainWgt", "Danger", and "Exp" columns:
-subset_2 <- subset(sleep_vim, BrainWgt < 100 | Danger == 4, select = c(BrainWgt, Danger, Exp))
+# subset all rows where BrainWgt :
+subset_2 <- subset(df.pid, BrainWgt < 100 | Danger == 4, select = c(BrainWgt, Danger, Exp))
 subset_2
 ```
 
 # **Challenge 4**
-Subset the `animals` dataframe:  
-1. in one dimension.  
-2. in two dimensions using either bracket notation `[ , ]` or `subset`.  
-3. using logical tests.  
+Say you want to look only at people over 50 who did not have an elevated diastolic blood pressure. Subset the `df.pid` dataframe by taking only those of correct age who had a pressure value under 90. Try to do it both ways--using base R and using the 'subset' function.  
+ 
 ```{r}
 ## YOUR CODE HERE
+
+
 ```
 
 # Merging data with `merge`
