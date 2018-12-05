@@ -28,7 +28,7 @@ Some of this also came from Chris Kennedy's "Concise R" series, accessed here: [
 Day 1) introduction to R, R Markdown, data types, data structures
 Day 2) Importing, subsetting, and merging data; type coercion, identifying missing data  
 Part 3) data exploration, statistical testing and graphing
-Part 4) For-loops and functions 
+
 
 
 Part 1 learning objectives:  
@@ -717,9 +717,13 @@ For example, in our `animals` dataframe, we can coerce "Type" from character to 
 
 The dollar sign operator `$` is used to call a single vector from a data frame. This will be discussed more in Part 2 along with the rest of subsetting.
 ```{r}
-str(animals)   # "Name" is character data type. See how each column name is preceded by `$`? 
+# "Name" is character data type. See how each column name is preceded by `$`?
+str(animals)   
+ 
 animals$Type <- factor(animals$Type)
-str(animals)   # "Name" is now factor data type!
+# "Name" is now factor data type!
+str(animals)  
+
 ```
 
 Notice that R stores factors internally as integers and uses the character strings as labels. Also notice that by default R orders factors alphabetically and returns them when we call the "Type" vector.
@@ -765,9 +769,15 @@ Check your working directory to see if it worked!
 
 #Loading in csv and SAS data files
 ```{r loading}
+#install.packages("rio")
+library(rio)
+?rio
+
+
+
 animals <- read.csv("animals.csv", 
                     header = TRUE, 
-                    stringsAsFactors = T,
+                    stringsAsFactors = TRUE,
                     na.strings = " ")
 animals
 str(animals)

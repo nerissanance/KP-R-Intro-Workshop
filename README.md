@@ -29,14 +29,9 @@ Welcome to the R introductory training! This training consists of three two-hour
 
 
 
-**Setting up Github with RStudio**
-Since everyone already has access to RStudio for the training, [the [add here]<br/>
-STEP 1: Install Git http://happygitwithr.com/installation-pain.html <br/>
-STEP 2: Set up SSH keys: http://happygitwithr.com/ssh-keys.html <br/>
-STEP 3: 
 
 <br/> <br/> 
-*Some useful resources:
+Some useful resources:
 <br/> 
 - [UCLA idre](http://www.ats.ucla.edu/stat/r/)  
 - [Quick-R](http://statmethods.net/)  

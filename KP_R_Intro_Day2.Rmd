@@ -440,7 +440,7 @@ library(nycflights13)
 dim(flights)
 head(flights)
 names(flights)
-#ask chris
+#add it into the environment
 flights <- flights
 ```
 
@@ -448,7 +448,7 @@ flights <- flights
 ?flights
 ?tidyr
 ```
-*A note about piped text*: below we use `%>%` text pipiing. This is equivalent to enclosing commands iwthint parantheses `()`, but it can be easier to read, especially when you have many commands on the same line.
+*A note about piped text*: below we use `%>%` text piping. This is equivalent to enclosing commands iwthint parantheses `()`, but it can be easier to read, especially when you have many commands on the same line.
 
 As you can see in the data, currently each row is a flight. Let's say you were interested in 
 ```{r spread}
@@ -458,34 +458,17 @@ messy <- data.frame(
   a = c(67, 80, 64),
   b = c(56, 90, 50)
 )
-
 messy
 
 
 #Gather
-gather <- messy %>%
-  gather(drug, heartrate, a:b)
+gathered <- messy %>%
+  gather(drug, heartrate, a:b) %>% as.data.frame()
 
 
 #Spread
+#spreading <- gather %>% spread()
 
-spreading <- gather %>% spread()
-
-
-
-#Spread by month
-# spread <- flights %>% spread(key="date",month)
-# 
-# dim(flights)
-# dim(spread)
-
-####Gather
-# gathered <- gather(flights, )
-# 
-# 
-# ####Unite
-# flights$date <- unite(flights, date, month, day, year, sep="/")
-# names(flights)
 ```
 
 Dplyr is a powerful tool that allows you to manipulate the data to dreate new columns, subset, select and join data frames. 
@@ -511,6 +494,7 @@ otherway <- select(flights, -(year:day))
 #make a variable that identifies the flights uniquely:
 flights$flight <- row.names(flights)
 frankenstein <- dplyr::left_join(small, otherway, by= c("flight"))
+
 
 ```
 
