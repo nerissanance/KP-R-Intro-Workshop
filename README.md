@@ -3,9 +3,9 @@
 Welcome to the R introductory training! This training consists of three two-hour sessions, and by the end of it we hope that you will be able to do the following: 
 <br/> <br/>
 *Day 1: Connecting and base R*
-- connect GitLab to R Studio Server 
+- connect GitLab to RStudio Server 
 - create repositories, pull and commit changes 
-- create a project in R
+- create a project in RStudio
 - create an Rmd file
 - download, install packages and read them into your library
 - find, read, and understand help files and other key documentation (eg. cran)
@@ -29,9 +29,9 @@ Welcome to the R introductory training! This training consists of three two-hour
 
 
 
-**Setting up Github with R**
-Since everyone already has access to an R server for the training, [the [add here]<br/>
-STEP 1: Install Github http://happygitwithr.com/installation-pain.html <br/>
+**Setting up Github with RStudio**
+Since everyone already has access to RStudio for the training, [the [add here]<br/>
+STEP 1: Install Git http://happygitwithr.com/installation-pain.html <br/>
 STEP 2: Set up SSH keys: http://happygitwithr.com/ssh-keys.html <br/>
 STEP 3: 
 
