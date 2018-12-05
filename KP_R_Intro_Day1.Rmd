@@ -82,7 +82,7 @@ Task: everyone google "RMarkdown cheat sheet" and save that PDF. Make sure you'r
 Challenge:
 
 * Create a header line called "R Training Day 1", with size 1 (aka "header 1").
-* Make a list (ordered or unordered) with the classes you're taking this semester.
+* Make a list (ordered or unordered) with three of your favorite animals.
 * Write the equation: Area = Pi * r^2
 * Compile as a PDF (or html if you prefer).
 

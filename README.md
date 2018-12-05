@@ -9,19 +9,22 @@ Welcome to the R introductory training! This training consists of three two-hour
 - create an Rmd file
 - download, install packages and read them into your library
 - find, read, and understand help files and other key documentation (eg. cran)
-- save and restore projects  <br/> <br/>
+- save and restore projects 
 - understand the basic types of data
 - load a SAS file into the environment
+ <br/> <br/>
 
 *Day 2: Reading in and manipulating data*
+- understand missing data in R 
 - employ basic data manipulation techniques
 - produce descriptive/summary statistics
-- understand the different types of missing data  <br/> <br/>
+<br/> <br/>
 
 *Day 3: Data exploration and graphing*
 - run statistical tests
+- run regression models
 - graph with ggplot
-(possibly also loops if there is time)
+
 
 
 
