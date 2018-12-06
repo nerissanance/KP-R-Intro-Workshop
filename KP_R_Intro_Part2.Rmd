@@ -1,0 +1,502 @@
+---
+title: 'KP R Intro Day 2: Data manipulation'
+author: "Nerissa Nance"
+date: "September 5, 2018"
+output:
+  html_document: 
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+  word_document:
+    toc: yes
+---
+
+
+###Citations:
+A lot of the source code for this material came from D-lab training materials authored by D-Lab staff. The original content can be accessed here: [https://github.com/dlab-berkeley/R-Fundamentals]
+Contributions by Dlab staff: Evan Muzzall, Shinhye Choi, Rochelle Terman, Dillon Niederhut, Sam Abdel-Ghaffar.
+
+# **Challenge 1**
+1. Clear your working environment
+2. Call the Rio package into your library and load in the SAS file of the WHO data 
+```{r review, eval=FALSE}
+
+##YOUR CODE HERE
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#rm(list=ls())
+
+#install.packages("mlbench")
+library(mlbench)
+```
+
+Day 2 learning objectives:  
+1. Subsetting in base R  
+2. Missing data (NA)  
+3. Merging data frames in base R  
+4. Data manipulation in dplyr
+
+# Loading data from files
+
+Load the PimaIndiansDiabetes2 dataset from the mlbench package
+```{r, eval = F}
+?read.csv
+```
+```{r}
+
+
+data("PimaIndiansDiabetes2") 
+#I like to rename it so it's easier ot type
+assign("df.pid", PimaIndiansDiabetes2)
+
+#can compare them using the "all.equal" command, just to double check
+all.equal(df.pid, PimaIndiansDiabetes2)
+
+# Read background information and variable descriptions.
+?PimaIndiansDiabetes2
+
+```
+
+
+# Inspecting the data frame
+Remember from Part 1 that we can learn a lot about data in R. For dataframes, the following functions are useful:
+```{r, eval=FALSE}
+str(df.pid)    # returns the structure of the dataframe
+dim(df.pid)    # dataframe dimensions
+
+
+colnames(df.pid)   #column names
+names(df.pid)    
+rownames(df.pid)  #rownames
+
+class(rownames(df.pid)) # returns character type, even though they are numbers! 
+
+nrow(df.pid)   # number of rows
+ncol(df.pid)   # number of columns
+unique(df.pid)   # show rows with unique data
+
+# if you want to know how many unique values there are, you can use this:
+length(unique(df.pid$age))
+
+
+head(df.pid, n = 10) # show the first "n" rows
+tail(df.pid, n = 4) # show the last "n" rows
+```
+
+
+# Subsetting in base R
+Efficiently subsetting your data will save you time and stress. Fortunately, there are several different ways to subset data in base R.
+
+### Subsetting in base R (`$`)
+Remember from Part 1 that the dollar sign operator `$` will extract only a single vector/column within the data frame:
+```{r, eval=FALSE}
+?"$" # Remember to wrap symbols in quotation marks to view their help pages
+```
+```{r}
+df.pid$age #Returns only the "age" vector from the `df.pid` data frame.
+```
+
+> Type df.pid$ and press the TAB key - a handy list of the columns in your data will appear! 
+
+```{r, eval = F}
+df.pid$
+```
+
+# **Challenge 2**
+1. Practice extracting a few variables from the `df.pid` dataframe using the dollar sign `$` and plot them in a histogram using the `hist()` function.
+
+```{r}
+## YOUR CODE HERE
+```
+
+### Subsetting in two dimensions with bracket notation `[ , ]` 
+However, we do not have to specify all rows or columns when subsetting with bracket notation. We can specify dimensions of both rows and columns that we want. You might find subsetting using **bracket notation** `[ , ]` along with variable names, positive and negative integers, and/or logical values is easier because you can subset multiple elements at once.  
+
+> Inside the brackets, everything before the comma refers to rows. Everything after the comma refers to columns! 
+
+> [rows , columns]  
+
+Let's start just with the columns!  
+
+### Variable names (`[ , c("Variable Names")]`)
+You can subset your data by specifying variable names within bracket notation and using the `c()` function to create a column name character vector of names you want to keep.
+
+We can create a new dataframe object `diab` that includes only "glucose" , "insulin" and "diabetes" variable names from the `df.pid` data frame:
+```{r, eval=FALSE}
+?"["
+```
+```{r}
+diab <- df.pid[ , c("glucose", "insulin", "diabetes")]
+str(diab)
+head(diab)
+
+# compare this to "df.pid", which remains unchanged
+head(df.pid)
+dim(df.pid)
+
+```
+
+> Notice that the comma is still included within the bracket notation before the vector of column names. This indicates that we want ALL of the rows corresponding to these two columns. This is the same when we only want to subset rows and include ALL columns (see below).  
+
+##### Remember that in bracket notation `[ , ]` everything **before** the comma refers to rows, and everything **after** the comma refers to columns.
+
+### Subsetting with integers
+Subsetting by **positive** integers will **include** only the specified columns as referenced by their indicies - we do not have to type out their names!  
+
+Create an object `subsetted` that includes only the first 50 observations of the "age", "pressure" and "pregnant" variables
+
+First use `str()` or `colnames` to see which integer values these columns represent. Because we only want the 3rd, 5th, and 9th columns, we type:  
+```{rstr}
+str(df.pid)
+subsetted <- df.pid[1:50 , c(1, 3, 8)] # why does our vector go after the comma?
+str(subsetted)
+head(subsetted)
+dim(subsetted)
+```
+
+Subsetting by **negative** integers will **exclude** the specified columns. Notice the `-` symbol before `c()` inside our bracket notation.
+
+This is useful when you only want to exclude a few things:
+```{r}
+str(df.pid)
+noage <- df.pid[ , -c(8)]
+str(noage)
+head(noage)
+```
+
+### Subsetting with logical tests
+We can also use logical tests to subset our data. For example, what if we want to include only the _**rows**_ that have a value of 35 for "age"? We can use the relational operator `==`:
+```{r, eval=FALSE}
+?"=="
+```
+```{r}
+all35yos <- df.pid[df.pid$age == 35 ,] 
+
+# Question: why is the comma included? 
+
+#check that this worked:
+table(all35yos$age)
+```
+
+You can also add more conditions using the "and" `&` logical operator or the "or" `|` logical operator: 
+```{r, eval=FALSE}
+?"&"
+?"|"
+```
+```{r}
+# & (and) = all conditions must be TRUE
+all41diab <- df.pid[df.pid$age == 41 & df.pid$diabetes == "pos", ] 
+head(all41diab)
+
+# | (or) = just one of the conditions must be TRUE
+all41ordiab <- df.pid[df.pid$age == 41 | df.pid$diabetes == "pos", ]
+head(all41ordiab)
+
+dim(all41diab) 
+dim(all41ordiab)
+```
+
+In `all41diab`, "age" must equal 41 _and_ "diabetes" must equal "pos" to be included - both conditions must be TRUE.  
+
+In `all41ordiab`, "age" must equal 41 _or_ "diabetes" can equal "pos" to be included - only one of these two conditions must be TRUE, hence the greater number of rows returned by "or".  
+
+We can also subset the  data to include only rows that do _not_ meet a certain condition by using the logical bash operator `!` (not). 
+```{r, eval=FALSE}
+?"!"
+```
+```{r}
+#say you wanted to exclude the 41 year olds instead:
+no41s <- df.pid[df.pid$age!=41,]
+table(df.pid$age)
+```
+
+
+### Subsetting lists with double bracket notation `[[ ]]`
+You can also subset lists. 
+```{r, eval=FALSE}
+?"[["
+```
+Create an example list:
+```{r}
+example_list <- list(TRUE, "string data", 5)
+example_list
+```
+
+> Consider the analogy of going through airport security. When you place your shoes in the plastic bin and then place it on the conveyor belt, you have placed two things: 1) your shoes inside the 2) plastic bin. 
+
+Use single brackets `[]` retrieves _both the placeholder and its value (the bin and your shoes)_ 
+```{r}
+example_list[1]
+```
+
+However, double brackets go one layer deeper inside the plastic bin and return _only your shoes!_ 
+```{r}
+example_list[[1]]
+```
+
+# **Challenge 3**
+1. Load the `iris` dataset! Type `data(iris)` to load it.  
+2. What is this dataset? How do you find out?  
+3. Subset the `iris` dataset:
+
+    * to a data frame named "vv" with only the observations from the versicolor or virginica species 
+    * to a data frame called "petals20" that has only the first 20 observations of the  "Petal.Length" and "Petal.Width" variables
+   
+```{r}
+## YOUR CODE HERE
+
+```
+
+# Missing data (`NA`)
+Identifying missing data can be important for subsetting purposes. R codes missing values as `NA`. Identifying missing data is important because dealing with it might be necessary to run basic tests like `mean()`. 
+```{r, eval=FALSE}
+?NA
+
+# Scroll down to `na.rm`:
+?mean 
+```
+```{r}
+mean(df.pid$pressure) 
+# This returns NA because R is unsure how to deal with NA cells for the `mean` computation.
+```
+
+Look at the "Usage" portion of the help file - we know what `rm` is, and we now know what `NA` is, so what do you think the logical argument `na.rm =` will do? That's right! We can use `na.rm = TRUE` to properly calculate the mean of the NonD column by now excluding the NAs. 
+```{r}
+mean(df.pid$pressure, na.rm = TRUE) 
+
+#Now `mean()` returns the mean!
+```
+
+While `na.rm()` nor `str()` will not tell us which data are missing in a convenient way, `is.na()` does. Wrap the name of your data frame in `is.na()` to return logical values. Missing data is coded as `TRUE`, while present data are coded as `FALSE`
+```{r, eval=FALSE}
+?is.na
+colSums(is.na(df.pid))
+
+#or for a specific variable 
+table(is.na(df.pid$pressure))
+
+
+```
+
+
+## Missing data (`NA`) - recoding missing data
+Make a copy of `df.pid` named df.copy so we do not alter the original, then recode NA values and replace them with the median value:
+```{r}
+df.copy <- df.pid
+
+df.copy$pressure[is.na(df.copy$pressure)] <- median(df.copy$pressure, na.rm=TRUE)
+
+table(is.na(df.copy$pressure))
+```
+
+
+We can also subset only rows without any missing data using bracket notation. `complete.cases()` will find rows with no missing values.
+```{r, eval=FALSE}
+?complete.cases
+```
+```{r}
+s_complete <- df.pid[complete.cases(df.pid) , ]  
+dim(s_complete)
+
+
+```
+
+
+
+# Subset with `subset`
+The `subset` command in base R can also be used to subset your data. How do you use the help file to see what the `x`, `subset`, and `select` arguments do?
+```{r, eval = F}
+?subset
+```
+```{r}
+# subset rows to only patients with diabetes and elevated BP values (i.e. greater than or equal to 90)
+subset_1 <- subset(x = df.pid, 
+                   subset = diabetes == 'pos' & pressure>=90,
+                   select = c("diabetes", "pressure"))
+dim(subset_1)
+head(subset_1)
+
+
+```
+
+# **Challenge 4**
+Say you want to look only at people over 50 who did not have an elevated diastolic blood pressure. Subset the `df.pid` dataframe by taking only those of correct age who had a pressure value under 90. Try to do it both ways--using base R and using the 'subset' function.  
+ 
+```{r}
+## YOUR CODE HERE
+
+
+```
+
+# Data summarization (`summary`, `describe` , `describeBy`,  `table`)
+Data can be summarized in a myriad of ways. Below are a few examples to get you started.
+
+`summary` provides a six-number summary of a data frame:
+```{r}
+summary(df.pid)
+
+# or of a single vector
+summary(df.pid$pressure)
+```
+
+`describe` and `describeBy` from the `psych` R package provide some other metrics. We are going to subset `animals` so that it only includes the numeric variables within the `describe` call. 
+
+Remember, we installed the 'psych' package on Day 1, so all we have to do is call it into our environment with `library`:
+```{r}
+library(psych)
+
+# this works, but some of the output might not be meaningful
+describe(df.pid) 
+
+#what is the 'diabetes' variable?
+str(df.pid)
+#it's a factor, so summary stats probably aren't helpful
+
+#let's just pick a few variables:
+describe(df.pid[ , c("pregnant", "glucose", "pressure", "insulin")]) 
+
+```
+
+We can also subset and save it for later use:
+```{r}
+
+names(df.pid)
+test_describe <- describe(df.pid[ , c("pregnant", "glucose", "pressure", "insulin")])
+
+test_describe
+
+write.csv(test_describe, "test_describe.csv", row.names = TRUE)
+
+
+#Output summary statistics by one grouping variable:
+summary_sub <- describeBy(df.pid, group = as.factor(df.pid$diabetes))
+summary_sub
+
+
+
+```
+
+
+We can view frequencies for of categorical data with `table`
+```{r}
+# get frequencies for one variable:
+table(df.pid$diabetes) 
+
+#get a cross tabulation of two variables:
+table(df.pid$diabetes, df.pid$pregnant) 
+```
+
+
+
+# Merging data with `merge`,`cbind()` and `rbind()`
+Merging data is useful when we want to combine two different dataframes that share a vector/column. We "merge" by that column. The first two arguments in `merge()` are the names of the two data frames, followed by `by` where we tell which column names we want to match.  
+
+Other useful functions include `cbind()` and `rbind()`.  
+
+`cbind()` will bind two data frames by their columns. Let's cbind `df1` and a new dataframe, `df3`:
+```{r, eval=FALSE}
+?merge
+?cbind
+?rbind 
+```
+```{r}
+
+
+#let's say that we have this other column of data we need to add 
+#(FYI: runif randomly chooses from a uniform distribution betwee nthe specified min and max. I'm making it the same size as the dataset for the sake of this example.) 
+df3 <- round(runif(768, min=0, max=10), 2)
+head(df3)
+
+df_cbind <- cbind(df.pid, df3)
+head(df_cbind)
+dim(df_cbind)
+```
+> NOTE: If you are using cbind, because it binds the data by row names, you need to make sure your data is SORTED in EXACTLY the same way! (i.e. probably use this only when you're very sure)
+
+`rbind()` will add more rows to an existing data frame. An example:
+```{r}
+ 
+#NOTE: datasets need to have the same number of columns
+df.a <- df.pid[,c("diabetes", "age", "pressure")]
+names(df.a)
+df.b <- data.frame(diabetes = c("pos", "pos", "pos", "neg"),
+                  age = c(44, 49, 50, 49),
+                  pressure = c(60,70,60,75))
+df_rbind <- rbind(df.a, df.b)
+dim(df_rbind)
+```
+> NOTE: for rbind to work, you should have the same column names for both of your data frames! 
+
+To make sure your data is ordered the way you need it to be, you can order your data using the `order` command. For example, sort `df.pid` by ascending pressure values: 
+```{r, eval=FALSE}
+
+new_ordered <- df.pid[order(df.pid$pressure),] 
+head(new_ordered)
+
+#for descending values:
+new_ordered2 <- df.pid[order(-df.pid$pressure),] 
+head(new_ordered2)
+```
+ 
+
+<!-- # Reshaping your data -->
+<!-- You will probably find that certain plotting and testing functions require that the data be formatted in "long" or "wide" format. The "reshape2" R package offers a handy way to reformat your data.  -->
+
+<!-- In base R, `t` will quickly transpose your dataframe or matrix. The rows will become the columns, and the columns will become the rows: -->
+<!-- ```{r, eval=FALSE} -->
+<!-- ?t -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- mat1 <- matrix(1:10, nrow = 5, ncol = 2) -->
+<!-- mat1 -->
+<!-- mat1_t <- t(mat1) -->
+<!-- mat1_t -->
+<!-- # or -->
+<!-- animals_t <- t(animals) -->
+<!-- animals_t -->
+<!-- ``` -->
+
+<!-- ### The "reshape2" package  -->
+<!-- In addition to many other ways, data are frequently formatted as "wide" or "long" type.  "Wide" format means that each variable is shown in a column, more like in our animals dataframe: -->
+<!-- ```{r} -->
+<!-- head(animals) -->
+<!-- ``` -->
+
+<!-- "Long" format means that each row is a unique combination of our "id" variable (animal "Type") and each variable ("Healthy", "Weight", "Height", and "Progress").   -->
+
+<!-- ##### `melt` and `dcast` -->
+<!-- Melt is a handy way to reshape data from "wide" to "long" format: -->
+<!-- ```{r, eval=F} -->
+<!-- library(reshape2) -->
+<!-- ?melt -->
+<!-- ?dcast -->
+<!-- ``` -->
+
+<!-- Let's "melt" the "animals" data frame into long format: -->
+<!-- ```{r} -->
+<!-- library(reshape2) -->
+<!-- animals_melt <- melt(animals, id = "Type") -->
+<!-- str(animals_melt) -->
+<!-- ``` -->
+<!-- ```{r, eval=FALSE} -->
+<!-- animals_melt -->
+<!-- ``` -->
+
+<!-- `animals` now has 80 rows and just 3 columns! What do you notice about the nature of each row? (hint: each row is a unique combination of the `id` variable ("Type") and the values for each of the other four columns: Healthy, Weight, Height, and Progress!   -->
+
+<!-- `dcast` is handy to perform some basic summary operations. For example, let's compute the mean Weight of each animal Type: -->
+<!-- ```{r} -->
+<!-- library(reshape2) -->
+<!-- type_means <- dcast(animals_melt, Type~variable, mean) -->
+<!-- type_means -->
+<!-- type_sd <- dcast(animals_melt, Type~variable, sd) -->
+<!-- type_sd -->
+<!-- ``` -->
+
+
+##Challenge #5 
+
+
+ 
