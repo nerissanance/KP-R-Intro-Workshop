@@ -405,7 +405,7 @@ Other useful functions include `cbind()` and `rbind()`.
 
 
 #let's say that we have this other column of data we need to add 
-#(FYI: runif randomly chooses from a uniform distribution betwee nthe specified min and max. I'm making it the same size as the dataset for the sake of this example.) 
+#(FYI: runif randomly chooses from a uniform distribution between the specified min and max. I'm making it the same size as the dataset for the sake of this example.) 
 df3 <- round(runif(768, min=0, max=10), 2)
 head(df3)
 
@@ -413,7 +413,18 @@ df_cbind <- cbind(df.pid, df3)
 head(df_cbind)
 dim(df_cbind)
 ```
-> NOTE: If you are using cbind, because it binds the data by row names, you need to make sure your data is SORTED in EXACTLY the same way! (i.e. probably use this only when you're very sure)
+> NOTE: If you are using cbind, because it binds the data by row names, you need to make sure your data is SORTED in EXACTLY the same way! 
+
+To make sure your data is ordered the way you need it to be, you can order your data using the `order` command. For example, sort `df.pid` by ascending pressure values: 
+```{r, eval=FALSE}
+
+new_ordered <- df.pid[order(df.pid$pressure),] 
+head(new_ordered)
+
+#for descending values:
+new_ordered2 <- df.pid[order(-df.pid$pressure),] 
+head(new_ordered2)
+```
 
 `rbind()` will add more rows to an existing data frame. An example:
 ```{r}
@@ -429,16 +440,6 @@ dim(df_rbind)
 ```
 > NOTE: for rbind to work, you should have the same column names for both of your data frames! 
 
-To make sure your data is ordered the way you need it to be, you can order your data using the `order` command. For example, sort `df.pid` by ascending pressure values: 
-```{r, eval=FALSE}
-
-new_ordered <- df.pid[order(df.pid$pressure),] 
-head(new_ordered)
-
-#for descending values:
-new_ordered2 <- df.pid[order(-df.pid$pressure),] 
-head(new_ordered2)
-```
  
 
 <!-- # Reshaping your data -->
@@ -447,8 +448,6 @@ head(new_ordered2)
 <!-- In base R, `t` will quickly transpose your dataframe or matrix. The rows will become the columns, and the columns will become the rows: -->
 <!-- ```{r, eval=FALSE} -->
 <!-- ?t -->
-<!-- ``` -->
-<!-- ```{r} -->
 <!-- mat1 <- matrix(1:10, nrow = 5, ncol = 2) -->
 <!-- mat1 -->
 <!-- mat1_t <- t(mat1) -->
@@ -456,7 +455,27 @@ head(new_ordered2)
 <!-- # or -->
 <!-- animals_t <- t(animals) -->
 <!-- animals_t -->
-<!-- ``` -->
+
+Function:       spread(data, key, value, fill = NA, convert = FALSE)
+Same as:        data %>% spread(key, value, fill = NA, convert = FALSE)
+
+Arguments:
+        data:data frame
+        key:column values to convert to multiple columns
+        value:single column values to convert to multiple columns' values 
+        fill:If there isn't a value for every combination of the other variables and the key column, this value will be substituted
+        convert:if TRUE will automatically convert values to logical, integer, numeric, complex or factor as appropriate
+```
+```{r}
+
+
+
+library(tidyr)
+
+wide <- tidyr::spread(df.who, c( age, year), suicides_no)
+
+
+```
 
 <!-- ### The "reshape2" package  -->
 <!-- In addition to many other ways, data are frequently formatted as "wide" or "long" type.  "Wide" format means that each variable is shown in a column, more like in our animals dataframe: -->
@@ -469,7 +488,7 @@ head(new_ordered2)
 <!-- ##### `melt` and `dcast` -->
 <!-- Melt is a handy way to reshape data from "wide" to "long" format: -->
 <!-- ```{r, eval=F} -->
-<!-- library(reshape2) -->
+library(reshape2)
 <!-- ?melt -->
 <!-- ?dcast -->
 <!-- ``` -->
