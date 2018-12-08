@@ -35,6 +35,14 @@ Part 1 learning objectives:
 
 #Introduction
 
+First off, please run this code by clicking the green arrow at the top of the grey area below:
+
+```{r, eval=FALSE}
+install.packages(c("ggplot2", "knitr", "psych", "rmarkdown", "reshape2", "swirl"))
+```
+
+
+
 ### The basics: Navigating RStudio and Projects
 Open RStudio! 
 
@@ -47,6 +55,7 @@ A project's folder is automatically set as the working directory, which allows u
 We can see recent projects by selecting File -> Recent Projects in the upper left corner of RStudio, or by clicking the list of recent projects in the upper right corner. If we click the name of the project it will switch to that project, or if we click the button it will open in a new session.
 
 Easy Challenge: close your project and then re-open it.
+
 
 ### RStudio interface
 
@@ -76,8 +85,7 @@ Task: everyone google "RMarkdown cheat sheet" and save that PDF. Make sure you'r
 Challenge:
 
 * Create a header line called "R Training Day 1", with size 1 (aka "header 1").
-* Make a list (ordered or unordered) with three of your favorite animals.
-* Write the equation: Area = Pi * r^2
+* Write the equation: Area = pi * r^2
 * Compile as a PDF (or html if you prefer).
 
 ### Package installation
@@ -87,9 +95,6 @@ Packages can also be installed through the command line using `install.packages(
 
 > It is generally good to keep RStudio and your packages up to date! Install the packages we will use in the workshop: 
 
-```{r, eval=FALSE}
-install.packages(c("ggplot2", "knitr", "psych", "rmarkdown", "reshape2", "swirl"))
-```
 
 ### The `library` function  
 Anytime you want to utilize a previously installed package, you must retreive it with `library()` when you begin a new R session. You do not need to reinstall packages each time you quit and restart your R session. 
@@ -136,6 +141,13 @@ numeric_object <- 4
 
 # the ls() function will show us what is in our global environment
 ls()
+
+
+r <- 2
+
+#back to our equation:
+
+Area = pi * r^2
 ```
 
 ### The R global environment
@@ -237,15 +249,7 @@ For example, to get help making boxplots, I might Google search "R how to make b
 ```{r}
 ## YOUR CODE HERE
 
-#1) 
-x <- "get"
 
-#2) 
-y <- 2
-z <- 5
-
-#3) 
-class(y)
 
 ```
 
@@ -269,7 +273,8 @@ Standard mathematical operators apply to the creation of numeric data:
 5 - 2  
 5 * 2  
 5 ^ 2  
-5 ** 2 # same as ^  
+# same as ^ :
+5 ** 2  
 5 / 2  
 5 %/% 2  
 5 %% 2  

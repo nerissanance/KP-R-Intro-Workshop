@@ -9,7 +9,7 @@ Welcome to the R introductory training! This training consists of three two-hour
 - find, read, and understand help files and other key documentation (eg. cran)
 - save and restore projects 
 - understand the basic types of data
-- load a SAS file into the environment
+- load a csv file and SAS file into the environment
  <br/> <br/>
 
 *Part 2: Reading in and manipulating data*

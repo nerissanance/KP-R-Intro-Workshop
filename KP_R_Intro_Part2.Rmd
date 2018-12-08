@@ -18,7 +18,7 @@ Contributions by Dlab staff: Evan Muzzall, Shinhye Choi, Rochelle Terman, Dillon
 
 # **Challenge 1**
 1. Clear your working environment
-2. Call the Rio package into your library and load in the SAS file of the WHO data 
+2. Call the `rio` package into your library and load in the SAS file of the WHO data 
 ```{r review, eval=FALSE}
 
 ##YOUR CODE HERE
@@ -27,7 +27,6 @@ Contributions by Dlab staff: Evan Muzzall, Shinhye Choi, Rochelle Terman, Dillon
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 #rm(list=ls())
-
 #install.packages("mlbench")
 library(mlbench)
 ```
@@ -36,19 +35,16 @@ Day 2 learning objectives:
 1. Subsetting in base R  
 2. Missing data (NA)  
 3. Merging data frames in base R  
-4. Data manipulation in dplyr
+4. Data manipulation 
 
 # Loading data from files
 
-Load the PimaIndiansDiabetes2 dataset from the mlbench package
-```{r, eval = F}
-?read.csv
-```
+Load the PimaIndiansDiabetes2 dataset from the mlbench package. This dataset is from the National Institute of Diabetes and Digestive and Kidney Diseases and contains health data for 768 patients.
+
 ```{r}
 
-
 data("PimaIndiansDiabetes2") 
-#I like to rename it so it's easier ot type
+#I like to rename it so it's easier to type
 assign("df.pid", PimaIndiansDiabetes2)
 
 #can compare them using the "all.equal" command, just to double check
@@ -57,32 +53,41 @@ all.equal(df.pid, PimaIndiansDiabetes2)
 # Read background information and variable descriptions.
 ?PimaIndiansDiabetes2
 
+rm(PimaIndiansDiabetes2)
+
 ```
 
 
 # Inspecting the data frame
 Remember from Part 1 that we can learn a lot about data in R. For dataframes, the following functions are useful:
 ```{r, eval=FALSE}
-str(df.pid)    # returns the structure of the dataframe
-dim(df.pid)    # dataframe dimensions
+# returns the structure of the dataframe
+str(df.pid) 
 
+# dataframe dimensions
+dim(df.pid)    
 
-colnames(df.pid)   #column names
+#column names
+colnames(df.pid)   
 names(df.pid)    
-rownames(df.pid)  #rownames
 
-class(rownames(df.pid)) # returns character type, even though they are numbers! 
+#rownames
+rownames(df.pid)  
 
-nrow(df.pid)   # number of rows
-ncol(df.pid)   # number of columns
-unique(df.pid)   # show rows with unique data
+# number of rows
+nrow(df.pid)  
+# number of columns
+ncol(df.pid)  
+# show rows with unique data
+unique(df.pid)   
 
 # if you want to know how many unique values there are, you can use this:
 length(unique(df.pid$age))
 
-
-head(df.pid, n = 10) # show the first "n" rows
-tail(df.pid, n = 4) # show the last "n" rows
+# show the first "n" rows
+head(df.pid, n = 10)
+# show the last "n" rows
+tail(df.pid, n = 4) 
 ```
 
 
@@ -95,7 +100,9 @@ Remember from Part 1 that the dollar sign operator `$` will extract only a singl
 ?"$" # Remember to wrap symbols in quotation marks to view their help pages
 ```
 ```{r}
-df.pid$age #Returns only the "age" vector from the `df.pid` data frame.
+#Returns only the "age" vector from the `df.pid` data frame.
+head(df.pid$age) 
+
 ```
 
 > Type df.pid$ and press the TAB key - a handy list of the columns in your data will appear! 
@@ -131,6 +138,7 @@ We can create a new dataframe object `diab` that includes only "glucose" , "insu
 diab <- df.pid[ , c("glucose", "insulin", "diabetes")]
 str(diab)
 head(diab)
+dim(diab)
 
 # compare this to "df.pid", which remains unchanged
 head(df.pid)
@@ -145,26 +153,30 @@ dim(df.pid)
 ### Subsetting with integers
 Subsetting by **positive** integers will **include** only the specified columns as referenced by their indicies - we do not have to type out their names!  
 
+Subsetting by **negative** integers will **exclude** the specified columns. Notice the `-` symbol before `c()` inside our bracket notation. This is useful when you only want to exclude a few things.
+
+
 Create an object `subsetted` that includes only the first 50 observations of the "age", "pressure" and "pregnant" variables
 
-First use `str()` or `colnames` to see which integer values these columns represent. Because we only want the 3rd, 5th, and 9th columns, we type:  
+First use `str()` or `colnames` to see which integer values these columns represent. 
 ```{rstr}
 str(df.pid)
 subsetted <- df.pid[1:50 , c(1, 3, 8)] # why does our vector go after the comma?
+
 str(subsetted)
 head(subsetted)
 dim(subsetted)
-```
 
-Subsetting by **negative** integers will **exclude** the specified columns. Notice the `-` symbol before `c()` inside our bracket notation.
-
-This is useful when you only want to exclude a few things:
-```{r}
-str(df.pid)
+names(df.pid)
 noage <- df.pid[ , -c(8)]
 str(noage)
 head(noage)
+
+dim(noage)
+dim(df.pid)
 ```
+
+
 
 ### Subsetting with logical tests
 We can also use logical tests to subset our data. For example, what if we want to include only the _**rows**_ that have a value of 35 for "age"? We can use the relational operator `==`:
@@ -213,39 +225,17 @@ table(df.pid$age)
 ```
 
 
-### Subsetting lists with double bracket notation `[[ ]]`
-You can also subset lists. 
-```{r, eval=FALSE}
-?"[["
-```
-Create an example list:
-```{r}
-example_list <- list(TRUE, "string data", 5)
-example_list
-```
-
-> Consider the analogy of going through airport security. When you place your shoes in the plastic bin and then place it on the conveyor belt, you have placed two things: 1) your shoes inside the 2) plastic bin. 
-
-Use single brackets `[]` retrieves _both the placeholder and its value (the bin and your shoes)_ 
-```{r}
-example_list[1]
-```
-
-However, double brackets go one layer deeper inside the plastic bin and return _only your shoes!_ 
-```{r}
-example_list[[1]]
-```
-
 # **Challenge 3**
 1. Load the `iris` dataset! Type `data(iris)` to load it.  
 2. What is this dataset? How do you find out?  
 3. Subset the `iris` dataset:
 
-    * to a data frame named "vv" with only the observations from the versicolor or virginica species 
+    * to a data frame named "vv" with only the observations from the "versicolor" or "virginica" species 
     * to a data frame called "petals20" that has only the first 20 observations of the  "Petal.Length" and "Petal.Width" variables
    
 ```{r}
 ## YOUR CODE HERE
+
 
 ```
 
@@ -287,8 +277,10 @@ Make a copy of `df.pid` named df.copy so we do not alter the original, then reco
 df.copy <- df.pid
 
 df.copy$pressure[is.na(df.copy$pressure)] <- median(df.copy$pressure, na.rm=TRUE)
-
+  
 table(is.na(df.copy$pressure))
+
+
 ```
 
 
@@ -300,6 +292,11 @@ We can also subset only rows without any missing data using bracket notation. `c
 s_complete <- df.pid[complete.cases(df.pid) , ]  
 dim(s_complete)
 
+
+
+#try this with one variable
+s_complete2 <- df.pid[complete.cases(df.pid$pressure) , ]  
+dim(s_complete2)
 
 ```
 
@@ -315,9 +312,20 @@ The `subset` command in base R can also be used to subset your data. How do you 
 subset_1 <- subset(x = df.pid, 
                    subset = diabetes == 'pos' & pressure>=90,
                    select = c("diabetes", "pressure"))
-dim(subset_1)
-head(subset_1)
 
+
+#compare this to what we just learned using the basic syntax:
+# subset_2 <- df.pid[df.pid$diabetes == 'pos' & df.pid$pressure >= 90,c("diabetes", "pressure")]
+# 
+# 
+# dim(subset_1)
+# head(subset_1)
+# dim(subset_2)
+# 
+# all.equal(subset_1, subset_2)
+
+table(subset_1$pressure)
+table(subset_2$pressure)
 
 ```
 
@@ -466,16 +474,10 @@ Arguments:
         fill:If there isn't a value for every combination of the other variables and the key column, this value will be substituted
         convert:if TRUE will automatically convert values to logical, integer, numeric, complex or factor as appropriate
 ```
-```{r}
-
-
-
-library(tidyr)
-
-wide <- tidyr::spread(df.who, c( age, year), suicides_no)
-
-
-```
+<!-- ```{r} -->
+<!-- <!-- library(tidyr) --> -->
+<!-- <!-- wide <- tidyr::spread(df.who, c( age, year), suicides_no) --> -->
+<!-- ``` -->
 
 <!-- ### The "reshape2" package  -->
 <!-- In addition to many other ways, data are frequently formatted as "wide" or "long" type.  "Wide" format means that each variable is shown in a column, more like in our animals dataframe: -->
