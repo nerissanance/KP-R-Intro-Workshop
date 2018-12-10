@@ -35,10 +35,16 @@ Part 1 learning objectives:
 
 #Introduction
 
-First off, please run this code by clicking the green arrow at the top of the grey area below:
+### Package installation
+Many people write clever software that makes R smarter/better/faster/stronger. You can install packages by clicking the "Packages" tab in the bottom-right window, clicking install, and then searching for the package you wish to install.
+
+Packages can also be installed through the command line using `install.packages()`. The package name must be wrapped in quotation marks so that R knows it is searching for that particular package named `"psych"`, rather than previously defined data named psych:
+
+> It is generally good to keep RStudio and your packages up to date! Install the packages we will use in the workshop: 
+
 
 ```{r, eval=FALSE}
-install.packages(c("ggplot2", "knitr", "psych", "rmarkdown", "reshape2", "swirl"))
+install.packages(c("ggplot2", "knitr", "psych", "rmarkdown", "reshape2", "swirl", "mlbench", "dplyr", "tidyr"))
 ```
 
 
@@ -86,18 +92,13 @@ Challenge:
 
 * Create a header line called "R Training Day 1", with size 1 (aka "header 1").
 * Write the equation: Area = pi * r^2
+* In the first chunk of code, write an equation (eg. 2 + 2)
 * Compile as a PDF (or html if you prefer).
 
-### Package installation
-Many people write clever software that makes R smarter/better/faster/stronger. You can install packages by clicking the "Packages" tab in the bottom-right window, clicking install, and then searching for the package you wish to install.
-
-Packages can also be installed through the command line using `install.packages()`. The package name must be wrapped in quotation marks so that R knows it is searching for that particular package named `"psych"`, rather than previously defined data named psych:
-
-> It is generally good to keep RStudio and your packages up to date! Install the packages we will use in the workshop: 
 
 
 ### The `library` function  
-Anytime you want to utilize a previously installed package, you must retreive it with `library()` when you begin a new R session. You do not need to reinstall packages each time you quit and restart your R session. 
+Before using a previously installed package, you must retreive it with `library()` when you begin a new R session. You do not need to reinstall packages each time you quit and restart your R session. 
 
 ```{r}
 library(ggplot2)
@@ -147,20 +148,18 @@ r <- 2
 
 #back to our equation:
 
-Area = pi * r^2
+Area <- pi * r^2
+
 ```
 
 ### The R global environment
 We now have an object defined in our global environment!
 
-Objects in R are stored in your global environment. `ls()` will list previously defined objects in your environment.
-```{r}
-ls() # there is currently nothing in our global environment
-```
 
 "Call" (retrieve) the data contained wihtin the object by typing its name into your script and running the line of code
 ```{r}
 numeric_object 
+print(numeric_object)
 # 4 is returned
 ```
 
@@ -170,7 +169,7 @@ welcome_object <- "Welcome"
 ls()
 ```
 
-We now have two objects in our global environment. Call the data contained within the object by typing its name and running the line of code:
+We now have four objects in our global environment. Call the data contained within the object by typing its name and running the line of code:
 ```{r}
 welcome_object
 ```
@@ -182,25 +181,15 @@ Names must be __**unique**__. If you reuse an old name, the old definition will 
 
 Let's overwrite the object `welcome_object` from above.
 ```{r}
-welcome_object <- "Welcome" 
+welcome_object <- "Welcome to class" 
+welcome_object
+
+
+welcome_object <- "Welcome to Training Day 1"
+ls() 
 ```
 See how the definition of `welcome_object` changed in your global environment window? However, there are still only two objects in your global environment. 
 
-It also prints the new information when called:
-```{r}
-welcome_object
-```
-
-If we want to preserve the original object `welcome_object` we have to define a new object
-```{r}
-welcome_object2 <- "Welcome to Training Day 1"
-ls() 
-```
-
-We now have three objects defined in our global environment! This third object contains new information and did not overwrite the old oblect:
-```{r}
-welcome_object2
-```
 
 ### Variable classes (`class`)
 Each variable in R has a `class` that summarizes the type of the data stored within the object. We will talk more about data types below.
@@ -208,9 +197,12 @@ Each variable in R has a `class` that summarizes the type of the data stored wit
 > NOTE! "numeric" is the default data type for numbers in R:
 
 ```{r}
-class(numeric_object) # this is numeric (NOT integer) data type!
-class(welcome_object) # character type
-class(welcome_object2) # character type
+# this is numeric (NOT integer) data type!
+class(numeric_object) 
+# character type
+class(welcome_object) 
+# character type
+class(welcome_object2) 
 ```
 
 ### Removing variables (`rm`)
@@ -237,21 +229,8 @@ You will often find that your questions are not answered by the help pages nor v
 
 For example, to get help making boxplots, I might Google search "R how to make boxplots stack overflow"
 
-# **Challenge 1**
-1. What is the three-piece recipe for variable definition? What piece goes where?  
-2. Define two numeric variables.  
-3. Define two character variables.  
-4. How do you check what types of data these variables are?  
-5. What does the `ls()` function do? Where else do you see this information?  
-6. Remove one of your numeric and one of your character variables.  
-7. Try to subract your remaining character variable from your numeric one. What happens? What might this tell you about data of different types?  
-8. Wipe your environment clean.  
-```{r}
-## YOUR CODE HERE
 
 
-
-```
 
 # Atomic data types in R
 Numeric, character, and logical (aka "boolean") data types all exist at the `atomic level`. Normally this means that they cannot be broken down any further and are the raw inputs for functions in R. Other R variables are frequently built upon these atomic types.
@@ -298,14 +277,9 @@ char2 <- paste("Hey", "momma", "I'm", "a", "string")
 char2
 ```
 
-Blankspace is the default separater in the `paste()` function. If you don't want this and want the words to be smushed together, use the argument `sep = ""`
-```{r}
-char3 <- paste0("Hi", "momma", "I'm", "a", "string")
-char3 
-```
 Note here that R is not a zero-indexed language - lists begin at the number 1. The one and only element in this object is the sentence "Hey momma I'm a string". 
 
-Character data have some useful functions such as `grep`, `substr`, `strsplit`, and `gsub`. Use your help commands to learn more!  
+Character data have some useful functions such as  `substr` and `strsplit`. We'll use these to explore function arguments. Use your help commands to learn more about the commands!  
 
 ### Function arguments
 Arguments go inside of the parentheses of R functions. Unnamed arguments are things like the number 4. `split = " "` is what is called a named argument. This argument goes inside the parentheses of another function such as `strsplit`. 
@@ -337,27 +311,6 @@ substr(char2, 1, 4) <- "Yes "
 char2 
 ```
 What changed?  
-
-### `gsub` example  
-You can also substitute with `gsub()`. Let's say we want to substitute all periods `.` in `char2` with `X`. We would type:
-```{r}
-char2
-gsub(".", "X", char2)
-```
-What happened here? R thinks `.` is a special shorthand for "everything".  
-
-To be safe, put the period in brackets so that R views it as a subsetting operation and not "everything else". You will learn more about bracket notation during the subsetting portion in Part 2: 
-```{r}
-gsub("[.]", "X", char2)
-```
-
-Still nothing happened... Why not? (hint: we don't have any periods in our sentence!). Let's choose another letter:
-```{r}
-gsub("[m]", "X", char2)
-# All "m" letters have now been replaced with "X". Remember that the `char2` object has not changed because we did not reassign it! 
-char2 <- gsub("[m]", "X", char2)
-char2
-```
 
 ### Logical type  
 Logical (boolean) data are dichotomous TRUE/FALSE values. R internally stores `FALSE` as 0 and `TRUE` as 1. Define a logical object:
@@ -396,15 +349,26 @@ TRUE > FALSE # greater than
 FALSE >= TRUE # greater than or equal to
 ```
 
-# **Challenge 2**
-1. Define a numeric object as 0 and check its class.  
-2. Define a boolean object as "FALSE" and check its class.  
-3. Use `==` to compare your numeric and boolean object. Are they equivalent? Why or why not?  
-4. Define a character object that uses `paste()` to combine more than one word into a sentence.  
-5. Use `substr` to extract the first word of your sentence.  
-6. Use `gsub` to replace a character in your sentence with some other character.  
+
+# **Challenge 1**
+1. What is the three-piece recipe for variable definition? What piece goes where?  
+2. Define two numeric variables.  
+3. Define two character variables.  
+4. How do you check what types of data these variables are?  
+5. What does the `ls()` function do? Where else do you see this information?  
+6. Remove one of your numeric and one of your character variables.  
+7. Try to subract your remaining character variable from your numeric one. What happens? What might this tell you about data of different types?  
+8. Define a numeric object as 0 and check its class.  
+9. Define a boolean object as "FALSE" and check its class.  
+10. Use `==` to compare your numeric and boolean object. Are they equivalent? Why or why not?  
+11. Define a character object that uses `paste()` to combine more than one word into a sentence.  
+12. Use `substr` to extract the first word of your sentence.  
+13. Wipe your environment clean.  
+ 
 ```{r}
 ## YOUR CODE HERE
+
+
 ```
 
 > See the below tables to help you remember your logical operations and functions.  
@@ -483,7 +447,7 @@ class(num)
 
 int <- as.integer(num)
 class(int)
-
+int
 ```
 
 Now, create some character data and try to convert it to integer type:
@@ -498,13 +462,15 @@ as.integer(char.num)
 ```
 Why did this fail? Can R change character data to numbers? Why not? (hint: R has no protocol for automatically coerce words to numbers). As you can see, trying to coerce data types can lead to weird behavior sometimes. 
 
-# **Challenge 3**
+# **Challenge 2**
 1. Create a character object and check its type using `is.character` and `class`. What is the difference between these two methods?    
-2. Try to change ("coerce") this object to another data type using `as.integer`, `as.numeric`, or `as.logical`.  
+2. Try to change ("coerce") this object to another data type using `as.integer`, `as.numeric`, and `as.logical`.  
 3. Create an object of class "integer". Remember, there are two ways to do this!  
 4. Why is 1 == "1" true?   Why is -1 < FALSE true?   Why is "one" < 2 false?  
 ```{r}
 ## YOUR CODE HERE
+
+
 ```
 
 # Data structures
@@ -585,7 +551,7 @@ You can also sample random groups of numbers. Use `set.seed()` to ensure that we
 ```
 Set the seed, and then choose our values:
 ```{r}
-set.seed(1)
+set.seed(2346)
 # 20 random samples from uniform distribution between the numbers 3 and 7
 uniform <- runif(20, 3, 7) 
 uniform
@@ -693,15 +659,6 @@ rownames(animals)
 class(rownames(animals))
 ```
 
-##### Change column order
-You can change the order of the columns by specifying their new order using `c()` within what is called "bracket notation" `[ , ]`. 
-
-> This will be covered with the rest of subsetting in Part 2. 
-
-```{r}
-animals <- animals[,c("Type", "Weight", "Height", "Progress")]
-head(animals)
-```
 
 ##### Factor data type  
 Factor data are categorical types used to make comparisons between other data. Factors group the data by their "levels" (the different categorical groups within a factor).  
@@ -712,7 +669,7 @@ The dollar sign operator `$` is used to call a single vector from a data frame. 
 ```{r}
 # "Name" is character data type. See how each column name is preceded by `$`?
 str(animals)   
- 
+ class(animals$Type)
 animals$Type <- factor(animals$Type)
 # "Name" is now factor data type!
 str(animals)  
@@ -730,7 +687,7 @@ Each animal type (Cat, Dog, and Pig) within the factor `animals$Type` vector are
 
 If we want to change how R stores the factor levels, we can specify their levels using the `levels()` argument. For example:
 ```{r}
-animals$Type  # Levels: Cat Dog Pig (default alphabetical sort)
+animals$Type  
 
 # What if we want to change the factor level sort to Levels: Dog Pig Cat?
 animals$Type <- factor(animals$Type, levels = c("Dog", "Pig", "Cat"))
@@ -743,6 +700,20 @@ animals$Type
 
 
 #Importing and Exporting
+
+
+
+##Importing csv and SAS data files
+
+```{r}
+df.who <- read.csv("./data/who_suicide_statistics.csv", 
+                    header = TRUE, 
+                    stringsAsFactors = FALSE,
+                    na.strings = " ")
+dim(df.who)
+head(df.who)
+str(df.who)
+```
 
 
 ## Saving your work (`write.csv`)  
@@ -759,52 +730,58 @@ The syntax looks like this:
 
 > `header = TRUE` will include the header row; `header = FALSE` will turn your header row into the first row of actual data. `na.strings = c(" ", 999)` indicates that blank cells and cells coded 999 allows you to specify data that should be automatically converted to `NA` upon importation. We do not have any here, so nothing is altered. 
 
-##Importing csv and SAS data files
 
-```{r}
-df.who <- read.csv("./data/who_suicide_statistics.csv", 
-                    header = TRUE, 
-                    stringsAsFactors = TRUE,
-                    na.strings = " ")
-head(df.who)
-str(df.who)
-```
-
-
-##Loading in data with the Rio package
+##Importing and exporting with the Rio package
 
 The Rio package simplifies importing/exporting by putting all data-specific import tools under one umbrella (a.k.a. the "swiss army knife" of data importing and exporting)
  See [this helpful rio documentation as well](https://cran.r-project.org/web/packages/rio/vignettes/rio.html). 
  
-```{r installing}
-#install.packages("rio")
-library(rio)
-#?rio
+```{r installing, eval=FALSE}
+install.packages("rio")
+?rio
 ```
 ```{r}
+library(rio)
 
-df.who2 <- import("/Users/BettyFriedan/Google Drive/KP-R-Intro-Workshop/data/whostats_suicide.sas7bdat")
+df.who2 <- import("./data/whostats_suicide.sas7bdat")
  dim(df.who2)
- 
+ head(df.who)
  
 #Are these dataframes the same? Let's see:
  all.equal(df.who,df.who2)
-#yup! :)
+
+ 
+ class(df.who$suicides_no)
+class(df.who2$suicides_no)
 ```
  
 
-# **Challenge 4**
+# **Challenge 3**
 1. Save the "animals" data frame as a .csv file named "animals.csv". How many basic arguments should you use to save using the `write.csv` function? 
-2. Read in the csv file of the WHO data and compare the results to the above SAS import.
+2. Read in the csv file of the WHO data using the rio package and compare the results to the above SAS import.
 ```{r}
 ## YOUR CODE HERE
+
+write.csv(object_name, file = "nameOfFile.csv", row.names = TRUE)
 ```
 Check your working directory to see if it worked!  
 
 
+#Visualize data
 
+We'll use this more in parts 2 and 3, but take a moment to look at the data you imported. You can use the `hist()` command to do a histogram and the `summary()` command to look at summary statistics. For example:
 
-# **Challenge 5** Homework (optional)
+```{r plotting}
+names(df.who)
+hist(df.who$suicides_no)
+
+plot(df.who$year, df.who$suicides)
+
+summary(df.who$suicides_no)
+
+```
+
+# **Challenge 4** Homework (optional)
 swirl is a package that helps you learn R by using R. Visit the [swirl](http://swirlstats.com/) homepage to learn more
 ```{r, eval=FALSE}
 library(swirl)
@@ -819,4 +796,4 @@ Acknowledgements
 - [Lander J. 2013. R for everyone: Advanced analytics and graphics](http://www.jaredlander.com/r-for-everyone/)  
 - [Matloff N. 2011. The art of R programming: A tour of statistical software design](https://www.nostarch.com/artofr.htm)  
 - [Brunsdon C, Comber L. 2015. An Introduction to R for Spatial Analysis and Mapping](https://us.sagepub.com/en-us/nam/an-introduction-to-r-for-spatial-analysis-and-mapping/book241031)
-- Contributions by Evan Muzzall, Rochelle Terman, Dillon Niederhut, Sam Abdel-Ghaffar
+- Contributions by Dlab affiliates Evan Muzzall, Rochelle Terman, Dillon Niederhut, Sam Abdel-Ghaffar
