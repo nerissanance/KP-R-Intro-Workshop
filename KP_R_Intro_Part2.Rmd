@@ -18,7 +18,7 @@ Contributions by Dlab staff: Evan Muzzall, Shinhye Choi, Rochelle Terman, Dillon
 
 # **Challenge 1**
 1. Clear your working environment
-2. Call the `rio` package andd load in the SAS file of the WHO data 
+2. Call the `rio` package and load in the SAS file of the WHO data 
 ```{r review, eval=FALSE}
 
 ##YOUR CODE HERE
@@ -194,7 +194,7 @@ We can also use logical tests to subset our data. For example, what if we want t
 ```{r}
 all35yos <- df.pid[df.pid$age == 35 ,] 
 
-# Question: why is the comma included? 
+# Pop quiz: why is the comma included? 
 
 #check that this worked:
 table(all35yos$age)
@@ -244,16 +244,7 @@ table(no41s$age)
    
 ```{r}
 ## YOUR CODE HERE
-data("iris")
-?iris
-iris <- iris
-names(iris)
 
-vv<- iris[iris$Species=="versicolor"|iris$Species=="virginica",]
-table(vv$Species)
-
-petals20 <- iris[1:20, c("Petal.Length","Petal.Width")]
-dim(petals20)
 
 ```
 
@@ -397,7 +388,7 @@ table(df.pid$diabetes)
 table(df.pid$diabetes, df.pid$pregnant) 
 ```
 
-**CHALLENGE # 4**
+**Challenge 4**
 
 1) Summarize the WHO suicide numbers by gender 
 2) What happens when you do this for all the variables? Why? How can you fix this?
@@ -484,25 +475,36 @@ table(is.na(joined$diabetes))
 
 #Reshaping data
 
+>NOTE: notice that with dyplr we're using the pipe operator `%>%`. This 'passes' one command through another. It's bascially the same thing as using parantheses (), but without the mess. It can make the code easier to read, especially as your code gets more complex with more operations building off each other.
+
 ```{r}
-spreading <- spread(df.who, year, population)
+
+#in case you didn't import it earlier:
+library(rio)
+df.who <- import("./data/whostats_suicide.sas7bdat")
+#quick! make them numeric:
+df.who$suicides_no <- as.numeric(df.who$suicides_no)
+df.who$population <- as.numeric(df.who$population)
+
+
+spreading <- df.who %>% spread(year, population)
 
 ```
 
 #Collapsing data
 
-You'll notice that the df.who data frame actually can just be collapsed to get a summary value for the number of suicides per year. You can also do this using the dplyr package and the `group_by()` and `summarise()` commands. Her we are collpasing hte numbero f suicides by country and year:
+You'll notice that the df.who data frame actually can just be collapsed to get a summary value for the number of suicides per year. You can also do this using the dplyr package and the `group_by()` and `summarise()` commands. Here we are collpasing hte numbero f suicides by country and year:
 
 ```{r}
 
-sum.df.who <- df.who %>% group_by(country, year) %>% summarise(sum(suicides_no))
+sum.df.who <- df.who %>% select(country, year, suicides_no, population) %>% group_by(country, year) %>% summarise_all(funs(sum))
 
 ```
 
-**Challenge #5**
+**Challenge 5**
 
 1. Combine df1 and df2 again using dplyr, but this time using the inner_join command. What is different from when you used left_join, and why? How can you tell?
-2.
+2. It would be more useful to know the proportion of suicides relative to the population, wouldn't it? Looking at your dplyr cheat sheet, how might you compute this using the `mutate` command and the `sum.df.who` dataframe we created above?
 
 ```{r}
 #YOUR CODE HERE
@@ -511,5 +513,5 @@ sum.df.who <- df.who %>% group_by(country, year) %>% summarise(sum(suicides_no))
 
 
 
-
+<<END PART 2>>
  
