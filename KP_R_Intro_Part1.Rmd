@@ -700,8 +700,19 @@ animals$Type
 
 
 
-##Importing csv and SAS data files
+##Importing csv data files using `read.csv`
 
+Check first where your working directory is by typing:
+```{r}
+getwd()
+```
+(note: since we're using R projects, you should already know where your wd is, because it's set up automatically).
+
+
+You can import data using the read.csv command. Take a moment to look at the help file for syntax tips:
+```{r, eval=FALSE}
+?read.csv
+```
 ```{r}
 df.who <- read.csv("./data/who_suicide_statistics.csv", 
                     header = TRUE, 
@@ -711,17 +722,6 @@ dim(df.who)
 head(df.who)
 str(df.who)
 ```
-
-
-## Saving your work (`write.csv`)  
-It is always good to save your work. Saving a dataframe as a .CSV file is a convenient way to store it for future use. **Anything saved will be placed into your working directory!** 
-
-See where your data frame is saved by typing(note: since we're using R projects, you should already know where your wd is, because it's set up automatically): 
-```{r}
-getwd()
-```
-The syntax looks like this:
-`write.csv(object_name, file = "nameOfFile.csv", row.names = TRUE)`
 
 > Notice that `stringsAsFactors = FALSE`. If set to `TRUE`, R will try to guess which **character** vectors should automatically be converted to factors. This is problematic because 1) R is not always good at guessing and 2) R defaults to alphabetical and increasing numeric factor level sorting. This might not matter for your data, but it is recommended to set `stringsAsFactors = FALSE` and manually convert your desired character vectors to factors.
 
@@ -756,14 +756,13 @@ class(df.who2$suicides_no)
 # **Challenge 3**
 1. Save the "animals" data frame as a .csv file named "animals.csv". How many basic arguments should you use to save using the `write.csv` function? 
 2. Import the "animals" data frame using the rio package. 
+3. Compare the two data frames. Are they the same? Why or why not?
 ```{r}
 ## YOUR CODE HERE
 
 ```
-Check your working directory to see if it worked!  
 
-
-#Visualize data
+#Visualize data (teaser)
 
 We'll use this more in parts 2 and 3, but take a moment to look at the data you imported. You can use the `hist()` command to do a histogram and the `summary()` command to look at summary statistics. For example:
 
