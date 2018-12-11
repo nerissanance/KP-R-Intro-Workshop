@@ -35,30 +35,16 @@ Part 1 learning objectives:
 
 #Introduction
 
-### Package installation
-Many people write clever software that makes R smarter/better/faster/stronger. You can install packages by clicking the "Packages" tab in the bottom-right window, clicking install, and then searching for the package you wish to install.
-
-Packages can also be installed through the command line using `install.packages()`. The package name must be wrapped in quotation marks so that R knows it is searching for that particular package named `"psych"`, rather than previously defined data named psych:
-
-> It is generally good to keep RStudio and your packages up to date! Install the packages we will use in the workshop: 
-
-
-```{r, eval=FALSE}
-install.packages(c("ggplot2", "knitr", "psych", "rmarkdown", "reshape2", "swirl", "mlbench", "dplyr", "tidyr"))
-```
-
-
-
 ### The basics: Navigating RStudio and Projects
-Open RStudio! 
+Currently, you have the "KP-R-Intro-Workshop" project open (as you can see in the upper right-hand corner of your screen). Projects are handy because a project's folder is automatically set as the working directory, which allows us to not worry about explicitly setting the working directory. This can be more convenient when working on the same code across different computers. 
+
+We can see recent projects by selecting File -> Recent Projects in the upper left corner of RStudio, or by clicking the list of recent projects in the upper right corner. If we click the name of the project it will switch to that project, or if we click the button it will open in a new session.
+
+Let's try creating a new project.
 
 * Create a new project: File -> New Project
 * Choose new directory or existing directory as preferred.
 * Click "open in new session" to have multiple RStudio projects open.
-
-A project's folder is automatically set as the working directory, which allows us to not worry about explicitly setting the working directory. This can be more convenient when working on the same code across different computers. 
-
-We can see recent projects by selecting File -> Recent Projects in the upper left corner of RStudio, or by clicking the list of recent projects in the upper right corner. If we click the name of the project it will switch to that project, or if we click the button it will open in a new session.
 
 Easy Challenge: close your project and then re-open it.
 
@@ -67,7 +53,7 @@ Easy Challenge: close your project and then re-open it.
 
 When we start RStudio we have no files open by default. Click File -> New File -> RScript to start a new R script (or program). This is a text file with all of the R commands you want to run for an analysis.
 
-As an alternative to an R script we can use a markdown file. R Markdown files combine R scripts with simple text formatting, which makes reports  (PDFs or HTMLs) easy to generate with embedded R output. Please take a second now to run `install.packages("markdown")` to install it. 
+As an alternative to an R script we can use a **markdown file**. R Markdown files combine R scripts with simple text formatting, which makes reports  (PDFs or HTMLs) easy to generate with embedded R output. 
 
 Try making a new R script and R markdown right now in your new project directory, and save the files. 
 
@@ -78,7 +64,7 @@ RStudio items to note:
 * Environment tab in the upper right, and history tab.
 * Files tab in bottom right, plus plots, help, etc.
 * We can click the "run" button to run the current R line in the editor.
-* Code menu has a lot of commands and shortcuts.
+ 
 
 ### Basic R markdown file.
 
@@ -86,16 +72,27 @@ File -> New -> R Markdown
 
 To write R code we need to start an R block with three backticks followed by r in braces (squiggly brackets - { and }). We can write commands inside of those brackets to change settings.
 
-Task: everyone google "RMarkdown cheat sheet" and save that PDF. Make sure you're downloading version 2 (2016) rather than the 2015 version.
+Task: everyone google "RMarkdown cheat sheet" and save that PDF.
 
 Challenge:
 
 * Create a header line called "R Training Day 1", with size 1 (aka "header 1").
-* Write the equation: Area = pi * r^2
+* Write this equation in the notes area: Area = pi * r^2
 * In the first chunk of code, write an equation (eg. 2 + 2)
 * Compile as a PDF (or html if you prefer).
 
 
+### Package installation
+Let's install some packages that we will use during the training. You can install packages by clicking the "Packages" tab in the bottom-right window, clicking install, and then searching for the package you wish to install.
+
+Packages can also be installed through the command line using `install.packages()`. The package name must be wrapped in quotation marks so that R knows it is searching for that particular package named `"psych"`, rather than previously defined data named psych:
+
+> It is generally good to keep RStudio and your packages up to date! Install the packages we will use in the workshop: 
+
+
+```{r, eval=FALSE}
+install.packages(c("ggplot2", "knitr", "psych", "rmarkdown", "reshape2", "swirl", "mlbench", "dplyr", "tidyr"))
+```
 
 ### The `library` function  
 Before using a previously installed package, you must retreive it with `library()` when you begin a new R session. You do not need to reinstall packages each time you quit and restart your R session. 
@@ -150,6 +147,7 @@ r <- 2
 
 Area <- pi * r^2
 
+Area
 ```
 
 ### The R global environment
@@ -185,7 +183,7 @@ welcome_object <- "Welcome to class"
 welcome_object
 
 
-welcome_object <- "Welcome to Training Day 1"
+welcome_object <- "Welcome to Part 1"
 ls() 
 ```
 See how the definition of `welcome_object` changed in your global environment window? However, there are still only two objects in your global environment. 
@@ -201,8 +199,7 @@ Each variable in R has a `class` that summarizes the type of the data stored wit
 class(numeric_object) 
 # character type
 class(welcome_object) 
-# character type
-class(welcome_object2) 
+
 ```
 
 ### Removing variables (`rm`)
@@ -255,7 +252,7 @@ Standard mathematical operators apply to the creation of numeric data:
 # same as ^ :
 5 ** 2  
 5 / 2  
-5 %/% 2  
+5 %/% 2 
 5 %% 2  
 5 %*% 2  
 ```
@@ -733,7 +730,7 @@ The syntax looks like this:
 
 ##Importing and exporting with the Rio package
 
-The Rio package simplifies importing/exporting by putting all data-specific import tools under one umbrella (a.k.a. the "swiss army knife" of data importing and exporting)
+The Rio package simplifies importing/exporting by putting all data-specific import tools under one umbrella (popularly known as the "swiss army knife" of data importing and exporting)
  See [this helpful rio documentation as well](https://cran.r-project.org/web/packages/rio/vignettes/rio.html). 
  
 ```{r installing, eval=FALSE}
@@ -758,11 +755,10 @@ class(df.who2$suicides_no)
 
 # **Challenge 3**
 1. Save the "animals" data frame as a .csv file named "animals.csv". How many basic arguments should you use to save using the `write.csv` function? 
-2. Read in the csv file of the WHO data using the rio package and compare the results to the above SAS import.
+2. Import the "animals" data frame using the rio package. 
 ```{r}
 ## YOUR CODE HERE
 
-write.csv(object_name, file = "nameOfFile.csv", row.names = TRUE)
 ```
 Check your working directory to see if it worked!  
 
@@ -775,9 +771,9 @@ We'll use this more in parts 2 and 3, but take a moment to look at the data you 
 names(df.who)
 hist(df.who$suicides_no)
 
-plot(df.who$year, df.who$suicides)
-
 summary(df.who$suicides_no)
+
+plot(df.who$year, df.who$suicides)
 
 ```
 

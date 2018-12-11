@@ -34,10 +34,11 @@ library(mlbench)
 ```
 
 Day 2 learning objectives:  
-1. Subsetting in base R  
-2. Missing data (NA)  
-3. Data manipulation 
-4. Merging data frames in base R 
+
+* 1. Subsetting in base R  
+* 2. Missing data (NA)  
+* 3. Merging data frames in base R and dplyr
+* 4. Reshaping data frames  
 
 # Loading data from files
 
@@ -334,7 +335,7 @@ subset_1 <- subset(x = df.pid,
                    select = c("diabetes", "pressure"))
 
 table(subset_1$pressure)
-table(subset_2$pressure)
+
 
 ```
 
@@ -396,12 +397,20 @@ table(df.pid$diabetes)
 table(df.pid$diabetes, df.pid$pregnant) 
 ```
 
-**CHALLENGE?**
+**CHALLENGE # 4**
 
-# Merging data with `merge`,`cbind()` and `rbind()`
-Merging data is useful when we want to combine two different dataframes that share a vector/column. We "merge" by that column. The first two arguments in `merge()` are the names of the two data frames, followed by `by` where we tell which column names we want to match.  
+1) Summarize the WHO suicide numbers by gender 
+2) What happens when you do this for all the variables? Why? How can you fix this?
+2) Save the output as a .csv file
 
-Other useful functions include `cbind()` and `rbind()`.  
+```{r}
+#YOUR CODE HERE
+
+```
+
+
+# Merging data with `cbind()` and `rbind()`
+Merging data is useful when we want to combine two different dataframes that share a vector/column.   
 
 `cbind()` will bind two data frames by their columns. Let's cbind `df1` and a new dataframe, `df3`:
 ```{r, eval=FALSE}
@@ -448,13 +457,16 @@ dim(df_rbind)
 ```
 > NOTE: for rbind to work, you should have the same column names for both of your data frames! 
 
-#Merging using dplyr
+#Merging data using dplyr
 
-You can also merge using the package `dplyr`. dyplyr is a popular pacakge for data manipulation. The commands for merging are very similar to what you use in sql. Take a moment to google `dplyr cheat sheet` to find a breakdown of the different commands.
+You can also merge using the package `dplyr`. dyplyr is a popular package for data manipulation. The commands for merging are very similar to what you use in sql. Take a moment to google `dplyr cheat sheet` to find a breakdown of the different commands.
 
 Let's practice a join:
 
 ```{r}
+library(tidyr) 
+library(dplyr)
+
 
 #first make an indidivual identifier for the data, for the sake of example
 df.pid$id <- rownames(df.pid)
@@ -470,82 +482,26 @@ table(is.na(joined$diabetes))
 
 ```
 
-<!-- # Reshaping your data -->
-<!-- You will probably find that certain plotting and testing functions require that the data be formatted in "long" or "wide" format. The "reshape2" R package offers a handy way to reformat your data.  -->
-
-<!-- In base R, `t` will quickly transpose your dataframe or matrix. The rows will become the columns, and the columns will become the rows: -->
-<!-- ```{r, eval=FALSE} -->
-<!-- ?t -->
-<!-- mat1 <- matrix(1:10, nrow = 5, ncol = 2) -->
-<!-- mat1 -->
-<!-- mat1_t <- t(mat1) -->
-<!-- mat1_t -->
-<!-- # or -->
-<!-- animals_t <- t(animals) -->
-<!-- animals_t -->
-
-Function:       spread(data, key, value, fill = NA, convert = FALSE)
-Same as:        data %>% spread(key, value, fill = NA, convert = FALSE)
-
-Arguments:
-        data:data frame
-        key:column values to convert to multiple columns
-        value:single column values to convert to multiple columns' values 
-        fill:If there isn't a value for every combination of the other variables and the key column, this value will be substituted
-        convert:if TRUE will automatically convert values to logical, integer, numeric, complex or factor as appropriate
+#Reshaping data
 
 ```{r}
-library(tidyr) 
-library(dplyr)
-#<!-- wide <- tidyr::spread(df.who, c( age, year), suicides_no) -->
-
-long <- gather(df.pid, key=id)
+spreading <- spread(df.who, year, population)
 
 ```
 
-### The "reshape2" package
-In addition to many other ways, data are frequently formatted as "wide" or "long" type.  "Wide" format means that each variable is shown in a column, more like in our animals dataframe:
+#Collapsing data
+
+You'll notice that the df.who data frame actually can just be collapsed to get a summary value for the number of suicides per year. You can also do this using the dplyr package and the `group_by()` and `summarise()` commands. Her we are collpasing hte numbero f suicides by country and year:
+
 ```{r}
-<!-- head(animals) -->
-<!-- ``` -->
 
-<!-- "Long" format means that each row is a unique combination of our "id" variable (animal "Type") and each variable ("Healthy", "Weight", "Height", and "Progress").   -->
-
-<!-- ##### `melt` and `dcast` -->
-<!-- Melt is a handy way to reshape data from "wide" to "long" format: -->
-<!-- ```{r, eval=F} -->
-library(reshape2)
-<!-- ?melt -->
-<!-- ?dcast -->
-<!-- ``` -->
-
-<!-- Let's "melt" the "animals" data frame into long format: -->
-<!-- ```{r} -->
-<!-- library(reshape2) -->
-<!-- animals_melt <- melt(animals, id = "Type") -->
-<!-- str(animals_melt) -->
-<!-- ``` -->
-<!-- ```{r, eval=FALSE} -->
-<!-- animals_melt -->
-<!-- ``` -->
-
-<!-- `animals` now has 80 rows and just 3 columns! What do you notice about the nature of each row? (hint: each row is a unique combination of the `id` variable ("Type") and the values for each of the other four columns: Healthy, Weight, Height, and Progress!   -->
-
-<!-- `dcast` is handy to perform some basic summary operations. For example, let's compute the mean Weight of each animal Type: -->
-<!-- ```{r} -->
-<!-- library(reshape2) -->
-<!-- type_means <- dcast(animals_melt, Type~variable, mean) -->
-<!-- type_means -->
-<!-- type_sd <- dcast(animals_melt, Type~variable, sd) -->
-<!-- type_sd -->
-<!-- ``` -->
+sum.df.who <- df.who %>% group_by(country, year) %>% summarise(sum(suicides_no))
 
 ```
 
+**Challenge #5**
 
-**Challenge #4**
-
-1. Combine df1 and df2 again using dplyr, but this time using the inner_join command. What is different and why? How can you tell?
+1. Combine df1 and df2 again using dplyr, but this time using the inner_join command. What is different from when you used left_join, and why? How can you tell?
 2.
 
 ```{r}

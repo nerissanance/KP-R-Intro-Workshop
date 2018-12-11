@@ -1,6 +1,10 @@
 # KP-R-Intro-Workshop
 
-Welcome to the R introductory training! This training consists of three two-hour sessions, and by the end of it we hope that you will be able to do the following: 
+Welcome to the KP DOR R fundamentals training! 
+
+We are developing this training in response to the need to improve support and guidance to programmers at DOR interested in learning the R programming language.
+
+This training consists of three two-hour sessions, and by the end of it we hope that you will be able to do the following: 
 <br/> <br/>
 *Part 1: Connecting and base R*
 - create a project in RStudio
@@ -12,25 +16,25 @@ Welcome to the R introductory training! This training consists of three two-hour
 - load a csv file and SAS file into the environment
  <br/> <br/>
 
-*Part 2: Reading in and manipulating data*
+*Part 2: Manipulating and summarizing data*
 - employ basic data manipulation techniques
 - understand missing data in R 
 - produce descriptive/summary statistics
 <br/> <br/>
 
-*Part 3: Data exploration and graphing*
-- graph with ggplot
+*Part 3: Data visualization and analysis*
+- graph with base r and ggplot
 - run statistical tests
 - run regression models
 
+<br/> <br/><br/> <br/><br/> <br/>
 
-
-
+Materials for this training were created/compiled by Nerissa Nance with some help from Chris Kennedy. Source materials come mostly from the DLab R Fundamentals training (accessed here[https://github.com/dlab-berkeley/R-Fundamentals]).
 
 
 
 <br/> <br/> 
-Some useful resources:
+Other useful resources:
 <br/> 
 - [UCLA idre](http://www.ats.ucla.edu/stat/r/)  
 - [Quick-R](http://statmethods.net/)  
