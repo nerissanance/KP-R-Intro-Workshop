@@ -532,7 +532,7 @@ R also gives you a shorthand operator for creating sequences in whole number inc
 ```{r}
 0:8
 
-sequence_object <- c(28:36)
+sequence_object <- 28:36
 sequence_object 
 
 0:length(logical_vector2)
