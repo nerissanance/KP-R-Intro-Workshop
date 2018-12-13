@@ -29,7 +29,7 @@ This training consists of three two-hour sessions, and by the end of it we hope 
 
 <br/> <br/><br/> <br/><br/> <br/>
 
-Materials for this training were created/compiled by Nerissa Nance with some help from Chris Kennedy. Source materials come mostly from the DLab R Fundamentals training (accessed here[https://github.com/dlab-berkeley/R-Fundamentals]).
+Materials for this training were created/compiled by Nerissa Nance with some help from Chris Kennedy. Source materials come mostly from the DLab R Fundamentals training (accessed [here](https://github.com/dlab-berkeley/R-Fundamentals).
 
 
 
