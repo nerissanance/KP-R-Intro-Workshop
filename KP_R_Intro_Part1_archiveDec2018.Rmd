@@ -3,12 +3,12 @@ title: "KP R Intro, Part 1"
 author: "Nerissa Nance"
 date: "November 20, 2018"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     number_sections: yes
     toc: yes
     toc_float: yes
+  pdf_document:
+    toc: yes
   word_document:
     toc: yes
 ---
@@ -26,11 +26,11 @@ Some of this also came from Chris Kennedy's "Concise R" series, accessed [here](
  
 
 Part 1 learning objectives:  
-* Students will be able to structure and execute essential functions, including using Rmd files and utilizing read key documentation
-* Students will be able to recognize and utilize different data types and data structures
-* Students will be able to identify different types of missing data in R
-* Students will feel comfortable accessing data from R
-
+1. Introduction: What is RStudio?, what is R Markdown?, the basics, objects, global environment, packages, variable assignment, help files  
+2. Atomic data types: numeric, character, and logical  
+3. Data type coercion  
+4. Data structures: vector, list, matrix, data frame  
+5. Importing and exporting data 
  
 
 #Introduction
