@@ -1,0 +1,2263 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={KP R Intro, Part 1},
+            pdfauthor={Nerissa Nance},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{KP R Intro, Part 1}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Nerissa Nance}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{November 20, 2018}
+
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+Citations: A lot of the source material for this training came from
+D-lab training materials authored by D-Lab staff. The original content
+can be accessed here:
+{[}\url{https://github.com/dlab-berkeley/R-Fundamentals}{]} D-Lab works
+with Berkeley faculty, research staff, and students to advance
+data-intensive social science and humanities research. They're really
+cool, check them out!
+\href{http://dlab.berkeley.edu/calendar-node-field-date}{D-Lab
+Calendar}\\
+\href{http://dlab.berkeley.edu/working-groups}{D-lab Working Groups}\\
+Some of this also came from Chris Kennedy's ``Concise R'' series,
+accessed \href{https://github.com/ck37/concise-r}{here}
+
+Part 1 learning objectives:\\
+* Students will be able to structure and execute essential functions,
+including using Rmd files and utilizing read key documentation *
+Students will be able to recognize and utilize different data types and
+data structures * Students will be able to identify different types of
+missing data in R * Students will feel comfortable accessing data from R
+
+\section{Introduction}\label{introduction}
+
+\subsubsection{The basics: Navigating RStudio and
+Projects}\label{the-basics-navigating-rstudio-and-projects}
+
+Currently, you have the ``KP-R-Intro-Workshop'' project open (as you can
+see in the upper right-hand corner of your screen). Projects are handy
+because a project's folder is automatically set as the working
+directory, which allows us to not worry about explicitly setting the
+working directory. This can be more convenient when working on the same
+code across different computers.
+
+We can see recent projects by selecting File -\textgreater{} Recent
+Projects in the upper left corner of RStudio, or by clicking the list of
+recent projects in the upper right corner. If we click the name of the
+project it will switch to that project, or if we click the button it
+will open in a new session.
+
+Let's try creating a new project.
+
+\begin{itemize}
+\tightlist
+\item
+  Create a new project: File -\textgreater{} New Project
+\item
+  Choose new directory or existing directory as preferred.
+\item
+  Click ``open in new session'' to have multiple RStudio projects open.
+\end{itemize}
+
+Easy Challenge: close your project and then re-open it.
+
+\subsubsection{RStudio interface}\label{rstudio-interface}
+
+When we start RStudio we have no files open by default. Click File
+-\textgreater{} New File -\textgreater{} RScript to start a new R script
+(or program). This is a text file with all of the R commands you want to
+run for an analysis.
+
+As an alternative to an R script we can use a \textbf{markdown file}. R
+Markdown files combine R scripts with simple text formatting, which
+makes reports (PDFs or HTMLs) easy to generate with embedded R output.
+
+Try making a new R script and R markdown right now in your new project
+directory, and save the files.
+
+RStudio items to note:
+
+\begin{itemize}
+\tightlist
+\item
+  Files show up as tabs in the editor window, usually the upper left.
+\item
+  The console is the R session where our commands are executed.
+\item
+  Environment tab in the upper right, and history tab.
+\item
+  Files tab in bottom right, plus plots, help, etc.
+\item
+  We can click the ``run'' button to run the current R line in the
+  editor.
+\end{itemize}
+
+\subsubsection{Basic R markdown file.}\label{basic-r-markdown-file.}
+
+File -\textgreater{} New -\textgreater{} R Markdown
+
+To write R code we need to start an R block with three backticks
+followed by r in braces (squiggly brackets - \{ and \}). We can write
+commands inside of those brackets to change settings.
+
+Task: everyone google ``RMarkdown cheat sheet'' and save that PDF.
+
+Challenge:
+
+\begin{itemize}
+\tightlist
+\item
+  Create a header line called ``R Training Day 1'', with size 1 (aka
+  ``header 1'').
+\item
+  Write this equation in the notes area: Area = pi * r\^{}2
+\item
+  In the first chunk of code, write an equation (eg. 2 + 2)
+\item
+  Compile as a PDF (or html if you prefer).
+\end{itemize}
+
+\subsubsection{Package installation}\label{package-installation}
+
+Let's install some packages that we will use during the training. You
+can install packages by clicking the ``Packages'' tab in the
+bottom-right window, clicking install, and then searching for the
+package you wish to install.
+
+Packages can also be installed through the command line using
+\texttt{install.packages()}. The package name must be wrapped in
+quotation marks so that R knows it is searching for that particular
+package named \texttt{"psych"}, rather than previously defined data
+named psych:
+
+\begin{quote}
+It is generally good to keep RStudio and your packages up to date!
+Install the packages we will use in the workshop:
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{install.packages}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{, }\StringTok{"psych"}\NormalTok{, }\StringTok{"rmarkdown"}\NormalTok{, }\StringTok{"reshape2"}\NormalTok{, }\StringTok{"swirl"}\NormalTok{, }\StringTok{"mlbench"}\NormalTok{, }\StringTok{"dplyr"}\NormalTok{, }\StringTok{"tidyr"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{\texorpdfstring{The \texttt{library}
+function}{The library function}}\label{the-library-function}
+
+Before using a previously installed package, you must retreive it with
+\texttt{library()} when you begin a new R session. You do not need to
+reinstall packages each time you quit and restart your R session.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(knitr)}
+\KeywordTok{library}\NormalTok{(psych)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'psych'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:ggplot2':
+## 
+##     %+%, alpha
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(rmarkdown)}
+\KeywordTok{library}\NormalTok{(reshape2)}
+\KeywordTok{library}\NormalTok{(swirl)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## | Hi! Type swirl() when you are ready to begin.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# these packages can now be used in our RStudio session!}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Getting help}\label{getting-help}
+
+The \texttt{?} symbol can be used to bring up the help pages:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?update.packages}
+\NormalTok{?read.csv}
+\NormalTok{?summary}
+\NormalTok{?describe}
+\NormalTok{?plot}
+\NormalTok{?ggplot}
+\NormalTok{?geometric.mean}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{\texorpdfstring{Variable assignment
+(\texttt{\textless{}-})}{Variable assignment (\textless{}-)}}\label{variable-assignment--}
+
+Variables are special data structures that allow you to enter data into
+R. Objects are stored in R's memory and can be retrieved (``called'')
+when you need them.
+
+You define objects through \texttt{variable\ assignment} and they are
+stored in your \texttt{global\ environment}.
+
+You define objects through variable assignment using the
+\textbf{assignment operator} \texttt{\textless{}-}. This is a ``less
+than'' \texttt{\textless{}} symbol immediately followed by a hyphen
+\texttt{-}
+
+\begin{quote}
+You will also see that \texttt{=} is frequently used in place of the
+assignment operator. This works the same, but we recommend using the
+assignment operator for consistency. Arguments and functions frequently
+use \texttt{=} and it is best to consistently assign your variables with
+\texttt{\textless{}-} until you understand the basics.
+\end{quote}
+
+\textbf{Object definition/variable assignment requires three pieces of
+information}:\\
+1) object\_name\\
+2) \texttt{\textless{}-}\\
+3) definition/assignment
+
+Let's define an object named \texttt{numeric\_oject} and define it as
+the number 4:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numeric_object <-}\StringTok{ }\DecValTok{4}
+
+\CommentTok{# the ls() function will show us what is in our global environment}
+\KeywordTok{ls}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric_object"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{r <-}\StringTok{ }\DecValTok{2}
+
+\CommentTok{#back to our equation:}
+
+\NormalTok{Area <-}\StringTok{ }\NormalTok{pi }\OperatorTok{*}\StringTok{ }\NormalTok{r}\OperatorTok{^}\DecValTok{2}
+
+\NormalTok{Area}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 12.56637
+\end{verbatim}
+
+\subsubsection{The R global environment}\label{the-r-global-environment}
+
+We now have an object defined in our global environment!
+
+``Call'' (retrieve) the data contained wihtin the object by typing its
+name into your script and running the line of code
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numeric_object }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(numeric_object)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# 4 is returned}
+\end{Highlighting}
+\end{Shaded}
+
+Let's try another example, this time using character data. Note that
+character data is \textbf{always} contained within quotation marks
+\texttt{"\ "}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{welcome_object <-}\StringTok{ "Welcome"}
+\KeywordTok{ls}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Area"           "numeric_object" "r"              "welcome_object"
+\end{verbatim}
+
+We now have four objects in our global environment. Call the data
+contained within the object by typing its name and running the line of
+code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{welcome_object}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Welcome"
+\end{verbatim}
+
+\subsubsection{Naming R variables}\label{naming-r-variables}
+
+Object names can be anything, but are always case sensitive. However,
+they cannot begin with a number and generally do not begin with symbols.
+However you choose to name your objects, be consistent and use brief
+descriptions of their contents.
+
+Names must be \textbf{\textbf{unique}}. If you reuse an old name, the
+old definition will be overwritten.
+
+Let's overwrite the object \texttt{welcome\_object} from above.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{welcome_object <-}\StringTok{ "Welcome to class"} 
+\NormalTok{welcome_object}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Welcome to class"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{welcome_object <-}\StringTok{ "Welcome to Part 1"}
+\KeywordTok{ls}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Area"           "numeric_object" "r"              "welcome_object"
+\end{verbatim}
+
+See how the definition of \texttt{welcome\_object} changed in your
+global environment window? However, there are still only two objects in
+your global environment.
+
+\subsubsection{\texorpdfstring{Variable classes
+(\texttt{class})}{Variable classes (class)}}\label{variable-classes-class}
+
+Each variable in R has a \texttt{class} that summarizes the type of the
+data stored within the object. We will talk more about data types below.
+
+\begin{quote}
+NOTE! ``numeric'' is the default data type for numbers in R:
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# this is numeric (NOT integer) data type!}
+\KeywordTok{class}\NormalTok{(numeric_object) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# character type}
+\KeywordTok{class}\NormalTok{(welcome_object) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\subsubsection{\texorpdfstring{Removing variables
+(\texttt{rm})}{Removing variables (rm)}}\label{removing-variables-rm}
+
+We remove individual variables from our environment with \texttt{rm()}.
+For example, to remove \texttt{numeric\_object}, we type:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rm}\NormalTok{(numeric_object)}
+\KeywordTok{ls}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Area"           "r"              "welcome_object"
+\end{verbatim}
+
+See how \texttt{numeric\_object} disappeared from our global
+environment?
+
+We can also wipe the entire environment with \texttt{rm(list\ =\ ls())}
+(or, click the broom icon in the upper right ``global environment''
+pane)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list =} \KeywordTok{ls}\NormalTok{()) }
+\KeywordTok{ls}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## character(0)
+\end{verbatim}
+
+Now, all objects are gone from our global environment.
+
+\subsubsection{Vignettes}\label{vignettes}
+
+Double question marks ?? will lead you to coding walkthroughs called
+``vignettes''. These usually come with preloaded data and examples:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{??psych}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## starting httpd help server ... done
+\end{verbatim}
+
+You will often find that your questions are not answered by the help
+pages nor vignettes. In that case you should Google-search your question
+or error message along with the name of a free help website.
+
+For example, to get help making boxplots, I might Google search ``R how
+to make boxplots stack overflow''
+
+\section{Atomic data types in R}\label{atomic-data-types-in-r}
+
+Numeric, character, and logical (aka ``boolean'') data types all exist
+at the \texttt{atomic\ level}. Normally this means that they cannot be
+broken down any further and are the raw inputs for functions in R. Other
+R variables are frequently built upon these atomic types.
+
+\subsubsection{Numeric type}\label{numeric-type}
+
+Numeric data are numbers and integers. You may also hear numeric data
+referred to as \texttt{float} or \texttt{double} data types. By default,
+R stores everything as \texttt{doubles} (64 bit floating point numbers)
+which makes R very memory hungry.
+
+Define an object called \texttt{num} and then check its class
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{num <-}\StringTok{ }\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{pi}
+\NormalTok{num}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6.283185
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(num)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+Standard mathematical operators apply to the creation of numeric data:
+\texttt{+} \texttt{-} \texttt{*} \texttt{\^{}} \texttt{**} \texttt{/}
+\texttt{\%*\%\ (matrix\ multiplication)}
+\texttt{\%/\%\ (integer\ division)} \texttt{\%\%\ (modular\ division)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5} \OperatorTok{+}\StringTok{ }\DecValTok{2}  
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5} \OperatorTok{-}\StringTok{ }\DecValTok{2}  
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5} \OperatorTok{*}\StringTok{ }\DecValTok{2}  
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5} \OperatorTok{^}\StringTok{ }\DecValTok{2}  
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 25
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# same as ^ :}
+\DecValTok{5} \OperatorTok{**}\StringTok{ }\DecValTok{2}  
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 25
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5} \OperatorTok{/}\StringTok{ }\DecValTok{2}  
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5} \OperatorTok{%/%}\StringTok{ }\DecValTok{2} 
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5} \OperatorTok{%%}\StringTok{ }\DecValTok{2}  
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5} \OperatorTok{%*%}\StringTok{ }\DecValTok{2}  
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]
+## [1,]   10
+\end{verbatim}
+
+\subsubsection{Character type}\label{character-type}
+
+Character (aka string or text) data are always contained within
+quotation marks \texttt{"\ "}. Character handling in R is fairly close
+to character handling in a Unix terminal.
+
+Let's create an object called \texttt{char} and define it with some
+character data. Then, check its class:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{char <-}\StringTok{ "This is character data"}
+\NormalTok{char}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "This is character data"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(char)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\subsubsection{\texorpdfstring{Contatenating text
+(\texttt{paste})}{Contatenating text (paste)}}\label{contatenating-text-paste}
+
+Use \texttt{paste()} to combine/concatenate character data. This will
+paste together separate words to larger texts.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{char2 <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"Hey"}\NormalTok{, }\StringTok{"momma"}\NormalTok{, }\StringTok{"I'm"}\NormalTok{, }\StringTok{"a"}\NormalTok{, }\StringTok{"string"}\NormalTok{)}
+\NormalTok{char2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Hey momma I'm a string"
+\end{verbatim}
+
+Note here that R is not a zero-indexed language - lists begin at the
+number 1. The one and only element in this object is the sentence ``Hey
+momma I'm a string''.
+
+Character data have some useful functions such as \texttt{substr} and
+\texttt{strsplit}. We'll use these to explore function arguments. Use
+your help commands to learn more about the commands!
+
+\subsubsection{Function arguments}\label{function-arguments}
+
+Arguments go inside of the parentheses of R functions. Unnamed arguments
+are things like the number 4. \texttt{split\ =\ "\ "} is what is called
+a named argument. This argument goes inside the parentheses of another
+function such as \texttt{strsplit}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{char4 <-}\StringTok{ "This/is/slash/separated/text"}
+\NormalTok{char4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "This/is/slash/separated/text"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{split1 <-}\StringTok{ }\KeywordTok{strsplit}\NormalTok{(char4, }\DataTypeTok{split =} \StringTok{"/"}\NormalTok{)}
+\NormalTok{split1 }\CommentTok{# a list is returned. }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "This"      "is"        "slash"     "separated" "text"
+\end{verbatim}
+
+Most functions require one or two arguments to be defined in order for
+it to properly run. You will find that functions are full of default,
+positional, and optional arguments that you can manipulate.
+
+\subsubsection{\texorpdfstring{Simple string subset example
+(\texttt{substr})}{Simple string subset example (substr)}}\label{simple-string-subset-example-substr}
+
+\texttt{substr} lets you extract text from certain character positions
+in character data. Refer back to \texttt{char2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{char2 <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"Hey"}\NormalTok{, }\StringTok{"momma"}\NormalTok{, }\StringTok{"I'm"}\NormalTok{, }\StringTok{"a"}\NormalTok{, }\StringTok{"string"}\NormalTok{)}
+\NormalTok{char2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Hey momma I'm a string"
+\end{verbatim}
+
+If we want to extract just the first four characters of the
+\texttt{char2} object we type:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{substr}\NormalTok{(char2, }\DataTypeTok{start =} \DecValTok{1}\NormalTok{, }\DataTypeTok{stop =} \DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Hey "
+\end{verbatim}
+
+``Hey'' (Hey + blankspace) is returned.
+
+You can use \texttt{substr()} and the assignment operator
+\texttt{\textless{}-} to redefine the first four characters in
+\texttt{char2} with the word ``Yes'' followed by a blankspace
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{substr}\NormalTok{(char2, }\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{) <-}\StringTok{ "Yes "}
+\NormalTok{char2 }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Yes momma I'm a string"
+\end{verbatim}
+
+What changed?
+
+\subsubsection{Logical type}\label{logical-type}
+
+Logical (boolean) data are dichotomous TRUE/FALSE values. R internally
+stores \texttt{FALSE} as 0 and \texttt{TRUE} as 1. Define a logical
+object:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bool_object <-}\StringTok{ }\OtherTok{TRUE}
+\NormalTok{bool_object}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(bool_object)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "logical"
+\end{verbatim}
+
+We recommend to always spell out \texttt{TRUE} and \texttt{FALSE}
+instead of abbreviating them \texttt{T} and \texttt{F} which might be
+mistaken for previously defined variables - therefore, you should not
+save anything as \texttt{T}, \texttt{F}, or \texttt{TRUE} or
+\texttt{FALSE}! Thus, there are certain words that do not make good
+variable names. R has many reserved words that you should avoid using.
+See \texttt{?reserved} for more information.
+
+Note that logical data also take on numeric properties. Remember that
+\texttt{TRUE} is stored as the numeral 1 and \texttt{FALSE} is stored as
+0.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bool_object }\OperatorTok{+}\StringTok{ }\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OtherTok{TRUE} \OperatorTok{-}\StringTok{ }\OtherTok{TRUE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OtherTok{TRUE} \OperatorTok{+}\StringTok{ }\OtherTok{FALSE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OtherTok{FALSE} \OperatorTok{-}\StringTok{ }\OtherTok{TRUE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -1
+\end{verbatim}
+
+\subsubsection{Logical tests}\label{logical-tests}
+
+Logical tests are helpful in R if you want to check for equivalence.
+Logical tests compare two objects and return a logical output. This is
+useful for removing missing data and subsetting (you will learn more
+about this in Part 2). Note the use of the double equals \texttt{==}
+sign.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?}\StringTok{"=="}
+\NormalTok{?}\StringTok{"&"}
+\NormalTok{?}\StringTok{"|"}
+\NormalTok{?}\StringTok{"!"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OtherTok{TRUE} \OperatorTok{==}\StringTok{ }\OtherTok{TRUE} \CommentTok{# is equivalent}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OtherTok{FALSE} \OperatorTok{==}\StringTok{ }\OtherTok{FALSE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OtherTok{TRUE} \OperatorTok{==}\StringTok{ }\OtherTok{FALSE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OtherTok{TRUE} \OperatorTok{&}\StringTok{ }\OtherTok{TRUE}   \CommentTok{# and }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OtherTok{TRUE} \OperatorTok{|}\StringTok{ }\OtherTok{FALSE}  \CommentTok{# or}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OtherTok{TRUE} \OperatorTok{!=}\StringTok{ }\OtherTok{FALSE}  \CommentTok{# not}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OtherTok{TRUE} \OperatorTok{>}\StringTok{ }\OtherTok{FALSE} \CommentTok{# greater than}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OtherTok{FALSE} \OperatorTok{>=}\StringTok{ }\OtherTok{TRUE} \CommentTok{# greater than or equal to}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\section{\texorpdfstring{\textbf{Challenge
+1}}{Challenge 1}}\label{challenge-1}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  What is the three-piece recipe for variable definition? What piece
+  goes where?\\
+\item
+  Define two numeric variables.\\
+\item
+  Define two character variables.\\
+\item
+  How do you check what types of data these variables are?\\
+\item
+  What does the \texttt{ls()} function do? Where else do you see this
+  information?\\
+\item
+  Remove one of your numeric and one of your character variables.\\
+\item
+  Try to subract your remaining character variable from your numeric
+  one. What happens? What might this tell you about data of different
+  types?\\
+\item
+  Define a numeric object as 0 and check its class.\\
+\item
+  Define a boolean object as ``FALSE'' and check its class.\\
+\item
+  Use \texttt{==} to compare your numeric and boolean object. Are they
+  equivalent? Why or why not?\\
+\item
+  Define a character object that uses \texttt{paste()} to combine more
+  than one word into a sentence.\\
+\item
+  Use \texttt{substr} to extract the first word of your sentence.\\
+\item
+  Wipe your environment clean.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{## YOUR CODE HERE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+See the below tables to help you remember your logical operations and
+functions.
+\end{quote}
+
+\href{https://us.sagepub.com/en-us/nam/an-introduction-to-r-for-spatial-analysis-and-mapping/book241031}{Brunsdon
+and Comber 2015, page 15} offer a useful summary table of logical
+operators in R. These are useful for comparing two data variables to
+each other:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Logical operator & Description\tabularnewline
+\midrule
+\endhead
+== & Equal\tabularnewline
+!= & Not equal\tabularnewline
+\textgreater{} & Greater than\tabularnewline
+\textless{} & Less than\tabularnewline
+\textgreater{}= & Greater than or equal\tabularnewline
+\textless{}= & Less than or equal\tabularnewline
+! & Not (goes in front of other expressions)\tabularnewline
+\& & And (combines expressions)\tabularnewline
+\texttt{\textbar{}} & Or (combines expressions)\tabularnewline
+\bottomrule
+\end{longtable}
+
+\href{https://us.sagepub.com/en-us/nam/an-introduction-to-r-for-spatial-analysis-and-mapping/book241031}{Brunsdon
+and Comber 2015, page 102} also offer an excellent summary table of
+logical functions in R.
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Logical function & Description\tabularnewline
+\midrule
+\endhead
+any(x) & \texttt{TRUE} if any in a vector of conditions \texttt{x} is
+true\tabularnewline
+all(x) & \texttt{TRUE} if all of a vector of conditions \texttt{x} is
+true\tabularnewline
+is.numeric(x) & \texttt{TRUE} if \texttt{x} contains a numeric
+value\tabularnewline
+is.character(x) & \texttt{TRUE} if \texttt{x} contains a character
+value\tabularnewline
+is.logical(x) & \texttt{TRUE} if \texttt{x} contains a true or false
+value\tabularnewline
+\bottomrule
+\end{longtable}
+
+Often it is handy to see what types of data you are working with.
+Similar to \texttt{class()} we can see what data type an object is with
+\texttt{is.type}. A logical response is returned:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{is.numeric}\NormalTok{(num) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{is.logical}\NormalTok{(bool_object)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{is.logical}\NormalTok{(char2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(char2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\subsubsection{\texorpdfstring{Data testing and type coercion
+(\texttt{as.type})}{Data testing and type coercion (as.type)}}\label{data-testing-and-type-coercion-as.type}
+
+``Type coercion'' refers to changing the data from one type to another.
+You can change data types with \texttt{as.} and then the data type you
+wish to convert to.\\
+\href{https://us.sagepub.com/en-us/nam/an-introduction-to-r-for-spatial-analysis-and-mapping/book241031}{Brunsdon
+and Comber 2015, page 102} also offer an excellent summary table of data
+types in R.
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+Type & Test & Conversion\tabularnewline
+\midrule
+\endhead
+character & is.character & as.character\tabularnewline
+complex & is.complex & as.complex\tabularnewline
+double & is.double & as.double\tabularnewline
+expression & is.expression & as.expression\tabularnewline
+integer & is.integer & as.integer\tabularnewline
+list & is.list & as.list\tabularnewline
+logical & is.logical & as.logical\tabularnewline
+numeric & is.numeric & as.numeric\tabularnewline
+single & is.single & as.single\tabularnewline
+raw & is.raw & as.raw\tabularnewline
+\bottomrule
+\end{longtable}
+
+\subsubsection{\texorpdfstring{Type coercion example
+(\texttt{as.numeric})}{Type coercion example (as.numeric)}}\label{type-coercion-example-as.numeric}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Create some character data}
+\NormalTok{char_data <-}\StringTok{ "9"}
+\KeywordTok{class}\NormalTok{(char_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Coerce this character data to numeric data type}
+\KeywordTok{as.numeric}\NormalTok{(char_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(char_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# What happened here? Why did `char_data` not change classes? (hint: we did not overwrite the object!)}
+
+\NormalTok{char.data <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(char_data)}
+\KeywordTok{class}\NormalTok{(char.data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{char.data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 9
+\end{verbatim}
+
+\subsubsection{\texorpdfstring{Type coercion example 2
+(\texttt{as.integer})}{Type coercion example 2 (as.integer)}}\label{type-coercion-example-2-as.integer}
+
+You can change numeric type to integer type using \texttt{as.integer}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{num <-}\StringTok{ }\DecValTok{4}
+\KeywordTok{class}\NormalTok{(num)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{int <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(num)}
+\KeywordTok{class}\NormalTok{(int)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "integer"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{int}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+Now, create some character data and try to convert it to integer type:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Create a new object}
+\NormalTok{char.num <-}\StringTok{ "three"}
+\NormalTok{char.num   }\CommentTok{#Note that the word three is contained within " " }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "three"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(char.num)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# What happens if we try to coerce character to numeric data type? }
+\KeywordTok{as.integer}\NormalTok{(char.num)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NAs introduced by coercion
+\end{verbatim}
+
+\begin{verbatim}
+## [1] NA
+\end{verbatim}
+
+Why did this fail? Can R change character data to numbers? Why not?
+(hint: R has no protocol for automatically coerce words to numbers). As
+you can see, trying to coerce data types can lead to weird behavior
+sometimes.
+
+\section{\texorpdfstring{\textbf{Challenge
+2}}{Challenge 2}}\label{challenge-2}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create a character object and check its type using
+  \texttt{is.character} and \texttt{class}. What is the difference
+  between these two methods?\\
+\item
+  Try to change (``coerce'') this object to another data type using
+  \texttt{as.integer}, \texttt{as.numeric}, and \texttt{as.logical}.\\
+\item
+  Create an object of class ``integer''. Remember, there are two ways to
+  do this!\\
+\item
+  Why is 1 == ``1'' true? Why is -1 \textless{} FALSE true? Why is
+  ``one'' \textless{} 2 false?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{## YOUR CODE HERE}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Data structures}\label{data-structures}
+
+There are several kinds of data structures in R. Data structures are
+collections of data objects (e.g., numeric, character, and logical
+vectors, lists, and matrices) that work together. These four are the
+most common:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  vector\\
+\item
+  list\\
+\item
+  matrix\\
+\item
+  dataframe
+\end{enumerate}
+
+\subsubsection{3.1 Vector}\label{vector}
+
+A \textbf{VECTOR} is an ordered group of the same kind of data.
+``Ordered'' means that their position matters. Vectors are
+one-dimensional and homogenous, and are thus referred to by their type
+(e.g., character vector, numeric vector, logical vector).
+
+Create a numeric vector by combining/concatenating elements with
+\texttt{c()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?c}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numeric_vector <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\NormalTok{numeric_vector}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3 5 6 5 3
+\end{verbatim}
+
+This numeric vector contains five elements.
+
+You can index a vector using square brackets (more on this in the
+subsetting section of Part 2). For example, to see what value lives in
+the third position of the object \texttt{numeric\_vector}, you could
+type:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numeric_vector[}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6
+\end{verbatim}
+
+You can also add items to a vector using \texttt{c()} and a comma
+\texttt{,} (as long as it is the same data type)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numeric_vector2 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(numeric_vector, }\DecValTok{78}\NormalTok{)}
+\NormalTok{numeric_vector2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  3  5  6  5  3 78
+\end{verbatim}
+
+It doesn't matter what the datatype is for a vector, as long as it is
+all the same
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{logical_vector <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OtherTok{TRUE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{logical_vector}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  TRUE  TRUE FALSE FALSE  TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{logical_vector2 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(logical_vector, }\KeywordTok{c}\NormalTok{(}\OtherTok{FALSE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{))}
+\NormalTok{logical_vector2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE
+\end{verbatim}
+
+You can also add and multiply vectors, but they need to be the same
+length
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{logical_vector }\OperatorTok{*}\StringTok{ }\NormalTok{logical_vector}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 1 0 0 1
+\end{verbatim}
+
+\subsubsection{\texorpdfstring{Generating random vectors
+(\texttt{seq})}{Generating random vectors (seq)}}\label{generating-random-vectors-seq}
+
+You might need to create vectors that are sequences of numbers. You can
+do this via \texttt{seq}. Here we specify a vector from zero to the
+\texttt{length} of our object \texttt{logical\_vector2} (eight). The
+argument \texttt{by\ =\ 2} tells R that we want only the even numbers!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?length}
+\NormalTok{logical_vector2}
+\KeywordTok{length}\NormalTok{(logical_vector2)}
+
+\KeywordTok{seq}\NormalTok{(}\DataTypeTok{from=}\DecValTok{0}\NormalTok{,}\DataTypeTok{to=}\KeywordTok{length}\NormalTok{(logical_vector2),}\DataTypeTok{by=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{\texorpdfstring{Sequence where \texttt{by\ =\ 1}
+(\texttt{:})}{Sequence where by = 1 (:)}}\label{sequence-where-by-1}
+
+R also gives you a shorthand operator for creating sequences in whole
+number increments of 1. This is the colon symbol \texttt{:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{0}\OperatorTok{:}\DecValTok{8}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0 1 2 3 4 5 6 7 8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sequence_object <-}\StringTok{ }\DecValTok{28}\OperatorTok{:}\DecValTok{36}
+\NormalTok{sequence_object }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 28 29 30 31 32 33 34 35 36
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{0}\OperatorTok{:}\KeywordTok{length}\NormalTok{(logical_vector2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0 1 2 3 4 5 6 7 8
+\end{verbatim}
+
+\subsubsection{\texorpdfstring{\texttt{set.seed}}{set.seed}}\label{set.seed}
+
+You can also sample random groups of numbers. Use \texttt{set.seed()} to
+ensure that we all always get the same random draws from the parent
+universe, even on different machines
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?set.seed}
+\NormalTok{?runif}
+\NormalTok{?rnorm}
+\NormalTok{?sample}
+\end{Highlighting}
+\end{Shaded}
+
+Set the seed, and then choose our values:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{2346}\NormalTok{)}
+\CommentTok{# 20 random samples from uniform distribution between the numbers 3 and 7}
+\NormalTok{uniform <-}\StringTok{ }\KeywordTok{runif}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{7}\NormalTok{) }
+\NormalTok{uniform}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 4.544240 3.489348 6.068407 3.161751 6.461309 5.810518 3.404867
+##  [8] 5.238931 6.954126 6.328505 3.048943 6.305050 4.382296 4.475999
+## [15] 3.133005 3.390534 4.084209 4.689436 5.267931 4.996230
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# 20 random samples from the normal distribution with a mean of 0 and standard deviation of 1}
+\NormalTok{normal <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{) }
+\NormalTok{normal}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] -0.09149019  1.12753115 -1.61933145 -0.48718366 -1.06576577
+##  [6] -0.74445302 -2.35303871  0.15443995  0.35509938 -0.06067869
+## [11]  0.31884664  1.32218276  1.19400064 -0.23740576 -2.15278944
+## [16]  0.80304167 -0.31741855 -1.35466867  0.03503021 -0.81104751
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# 20 random samples from between the numbers 5 and 10. Note that `replace=TRUE` signifies that it is OK to reuse numbers already selected.}
+\NormalTok{integer <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\DecValTok{5}\OperatorTok{:}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{) }
+\NormalTok{integer}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  7 10  7  5  7 10  8  6  6  7  8  5  8  5  5  7  9  9 10  7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{character <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"Cat"}\NormalTok{, }\StringTok{"Dog"}\NormalTok{, }\StringTok{"Pig"}\NormalTok{), }\DecValTok{20}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{) }\CommentTok{# 20 random samples of character data}
+\NormalTok{character}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "Cat" "Cat" "Pig" "Pig" "Dog" "Pig" "Cat" "Dog" "Pig" "Dog" "Cat"
+## [12] "Pig" "Dog" "Pig" "Pig" "Cat" "Pig" "Cat" "Pig" "Cat"
+\end{verbatim}
+
+\subsubsection{List}\label{list}
+
+A \textbf{LIST} is an ordered group of data that are not of the same
+type. Lists are heterogenous. Instead of using \texttt{c()} like in
+vector creation, use \texttt{list()} to create a list:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?list}
+
+\NormalTok{list1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\OtherTok{TRUE}\NormalTok{, }\StringTok{"one"}\NormalTok{, }\DecValTok{1}\NormalTok{) }\CommentTok{# include three kinds of data: logical, character, and integer}
+\NormalTok{list1}
+\KeywordTok{class}\NormalTok{(list1)}
+\end{Highlighting}
+\end{Shaded}
+
+Lists are simple containers and are not additive or multiplicative like
+vectors and matrices are:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{list1 }\OperatorTok{*}\StringTok{ }\KeywordTok{list}\NormalTok{(}\OtherTok{FALSE}\NormalTok{, }\StringTok{"zero"}\NormalTok{, }\DecValTok{0}\NormalTok{) }\CommentTok{# Error}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Matrix}\label{matrix}
+
+\textbf{MATRICES} are homogenous like vectors. They are tables comprised
+of data all of the same type. Matrices are organized into rows and
+columns.
+
+Use \texttt{matrix()} to create a matrix
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?matrix}
+\end{Highlighting}
+\end{Shaded}
+
+We can also specify how we want the matrix to be organized using the
+\texttt{nrow} and \texttt{ncol} arguments:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{matrix1 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{12}\NormalTok{, }\DataTypeTok{nrow =} \DecValTok{4}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{) }\CommentTok{# this makes a 4 x 3 matrix}
+\NormalTok{matrix1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    1    5    9
+## [2,]    2    6   10
+## [3,]    3    7   11
+## [4,]    4    8   12
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(matrix1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "matrix"
+\end{verbatim}
+
+We can also coerce a vector to a matrix, because a vector is comprised
+of homogenous data of the same kind, just like a matrix is:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Create a numeric vector from 1 to 20}
+\NormalTok{vec1 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{20}\NormalTok{)}
+\NormalTok{vec1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(vec1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "integer"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Coerce this vector to a matrix with 10 rows and 2 columns:}
+\NormalTok{matrix2 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(vec1, }\DataTypeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\NormalTok{matrix2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       [,1] [,2]
+##  [1,]    1   11
+##  [2,]    2   12
+##  [3,]    3   13
+##  [4,]    4   14
+##  [5,]    5   15
+##  [6,]    6   16
+##  [7,]    7   17
+##  [8,]    8   18
+##  [9,]    9   19
+## [10,]   10   20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(matrix2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "matrix"
+\end{verbatim}
+
+\subsubsection{Data frame}\label{data-frame}
+
+\emph{\textbf{It is worth emphasizing the importance of data frames in
+R!}} Inside R, a \textbf{DATA FRAME} is a list of equal-length vectors.
+These vectors can be of different types. Data frames are thus
+heterogenous like lists.
+
+This is simply a spreadsheet!
+
+Let's create a dataframe called \texttt{animals} using the vectors we
+already created:
+
+We do this using \texttt{data.frame()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?data.frame}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{animals <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(uniform, normal, integer, character, }\DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
+\CommentTok{# }\AlertTok{NOTE}\CommentTok{: `stringsAsFactors=FALSE` means that R will NOT try to interpret character data as factor type. More on this below. }
+\end{Highlighting}
+\end{Shaded}
+
+Take a peek at the \texttt{animals} data frame to see what it looks
+like:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(animals)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    uniform      normal integer character
+## 1 4.544240 -0.09149019       7       Cat
+## 2 3.489348  1.12753115      10       Cat
+## 3 6.068407 -1.61933145       7       Pig
+## 4 3.161751 -0.48718366       5       Pig
+## 5 6.461309 -1.06576577       7       Dog
+## 6 5.810518 -0.74445302      10       Pig
+\end{verbatim}
+
+We can change the names of the columns by passing into it a vector with
+our desired names
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Create a vector called `new_df_names` with the new column names and pass this vector into `colnames()`}
+\KeywordTok{colnames}\NormalTok{(animals) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Weight"}\NormalTok{, }\StringTok{"Progress"}\NormalTok{, }\StringTok{"Height"}\NormalTok{, }\StringTok{"Type"}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(animals)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     Weight    Progress Height Type
+## 1 4.544240 -0.09149019      7  Cat
+## 2 3.489348  1.12753115     10  Cat
+## 3 6.068407 -1.61933145      7  Pig
+## 4 3.161751 -0.48718366      5  Pig
+## 5 6.461309 -1.06576577      7  Dog
+## 6 5.810518 -0.74445302     10  Pig
+\end{verbatim}
+
+We can check the structure of our data frame via \texttt{str()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?str}
+\KeywordTok{str}\NormalTok{(animals)}
+\end{Highlighting}
+\end{Shaded}
+
+Here, we can see that a data frame is just a list of equal-length
+vectors! For readability purposes, \texttt{str()} displays columns from
+top to bottom, while the data are displayed left to right.
+
+\subparagraph{Learning about your data
+frame}\label{learning-about-your-data-frame}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# View the dimensions (nrow x ncol) of the data frame:}
+\KeywordTok{dim}\NormalTok{(animals) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20  4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# View column names:}
+\KeywordTok{colnames}\NormalTok{(animals)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Weight"   "Progress" "Height"   "Type"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# View row names (we did not change these, so they default to character type)}
+\KeywordTok{rownames}\NormalTok{(animals)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12" "13" "14"
+## [15] "15" "16" "17" "18" "19" "20"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(}\KeywordTok{rownames}\NormalTok{(animals))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\subparagraph{Factor data type}\label{factor-data-type}
+
+Factor data are categorical types used to make comparisons between other
+data. Factors group the data by their ``levels'' (the different
+categorical groups within a factor).
+
+For example, in our \texttt{animals} dataframe, we can coerce ``Type''
+from character to factor data type. Cat, Dog, and Pig are the factor
+levels. If we might want to compare heights and weights between Cat,
+Dog, and Pigs, we set the character ``Type'' vector to factor data type.
+We can do so with \texttt{factor()}.
+
+The dollar sign operator \texttt{\$} is used to call a single vector
+from a data frame. This will be discussed more in Part 2 along with the
+rest of subsetting.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# "Name" is character data type. See how each column name is preceded by `$`?}
+\KeywordTok{str}\NormalTok{(animals)   }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    20 obs. of  4 variables:
+##  $ Weight  : num  4.54 3.49 6.07 3.16 6.46 ...
+##  $ Progress: num  -0.0915 1.1275 -1.6193 -0.4872 -1.0658 ...
+##  $ Height  : int  7 10 7 5 7 10 8 6 6 7 ...
+##  $ Type    : chr  "Cat" "Cat" "Pig" "Pig" ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+ \KeywordTok{class}\NormalTok{(animals}\OperatorTok{$}\NormalTok{Type)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{animals}\OperatorTok{$}\NormalTok{Type <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(animals}\OperatorTok{$}\NormalTok{Type)}
+\CommentTok{# "Name" is now factor data type!}
+\KeywordTok{str}\NormalTok{(animals)  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    20 obs. of  4 variables:
+##  $ Weight  : num  4.54 3.49 6.07 3.16 6.46 ...
+##  $ Progress: num  -0.0915 1.1275 -1.6193 -0.4872 -1.0658 ...
+##  $ Height  : int  7 10 7 5 7 10 8 6 6 7 ...
+##  $ Type    : Factor w/ 3 levels "Cat","Dog","Pig": 1 1 3 3 2 3 1 2 3 2 ...
+\end{verbatim}
+
+Notice that R stores factors internally as integers and uses the
+character strings as labels. Also notice that by default R orders
+factors alphabetically and returns them when we call the ``Type''
+vector.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{animals}\OperatorTok{$}\NormalTok{Type}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] Cat Cat Pig Pig Dog Pig Cat Dog Pig Dog Cat Pig Dog Pig Pig Cat Pig
+## [18] Cat Pig Cat
+## Levels: Cat Dog Pig
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{levels}\NormalTok{(animals}\OperatorTok{$}\NormalTok{Type)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Cat" "Dog" "Pig"
+\end{verbatim}
+
+\subparagraph{\texorpdfstring{Changing factor
+``levels''}{Changing factor levels}}\label{changing-factor-levels}
+
+Each animal type (Cat, Dog, and Pig) within the factor
+\texttt{animals\$Type} vector are the factor levels.
+
+If we want to change how R stores the factor levels, we can specify
+their levels using the \texttt{levels()} argument. For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{animals}\OperatorTok{$}\NormalTok{Type  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] Cat Cat Pig Pig Dog Pig Cat Dog Pig Dog Cat Pig Dog Pig Pig Cat Pig
+## [18] Cat Pig Cat
+## Levels: Cat Dog Pig
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# What if we want to change the factor level sort to Levels: Dog Pig Cat?}
+\NormalTok{animals}\OperatorTok{$}\NormalTok{Type <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(animals}\OperatorTok{$}\NormalTok{Type, }\DataTypeTok{levels =} \KeywordTok{c}\NormalTok{(}\StringTok{"Dog"}\NormalTok{, }\StringTok{"Pig"}\NormalTok{, }\StringTok{"Cat"}\NormalTok{))}
+
+\CommentTok{# Now when we call animals$Name, we can see that the levels have changed}
+\NormalTok{animals}\OperatorTok{$}\NormalTok{Type }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] Cat Cat Pig Pig Dog Pig Cat Dog Pig Dog Cat Pig Dog Pig Pig Cat Pig
+## [18] Cat Pig Cat
+## Levels: Dog Pig Cat
+\end{verbatim}
+
+\begin{quote}
+NOTE: we will load the \texttt{animals} data frame from file at the
+beginning of Part 2, so do not worry if your dataframe does not look
+identical!
+\end{quote}
+
+\section{Importing and Exporting}\label{importing-and-exporting}
+
+\subsection{\texorpdfstring{Importing csv data files using
+\texttt{read.csv}}{Importing csv data files using read.csv}}\label{importing-csv-data-files-using-read.csv}
+
+Check first where your working directory is by typing:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{getwd}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "I:/R training/KP-R-Intro-Workshop"
+\end{verbatim}
+
+(note: since we're using R projects, you should already know where your
+wd is, because it's set up automatically).
+
+You can import data using the read.csv command. Take a moment to look at
+the help file for syntax tips:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?read.csv}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df.who <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"./data/who_suicide_statistics.csv"}\NormalTok{, }
+                    \DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{, }
+                    \DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{,}
+                    \DataTypeTok{na.strings =} \StringTok{" "}\NormalTok{)}
+\KeywordTok{dim}\NormalTok{(df.who)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 43776     6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(df.who)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   country year    sex         age suicides_no population
+## 1 Albania 1985 female 15-24 years          NA     277900
+## 2 Albania 1985 female 25-34 years          NA     246800
+## 3 Albania 1985 female 35-54 years          NA     267500
+## 4 Albania 1985 female  5-14 years          NA     298300
+## 5 Albania 1985 female 55-74 years          NA     138700
+## 6 Albania 1985 female   75+ years          NA      34200
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str}\NormalTok{(df.who)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    43776 obs. of  6 variables:
+##  $ country    : chr  "Albania" "Albania" "Albania" "Albania" ...
+##  $ year       : int  1985 1985 1985 1985 1985 1985 1985 1985 1985 1985 ...
+##  $ sex        : chr  "female" "female" "female" "female" ...
+##  $ age        : chr  "15-24 years" "25-34 years" "35-54 years" "5-14 years" ...
+##  $ suicides_no: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ population : int  277900 246800 267500 298300 138700 34200 301400 264200 296700 325800 ...
+\end{verbatim}
+
+\begin{quote}
+Notice that \texttt{stringsAsFactors\ =\ FALSE}. If set to
+\texttt{TRUE}, R will try to guess which \textbf{character} vectors
+should automatically be converted to factors. This is problematic
+because 1) R is not always good at guessing and 2) R defaults to
+alphabetical and increasing numeric factor level sorting. This might not
+matter for your data, but it is recommended to set
+\texttt{stringsAsFactors\ =\ FALSE} and manually convert your desired
+character vectors to factors.
+\end{quote}
+
+\begin{quote}
+\texttt{header\ =\ TRUE} will include the header row;
+\texttt{header\ =\ FALSE} will turn your header row into the first row
+of actual data. \texttt{na.strings\ =\ c("\ ",\ 999)} indicates that
+blank cells and cells coded 999 allows you to specify data that should
+be automatically converted to \texttt{NA} upon importation. We do not
+have any here, so nothing is altered.
+\end{quote}
+
+\subsection{Importing and exporting with the Rio
+package}\label{importing-and-exporting-with-the-rio-package}
+
+The Rio package simplifies importing/exporting by putting all
+data-specific import tools under one umbrella (popularly known as the
+``swiss army knife'' of data importing and exporting) See
+\href{https://cran.r-project.org/web/packages/rio/vignettes/rio.html}{this
+helpful rio documentation as well}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"rio"}\NormalTok{)}
+\NormalTok{?rio}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(rio)}
+
+\NormalTok{df.who2 <-}\StringTok{ }\KeywordTok{import}\NormalTok{(}\StringTok{"./data/whostats_suicide.sas7bdat"}\NormalTok{)}
+ \KeywordTok{dim}\NormalTok{(df.who2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 43776     6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+ \KeywordTok{head}\NormalTok{(df.who)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   country year    sex         age suicides_no population
+## 1 Albania 1985 female 15-24 years          NA     277900
+## 2 Albania 1985 female 25-34 years          NA     246800
+## 3 Albania 1985 female 35-54 years          NA     267500
+## 4 Albania 1985 female  5-14 years          NA     298300
+## 5 Albania 1985 female 55-74 years          NA     138700
+## 6 Albania 1985 female   75+ years          NA      34200
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Are these dataframes the same? Let's see:}
+ \KeywordTok{all.equal}\NormalTok{(df.who,df.who2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "Attributes: < Names: 1 string mismatch >"                                  
+##  [2] "Attributes: < Length mismatch: comparison on first 2 components >"         
+##  [3] "Attributes: < Component 2: Modes: numeric, character >"                    
+##  [4] "Attributes: < Component 2: Lengths: 43776, 1 >"                            
+##  [5] "Attributes: < Component 2: target is numeric, current is character >"      
+##  [6] "Component \"country\": Attributes: < target is NULL, current is list >"    
+##  [7] "Component \"year\": Attributes: < target is NULL, current is list >"       
+##  [8] "Component \"sex\": Attributes: < target is NULL, current is list >"        
+##  [9] "Component \"age\": Attributes: < target is NULL, current is list >"        
+## [10] "Component \"suicides_no\": Modes: numeric, character"                      
+## [11] "Component \"suicides_no\": Attributes: < target is NULL, current is list >"
+## [12] "Component \"suicides_no\": target is numeric, current is character"        
+## [13] "Component \"population\": Attributes: < target is NULL, current is list >"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+ \KeywordTok{class}\NormalTok{(df.who}\OperatorTok{$}\NormalTok{suicides_no)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "integer"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(df.who2}\OperatorTok{$}\NormalTok{suicides_no)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\section{\texorpdfstring{\textbf{Challenge
+3}}{Challenge 3}}\label{challenge-3}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Save the ``animals'' data frame as a .csv file named ``animals.csv''.
+  How many basic arguments should you use to save using the
+  \texttt{write.csv} function?
+\item
+  Import the ``animals'' data frame using the rio package.
+\item
+  Compare the two data frames. Are they the same? Why or why not?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{## YOUR CODE HERE}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Visualize data (teaser)}\label{visualize-data-teaser}
+
+We'll use this more in parts 2 and 3, but take a moment to look at the
+data you imported. You can use the \texttt{hist()} command to do a
+histogram and the \texttt{summary()} command to look at summary
+statistics. For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{names}\NormalTok{(df.who)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "country"     "year"        "sex"         "age"         "suicides_no"
+## [6] "population"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{hist}\NormalTok{(df.who}\OperatorTok{$}\NormalTok{suicides_no)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{KP_R_Intro_Part1_files/figure-latex/plotting-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(df.who}\OperatorTok{$}\NormalTok{suicides_no)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##     0.0     1.0    14.0   193.3    91.0 22338.0    2256
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(df.who}\OperatorTok{$}\NormalTok{year, df.who}\OperatorTok{$}\NormalTok{suicides)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{KP_R_Intro_Part1_files/figure-latex/plotting-2.pdf}
+
+\section{\texorpdfstring{\textbf{Challenge 4} Homework
+(optional)}{Challenge 4 Homework (optional)}}\label{challenge-4-homework-optional}
+
+swirl is a package that helps you learn R by using R. Visit the
+\href{http://swirlstats.com/}{swirl} homepage to learn more
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(swirl)}
+\KeywordTok{swirl}\NormalTok{()}
+\CommentTok{# follow the instructions until you can select number 1 "R Programming: The basics of programming in R"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+NOTE: type \texttt{bye()} to exist swirl.
+\end{quote}
+
+Acknowledgements - \href{http://adv-r.had.co.nz/}{Wickham H. 2014.
+Advanced R}\\
+- \href{http://www.jaredlander.com/r-for-everyone/}{Lander J. 2013. R
+for everyone: Advanced analytics and graphics}\\
+- \href{https://www.nostarch.com/artofr.htm}{Matloff N. 2011. The art of
+R programming: A tour of statistical software design}\\
+-
+\href{https://us.sagepub.com/en-us/nam/an-introduction-to-r-for-spatial-analysis-and-mapping/book241031}{Brunsdon
+C, Comber L. 2015. An Introduction to R for Spatial Analysis and
+Mapping} - Contributions by Dlab affiliates Evan Muzzall, Rochelle
+Terman, Dillon Niederhut, Sam Abdel-Ghaffar
+
+
+\end{document}

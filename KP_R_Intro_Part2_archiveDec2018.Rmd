@@ -1,0 +1,567 @@
+---
+title: 'KP R Intro Day 2: Data manipulation, summarization and graphing'
+author: "Nerissa Nance"
+date: "September 5, 2018"
+output:
+  html_document: 
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+  word_document:
+    toc: yes
+---
+
+
+###Citations:
+A lot of the source code for this material came from D-lab training materials authored by D-Lab staff. The original content can be accessed here: [https://github.com/dlab-berkeley/R-Fundamentals]
+Contributions by Dlab staff: Evan Muzzall, Shinhye Choi, Rochelle Terman, Dillon Niederhut, Sam Abdel-Ghaffar.
+
+# **Challenge 1**
+1. Clear your working environment
+2. Call the `rio` package and load in the SAS file of the WHO data (look in the "data" folder for this project to see the name of the file; hint: `?rio` for notes on syntax) 
+
+Extra credit #1: look at the data. How is it set up? why might this be challenging for analysis?
+Extra credit #2: load in also the .csv file of the same dataset and compare the datasets using the `all.equal()` command. Are they the same?
+
+```{r review, eval=FALSE}
+
+##YOUR CODE HERE
+
+
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#install.packages("mlbench")
+library(mlbench)
+library(rio)
+```
+
+Day 2 learning objectives:  
+
+* 1. Subsetting in base R  
+* 2. Missing data (NA)  
+* 3. Merging data frames in base R and dplyr
+* 4. Intro to plotting with ggplot2 
+
+# Loading data from files
+
+Load the PimaIndiansDiabetes2 dataset from the mlbench package. This dataset is from the National Institute of Diabetes and Digestive and Kidney Diseases and contains health data for 768 patients.
+
+```{r}
+
+data("PimaIndiansDiabetes2") 
+#I like to rename it so it's easier to type
+assign("df.pid", PimaIndiansDiabetes2)
+
+#can compare them using the "all.equal" command, just to double check
+all.equal(df.pid, PimaIndiansDiabetes2)
+
+# Read background information and variable descriptions.
+?PimaIndiansDiabetes2
+
+rm(PimaIndiansDiabetes2)
+
+```
+
+
+# Inspecting the data frame
+Remember from Part 1 that we can learn a lot about data in R. For dataframes, the following functions are useful:
+```{r, eval=FALSE}
+# returns the structure of the dataframe
+str(df.pid) 
+
+# dataframe dimensions
+dim(df.pid)    
+
+#column names
+colnames(df.pid)   
+names(df.pid)    
+
+#rownames
+rownames(df.pid)  
+
+# number of rows
+nrow(df.pid)  
+# number of columns
+ncol(df.pid)  
+# show rows with unique data
+unique(df.pid)   
+
+# if you want to know how many unique values there are, you can use this:
+length(unique(df.pid$age))
+
+# show the first "n" rows
+head(df.pid, n = 10)
+# show the last "n" rows
+tail(df.pid, n = 4) 
+```
+
+
+# Subsetting in base R
+Efficiently subsetting your data will save you time and stress. Fortunately, there are several different ways to subset data in base R.
+
+### Subsetting in base R (`$`)
+Remember from Part 1 that the dollar sign operator `$` will extract only a single vector/column within the data frame:
+```{r, eval=FALSE}
+?"$" # Remember to wrap symbols in quotation marks to view their help pages
+```
+```{r}
+#Returns only the "age" vector from the `df.pid` data frame.
+head(df.pid$age) 
+
+```
+
+> Type df.pid$ and press the TAB key - a handy list of the columns in your data will appear! 
+
+```{r, eval = F}
+df.pid$
+```
+
+# **Challenge 2**
+1. Practice by extracting `pressure` and `glucose` from the `df.pid` dataframe using the dollar sign `$` and plot them in a histogram using the `hist()` function.
+
+Extra credit #1: try this also using the generic `plot()` command.
+
+```{r}
+## YOUR CODE HERE
+
+
+
+```
+
+### Subsetting in two dimensions with bracket notation `[ , ]` 
+However, we do not have to specify all rows or columns when subsetting with bracket notation. We can specify dimensions of both rows and columns that we want. You might find subsetting using **bracket notation** `[ , ]` along with variable names, positive and negative integers, and/or logical values is easier because you can subset multiple elements at once.  
+
+> Inside the brackets, everything before the comma refers to rows. Everything after the comma refers to columns! 
+
+> [rows , columns]  
+
+Let's start just with the columns!  
+
+### Variable names (`[ , c("Variable Names")]`)
+You can subset your data by specifying variable names within bracket notation and using the `c()` function to create a column name character vector of names you want to keep.
+
+We can create a new dataframe object `diab` that includes only "glucose" , "insulin" and "diabetes" variable names from the `df.pid` data frame:
+```{r, eval=FALSE}
+?"["
+```
+```{r}
+diab <- df.pid[ , c("glucose", "insulin", "diabetes")]
+str(diab)
+head(diab)
+dim(diab)
+
+# compare this to "df.pid", which remains unchanged
+head(df.pid)
+dim(df.pid)
+
+```
+
+> Notice that the comma is still included within the bracket notation before the vector of column names. This indicates that we want ALL of the rows corresponding to these two columns. This is the same when we only want to subset rows and include ALL columns (see below).  
+
+
+
+### Subsetting with integers
+Subsetting by **positive** integers will **include** only the specified columns as referenced by their indicies - we do not have to type out their names!  
+
+Subsetting by **negative** integers will **exclude** the specified columns. Notice the `-` symbol before `c()` inside our bracket notation. This is useful when you only want to exclude a few things.
+
+
+```{r str}
+str(df.pid)
+
+# why does our vector go after the comma?
+subsetted <- df.pid[1:50 , c(1, 3, 8)] 
+
+str(subsetted)
+head(subsetted)
+dim(subsetted)
+
+dim(df.pid)
+
+
+names(df.pid)
+noage <- df.pid[ , -c(8)]
+str(noage)
+head(noage)
+
+dim(noage)
+```
+
+
+
+### Subsetting with logical tests
+We can also use logical tests to subset our data. For example, what if we want to include only the _**rows**_ that have a value of 35 for "age"? We can use the relational operator `==`:
+```{r, eval=FALSE}
+?"=="
+```
+```{r}
+all35yos <- df.pid[df.pid$age == 35 ,] 
+
+# Pop quiz: why is the comma included? 
+
+#check that this worked:
+table(all35yos$age)
+
+```
+
+You can also add more conditions using the "and" `&` logical operator or the "or" `|` logical operator: 
+```{r, eval=FALSE}
+?"&"
+?"|"
+```
+```{r}
+# & (and) = all conditions must be TRUE
+all41diab <- df.pid[df.pid$age == 41 & df.pid$diabetes == "pos", ] 
+head(all41diab)
+
+# | (or) = just one of the conditions must be TRUE
+all41ordiab <- df.pid[df.pid$age == 41 | df.pid$diabetes == "pos", ]
+head(all41ordiab)
+
+dim(all41diab) 
+dim(all41ordiab)
+
+#say you wanted to exclude the 41 year olds instead:
+no41s <- df.pid[df.pid$age!=41,]
+table(no41s$age)
+```
+
+
+
+# **Challenge 3**
+1. Load the `iris` dataset! Type `data(iris)` to load it.  
+2. What is this dataset? How do you find out?  
+3. Subset the `iris` dataset:
+
+    * to a data frame named "vv" with only the observations from the "versicolor" or "virginica" species 
+    * to a data frame called "petals20" that has only the first 20 observations of the  "Petal.Length" and "Petal.Width" variables
+    
+Extra credit #1: Try also subsetting to a dataset that only has length values greater than the median length OR width values greater than the median width (hint: use `summary()` to peek at descriptive stats)
+   
+```{r}
+## YOUR CODE HERE
+
+
+```
+
+# Missing data (`NA`)
+Identifying missing data can be important for subsetting purposes. R codes missing values as `NA`. Identifying missing data is important because dealing with it might be necessary to run basic tests like `mean()`. 
+```{r, eval=FALSE}
+?NA
+
+# Scroll down to `na.rm`:
+?mean 
+```
+```{r}
+mean(df.pid$pressure) 
+# This returns NA because R is unsure how to deal with NA cells for the `mean` computation.
+
+
+table(is.na(df.pid$pressure))
+```
+
+Look at the "Usage" portion of the help file - we know what `rm` is, and we now know what `NA` is, so what do you think the logical argument `na.rm =` will do? That's right! We can use `na.rm = TRUE` to properly calculate the mean of the NonD column by now excluding the NAs. 
+```{r}
+mean(df.pid$pressure, na.rm = TRUE) 
+
+#Now `mean()` returns the mean!
+```
+
+While `na.rm()` nor `str()` will not tell us which data are missing in a convenient way, `is.na()` does. Wrap the name of your data frame in `is.na()` to return logical values. Missing data is coded as `TRUE`, while present data are coded as `FALSE`
+```{r, eval=FALSE}
+?is.na
+colSums(is.na(df.pid))
+
+#or for a specific variable 
+table(is.na(df.pid$pressure))
+
+
+```
+
+
+## Missing data (`NA`) - recoding missing data
+Make a copy of `df.pid` named df.copy so we do not alter the original, then recode NA values and replace them with the median value:
+```{r}
+df.copy <- df.pid
+
+df.copy$pressure[is.na(df.copy$pressure)] <- median(df.copy$pressure, na.rm=TRUE)
+  
+table(is.na(df.copy$pressure))
+
+
+```
+
+
+We can also subset only rows without any missing data using bracket notation. `complete.cases()` will find rows with no missing values.
+```{r, eval=FALSE}
+?complete.cases
+```
+```{r}
+s_complete <- df.pid[complete.cases(df.pid) , ]  
+dim(s_complete)
+
+
+
+#try this with one variable
+s_complete2 <- df.pid[complete.cases(df.pid$pressure) , ]  
+dim(s_complete2)
+
+```
+
+
+
+# Data summarization (`summary`, `describe` , `describeBy`,  `table`)
+Data can be summarized in a myriad of ways. Below are a few examples to get you started.
+
+`summary` provides a six-number summary of a data frame:
+```{r}
+summary(df.pid)
+
+# or of a single vector
+summary(df.pid$pressure)
+```
+
+`describe` and `describeBy` from the `psych` R package provide some other metrics. We are going to subset `animals` so that it only includes the numeric variables within the `describe` call. 
+
+Remember, we installed the 'psych' package on Day 1, so all we have to do is call it into our environment with `library`:
+```{r}
+library(psych)
+
+# this works, but some of the output might not be meaningful
+describe(df.pid) 
+
+#what is the 'diabetes' variable?
+str(df.pid)
+#it's a factor, so summary stats probably aren't helpful
+
+#let's just pick a few variables:
+describe(df.pid[ , c("pregnant", "glucose", "pressure", "insulin")]) 
+
+```
+
+We can also subset and save it for later use:
+```{r}
+
+names(df.pid)
+test_descriptives <- describe(df.pid[ , c("pregnant", "glucose", "pressure", "insulin")])
+
+test_descriptives
+
+export(test_descriptives, "test_descriptives.csv", col.names=TRUE)
+
+
+#Output summary statistics by one grouping variable:
+summary_sub <- describeBy(df.pid, group = as.factor(df.pid$diabetes))
+summary_sub
+
+```
+
+
+We can view frequencies for of categorical data with `table`
+```{r}
+# get frequencies for one variable:
+table(df.pid$diabetes) 
+
+#get a cross tabulation of two variables:
+table(df.pid$diabetes, df.pid$pregnant) 
+```
+
+**Challenge 4**
+
+1) Summarize the WHO suicide numbers by gender 
+2) What happens when you do this for all the variables? Why? How can you fix this?
+3) Save the output as a .csv file
+
+Extra credit #1: why are these statistics not very useful? (again, peek at how the data is set up)
+Extra credit #2: look up the `summarise_each()` command in the dplyr package. How might you collapse the data using this command? (hint: check out the cheatsheet for the dplyr packge for help)
+```{r}
+#YOUR CODE HERE
+
+```
+
+
+# Merging data with `cbind()` and `rbind()`
+Merging data is useful when we want to combine two different dataframes that share a vector/column.   
+
+`cbind()` will bind two data frames by their columns. Let's cbind `df1` and a new dataframe, `df3`:
+```{r, eval=FALSE}
+?merge
+?cbind
+?rbind 
+```
+```{r}
+
+
+#let's say that we have this other column of data we need to add 
+#(FYI: runif randomly chooses from a uniform distribution between the specified min and max. I'm making it the same size as the dataset for the sake of this example.) 
+df3 <- round(runif(768, min=0, max=10), 2)
+head(df3)
+
+df_cbind <- cbind(df.pid, df3)
+head(df_cbind)
+dim(df_cbind)
+```
+> NOTE: If you are using cbind, because it binds the data by row names, you need to make sure your data is SORTED in EXACTLY the same way! 
+
+To make sure your data is ordered the way you need it to be, you can order your data using the `order` command. For example, sort `df.pid` by ascending pressure values: 
+```{r, eval=FALSE}
+
+new_ordered <- df.pid[order(df.pid$pressure),] 
+head(new_ordered)
+
+#for descending values:
+new_ordered2 <- df.pid[order(-df.pid$pressure),] 
+head(new_ordered2)
+```
+
+`rbind()` will add more rows to an existing data frame. An example:
+```{r}
+ 
+#NOTE: datasets need to have the same number of columns
+df.a <- df.pid[,c("diabetes", "age", "pressure")]
+names(df.a)
+df.b <- data.frame(diabetes = c("pos", "pos", "pos", "neg"),
+                  age = c(44, 49, 50, 49),
+                  pressure = c(60,70,60,75))
+df_rbind <- rbind(df.a, df.b)
+dim(df_rbind)
+```
+> NOTE: for rbind to work, you should have the same column names for both of your data frames! 
+
+#Merging data using dplyr
+
+You can merge data in R using a variety of tools, but one way is to use the package `dplyr`. dyplyr is a popular package for data manipulation. The commands for merging are very similar to what you use in sql. Take a moment to google `dplyr cheat sheet` to find a breakdown of the different commands.
+
+Let's practice a join:
+
+```{r}
+library(dplyr)
+
+
+#first make an indidivual identifier for the data, for the sake of example
+df.pid$id <- rownames(df.pid)
+#let's first split the data:
+df1 <- df.pid[,c("id","pregnant", "glucose" , "pressure")]
+df2 <- df.pid[1:400,c("diabetes", "id")]
+
+joined <- dplyr::left_join(df1, df2, by="id")
+
+dim(joined)
+table(is.na(joined$diabetes))
+
+
+```
+
+**Challenge 5**
+
+1. Combine df1 and df2 again using dplyr, but this time using the inner_join command. What is different from when you used left_join, and why? How can you tell?
+
+Extra credit #1: create 5 new rows of the df.pid dataset and append them to df.pid dataset using rbind(). (Be sure to create a NEW object so you are not overwriting your own!)
+
+```{r}
+#YOUR CODE HERE
+
+```
+
+
+
+# ggplot2
+The "ggplot2" R package is a powerful way to graph your data. The syntax is additive, it uses a plus-symbol `+` to connect different arguments together.  
+
+The [ggplot2](http://ggplot2.org/) R package eases the burden of plotting using base functions. Instead, it favors simplified syntax, which is different from anything you have seen thus far. ggplot2 is part of the [tidyverse](https://www.tidyverse.org/) - a series of R packages designed to simplify R syntax. Click the above hyperlink to learn more. "gg" stands for "Grammar of Graphics." 
+
+The `ggplot` function is the main function call. You need three things to create a ggplot:  
+1) a dataset - some data to be visualized  
+2) "aes"thetics - definitions of your coordinate system, point color and shape mappings, etc.  
+3) geoms - how your data should be represented: points, bars, densities, ribbons, etc.
+
+ggplot2 functions work in **layers**. Each time you wish to add a geom, title, axis label, or background color, you must add a new layer by typing the plus `+` sign.  
+
+Check out the help files and then see the below examples using the "iris" dataset:
+```{r}
+library(ggplot2)
+?ggplot2
+data(iris)
+```
+
+# ggplot histogram 
+Remember how we said the `ggplot` function works in layers? Look what happens if we specifiy our data set ("iris") and our global aesthetic ("aes"), but we do not specify our "geom". We get the coordinate system and a defined X axis (Petal.Length), but no representation of the data!
+```{r}
+ggplot(data = iris, aes(x = Petal.Length))
+```
+
+We can add the bars by adding a new layer with `+`, and then specify "geom_histogram()" to get produce the histogram! 
+
+```{r}
+ggplot(data = iris, aes(x = Petal.Length)) + 
+    geom_histogram()
+
+```
+
+You can also change the color of the bars by adding the `fill` argument to the global aes, change the background color by adding `theme_` in a new layer, and the title by adding `ggtitle` in a new layer. The `bins` argument will change the number and width of the histogram bars.
+```{r}
+ggplot(data = iris, aes(x = Petal.Length)) + 
+    geom_histogram(fill = "blue", color = "black", bins = 10) + 
+    theme_classic() + 
+    ggtitle("This is a ggplot histogram") + 
+  ylab("Count")
+```
+
+# ggplot boxplots
+Boxplots continue to follow this logic. However, this time we should specifically define our X axis as the factor variable we wish to investigate, and the Y axis as some numeric value: 
+```{r}
+ggplot(data = iris, aes(x = Species, y = Petal.Length, fill = Species)) + 
+    geom_boxplot() + 
+    theme_minimal() + 
+    ylab("Petal Length (cm)") +
+    ggtitle("This are ggplot boxplots") 
+```
+What happens if you un-hashtage `guides(fill = FALSE)` in the above chunk?  
+
+# ggplot scatterplots
+Scatterplots work similarly. However, this time we must define both our X and Y axes in our global "aes" and select "geom_point()" as our geom. 
+
+We can then automatically map the factor variable ("Species") to point types and shapes in the `color` and `shape` arguments. By doing so, a legend is automatically created for us! 
+
+The other layer arguments apply as well. `size` will change the size of the points, while `alpha` will change their transparency. 
+
+We can also include a second `theme` argument layer where can can specify the legend position via `legend.position`. 
+
+The X and Y axis labels can be changed via `xlab` and `ylab` layers, for example if we want to include our units of measurement (centimeters):
+```{r}
+ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width, color = Species, shape = Species)) + 
+    geom_point(size = 10, alpha = 0.5) + 
+    theme_classic() +
+    ggtitle("This is a ggplot scatterplot") +
+    theme(legend.position = "top") + 
+    xlab("Petal Length (cm)") + 
+    ylab("Petal Width (cm)") + 
+    theme(legend.position = "top",
+          plot.title = element_text(hjust = 0.5, size = 40),
+          legend.title = element_text(size = 20),
+          legend.text = element_text(size = 20),
+          axis.text.x = element_text(angle = 45, hjust = 1)) 
+```
+
+# **Challenge 6** 
+Try this on your own with the df.pid dataset!
+
+1) Create a boxplot of pressure values by diabetes status
+2) Do you get a `warnings` message? Why?
+3) Add color, if you didn't yet in step #1
+4) Add labels to the x and y axes 
+
+Extra credit #1: fix the issue pointed out in the warnings() message (hint: use the code from part 7 above)
+Extra credit #2: try it on your own! Think about the data you have and what would be interesting to visualize. Refer to the ggplot2 `cheatsheet`, if you haven't already for inspiration.
+
+
+```{r}
+##YOUR CODE HERE
+
+
+```
+
+ 
