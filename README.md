@@ -29,18 +29,17 @@ Specific objectives include:
 <br/><br/><br/>
 Topics
 <br/>
-*Part 1: Connecting and base R*
+**Part 1: Connecting and base R**
 
 - Utilizing files in RStudio, creating an Rmd file, download, install packages and read them into your library, and read key      documentation
 - Reviewing different data types, naming/calling syntax, subsetting syntax and data structures
 - Identifying different types of missing data 
 - Loading a csv file and SAS file into the environment 
 - Accessing the VDW and CLARITY using R
-     
- <br/>    
- Chapters to review: Chapter 20 Vectors
+       
+ *Chapters to review: Chapter 20 Vectors
  <br/><br/>
- *Part 2: Manipulating, summarizing and visualizing data*
+ **Part 2: Manipulating, summarizing and visualizing data**
  
 - employ some basic data manipulation techniques
 - understand missing data in R 
