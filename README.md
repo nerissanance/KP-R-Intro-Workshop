@@ -27,7 +27,7 @@ Specific objectives include:
 - Student will feel comfortable merging and manipulating data
 - Students will be able to visualize data
 <br/><br/><br/>
-Topics
+***Topics***
 <br/>
 **Part 1: Connecting and base R**
 
