@@ -19,6 +19,7 @@ Learning objectives
 This training consists of two (two-hour) sessions, and by the end of it, students will be comfortable enough in RStudio to open, clean, and visualize data, use R packages and know how to access help for their specific needs. 
 <br/>
 Specific objectives include:
+<br/>
 - Students will be able to understand and leverage the R Studio interface 
 - Students will be able to recognize and utilize different data types and data structures
 - Students will be able to identify different types of missing data in R
@@ -29,6 +30,7 @@ Specific objectives include:
 Topics
 <br/>
 *Part 1: Connecting and base R*
+
 - Utilizing files in RStudio, creating an Rmd file, download, install packages and read them into your library, and read key      documentation
 - Reviewing different data types, naming/calling syntax, subsetting syntax and data structures
 - Identifying different types of missing data 
@@ -39,6 +41,7 @@ Topics
  Chapters to review: Chapter 20 Vectors
  <br/><br/>
  *Part 2: Manipulating, summarizing and visualizing data*
+ 
 - employ some basic data manipulation techniques
 - understand missing data in R 
 - produce descriptive/summary statistics
