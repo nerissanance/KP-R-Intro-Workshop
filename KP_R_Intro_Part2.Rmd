@@ -45,6 +45,8 @@ Day 2 learning objectives:
 * 3. Merging data frames in base R and dplyr
 * 4. Intro to plotting with ggplot2 
 
+ 
+
 # Loading data from files
 
 Load the PimaIndiansDiabetes2 dataset from the mlbench package. This dataset is from the National Institute of Diabetes and Digestive and Kidney Diseases and contains health data for 768 patients.
