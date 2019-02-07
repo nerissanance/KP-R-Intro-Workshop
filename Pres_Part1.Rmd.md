@@ -100,7 +100,8 @@ library(swirl)
 
 
 
-### Getting help  
+Getting help 
+========================================================
 The `?` symbol can be used to bring up the help pages:  
 
 ```r
@@ -239,7 +240,7 @@ See how the definition of `welcome_object` changed in your global environment wi
 
 
 
-### Variable classes (`class`)
+Variable classes
 ========================================================
 Each variable in R has a `class` that summarizes the type of the data stored within the object. We will talk more about data types below.
 
@@ -1100,7 +1101,9 @@ levels(animals$Type)
 [1] "Cat" "Dog" "Pig"
 ```
 
-##### Changing factor "levels"
+
+Changing factor "levels"
+========================================================
 Each animal type (Cat, Dog, and Pig) within the factor `animals$Type` vector are the factor levels. 
 
 If we want to change how R stores the factor levels, we can specify their levels using the `levels()` argument. For example:
@@ -1129,7 +1132,7 @@ animals$Type
 Levels: Dog Pig Cat
 ```
 
-> NOTE: we will load the `animals` data frame from file at the beginning of Part 2, so do not worry if your dataframe does not look identical! 
+
 
 
 Importing and exporting with the Rio package
@@ -1143,8 +1146,8 @@ The Rio package simplifies importing/exporting by putting all data-specific impo
 ```r
 library(rio)
 
-df.who2 <- import("./data/whostats_suicide.sas7bdat")
- dim(df.who2)
+df.who <- import("./data/whostats_suicide.sas7bdat")
+ dim(df.who)
 ```
 
 ```
@@ -1166,10 +1169,51 @@ Visualize data
 We'll use this more in parts 2 and 3, but take a moment to look at the data you imported. You can use the `hist()` command to do a histogram and the `summary()` command to look at summary statistics. For example:
 
 
-
-
-
+```r
+names(df.who)
+```
 
 ```
-Error in eval(expr, envir, enclos) : object 'df.who' not found
+[1] "country"     "year"        "sex"         "age"         "suicides_no"
+[6] "population" 
 ```
+
+```r
+class(df.who$suicides_no)
+```
+
+```
+[1] "character"
+```
+
+```r
+df.who$suic_no_num <- as.numeric(df.who$suicides_no)
+
+hist(df.who$suic_no_num)
+```
+
+![plot of chunk plotting](Pres_Part1.Rmd-figure/plotting-1.png)
+
+```r
+summary(df.who$suic_no_num)
+```
+
+```
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+    0.0     1.0    14.0   193.3    91.0 22338.0    2256 
+```
+
+Challenge 4 Homework (optional)
+========================================================
+
+swirl is a package that helps you learn R by using R. Visit the [swirl](http://swirlstats.com/) homepage to learn more
+
+```r
+library(swirl)
+swirl()
+# follow the instructions until you can select number 1 "R Programming: The basics of programming in R"
+```
+
+> NOTE: type `bye()` to exist swirl. 
+
+
