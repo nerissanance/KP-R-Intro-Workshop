@@ -17,13 +17,6 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Citations:
-A lot of the source material for this training came from D-lab training materials authored by D-Lab staff. The original content can be accessed here: [https://github.com/dlab-berkeley/R-Fundamentals]
-D-Lab works with Berkeley faculty, research staff, and students to advance data-intensive social science and humanities research. They're really cool, check them out!
- [D-Lab Calendar](http://dlab.berkeley.edu/calendar-node-field-date)  
- [D-lab Working Groups](http://dlab.berkeley.edu/working-groups)  
-Some of this also came from Chris Kennedy's "Concise R" series, accessed [here](https://github.com/ck37/concise-r)
- 
 
 Part 1 learning objectives:  
 * Students will be able to structure and execute essential functions, including using Rmd files and utilizing read key documentation
@@ -31,7 +24,6 @@ Part 1 learning objectives:
 * Students will be able to identify different types of missing data in R
 * Students will feel comfortable accessing data from R
 
- 
 
 #Introduction
 
@@ -791,4 +783,11 @@ Acknowledgements
 - [Lander J. 2013. R for everyone: Advanced analytics and graphics](http://www.jaredlander.com/r-for-everyone/)  
 - [Matloff N. 2011. The art of R programming: A tour of statistical software design](https://www.nostarch.com/artofr.htm)  
 - [Brunsdon C, Comber L. 2015. An Introduction to R for Spatial Analysis and Mapping](https://us.sagepub.com/en-us/nam/an-introduction-to-r-for-spatial-analysis-and-mapping/book241031)
-- Contributions by Dlab affiliates Evan Muzzall, Rochelle Terman, Dillon Niederhut, Sam Abdel-Ghaffar
+
+
+A lot of the source material for this training came from D-lab training materials authored by D-Lab staff. The original content can be accessed here: [https://github.com/dlab-berkeley/R-Fundamentals]
+D-Lab works with Berkeley faculty, research staff, and students to advance data-intensive social science and humanities research. They're really cool, check them out!
+ [D-Lab Calendar](http://dlab.berkeley.edu/calendar-node-field-date)  
+ [D-lab Working Groups](http://dlab.berkeley.edu/working-groups)  
+Some of this also came from Chris Kennedy's "Concise R" series, accessed [here](https://github.com/ck37/concise-r)
+ 
