@@ -3,7 +3,7 @@
 Welcome to the KP DOR R fundamentals training! 
 
 
-Textbook:
+Relevant textbook:
 <br/>
 [R for Data Science](https://r4ds.had.co.nz/)
 <br/> <br/> 
@@ -18,26 +18,31 @@ Other useful resources:
 Learning objectives
 This training consists of two (two-hour) sessions, and by the end of it, students will be comfortable enough in RStudio to open, clean, and visualize data, use R packages and know how to access help for their specific needs. 
 <br/>
-Specific objectives include:
+By the end of the course, we hope that you will:
 <br/>
-- Students will be able to understand and leverage the R Studio interface 
-- Students will be able to recognize and utilize different data types and data structures
-- Students will be able to identify different types of missing data in R
-- Students will feel comfortable accessing data from R 
-- Student will feel comfortable merging and manipulating data
-- Students will be able to visualize data
+- be able to understand and leverage the R Studio interface 
+- be able to recognize and utilize different data types and data structures
+- be able to identify different types of missing data in R
+- feel comfortable accessing data from R 
+- feel comfortable merging and performing some basic data manipulations
+- be able to visualize data
 <br/><br/><br/>
 ***Topics***
 <br/>
+
 **Part 1: Connecting and base R**
 
-- Utilizing files in RStudio, creating an Rmd file, download, install packages and read them into your library, and read key      documentation
+- Utilizing files in RStudio, creating an Rmd file, download, install packages and read them into your library, and read key documentation
 - Reviewing different data types, naming/calling syntax, subsetting syntax and data structures
 - Identifying different types of missing data 
 - Loading a csv file and SAS file into the environment 
-- Accessing the VDW and CLARITY using R
-       
- *Chapters to review: Chapter 20 Vectors
+- Accessing the VDW and CLARITY using R (**PENDING**)
+     <br/>  
+ *Relevant chapters: 
+ - Chapters 1 Intro
+ - Chapter 27 R Markdown
+ - Chapter 20 Vectors
+
  <br/><br/>
  **Part 2: Manipulating, summarizing and visualizing data**
  
@@ -46,10 +51,13 @@ Specific objectives include:
 - produce descriptive/summary statistics
 - merge data with cbind/rbind and dplyr
 - graph with base r and ggplot
-<br/>
- Chapters to review: Chapter 20 Vectors
- <br/>
-<br/>
+   <br/>  
+ *Relevant chapters: 
+ - Chapter 5 data transformation
+ - Chapter 3 Visualization
+ - Chapter 28 Graphics for communication
+ 
+ <br/><br/>
 
 <br/> <br/><br/> <br/><br/> <br/>
 
