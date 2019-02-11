@@ -8,11 +8,11 @@ Learning objectives
 ========================================================
 
 
-Part 1 learning objectives:  
-- Students will be able to structure and execute essential functions, including using Rmd files and utilizing read key documentation
-- Students will be able to recognize and utilize different data types and data structures
-- Students will be able to identify different types of missing data in R
-- Students will feel comfortable accessing data from R
+Part 1 learning objectives, students will:  
+- be able to structure and execute essential functions, including using Rmd files and utilizing read key documentation
+- be able to recognize and utilize different data types and data structures
+- be able to identify different types of missing data in R
+- feel comfortable accessing data from R
 
 
 The basics: navigating RStudio and projects
@@ -22,6 +22,8 @@ Currently, you have the "KP-R-Intro-Workshop" project open (as you can see in th
 
 We can see recent projects by selecting File -> Recent Projects in the upper left corner of RStudio, or by clicking the list of recent projects in the upper right corner. If we click the name of the project it will switch to that project, or if we click the button it will open in a new session.
 
+The basics: navigating RStudio and projects
+========================================================
 Let's try creating a new project.
 
 * Create a new project: File -> New Project
@@ -37,6 +39,10 @@ RStudio interface
 When we start RStudio we have no files open by default. Click File -> New File -> RScript to start a new R script (or program). This is a text file with all of the R commands you want to run for an analysis.
 
 As an alternative to an R script we can use a **markdown file**. R Markdown files combine R scripts with simple text formatting, which makes reports  (PDFs or HTMLs) easy to generate with embedded R output. 
+
+
+RStudio interface
+========================================================
 
 Try making a new R script and R markdown right now in your new project directory, and save the files. 
 
@@ -58,7 +64,8 @@ To write R code we need to start an R block with three backticks followed by r i
 
 Task: everyone google "RMarkdown cheat sheet" and save that PDF.
 
-Challenge:
+Challenge
+========================================================
 
 * Create a header line called "R Training Day 1", with size 1 (aka "header 1").
 * Write this equation in the notes area: Area = pi * r^2
@@ -72,6 +79,10 @@ Package installation
 Let's install some packages that we will use during the training. You can install packages by clicking the "Packages" tab in the bottom-right window, clicking install, and then searching for the package you wish to install.
 
 Packages can also be installed through the command line using `install.packages()`. The package name must be wrapped in quotation marks so that R knows it is searching for that particular package named `"psych"`, rather than previously defined data named psych:
+
+
+Package installation
+========================================================
 
 > It is generally good to keep RStudio and your packages up to date! Install the packages we will use in the workshop: 
 
@@ -119,14 +130,6 @@ You define objects through `variable assignment` and they are stored in your `gl
 
 You define objects through variable assignment using the **assignment operator** `<-`. This is a "less than" `<` symbol immediately followed by a hyphen `-`
 
-> You will also see that `=` is frequently used in place of the assignment operator. This works the same, but we recommend using the assignment operator for consistency. Arguments and functions frequently use `=` and it is best to consistently assign your variables with `<-` until you understand the basics.  
-
-
-Object definition/variable assignment requires three pieces of information:
-========================================================
-1) object_name  
-2) `<-`  
-3) definition/assignment  
 
 Let's define an object named `numeric_oject` and define it as the number 4:
 ```{r}
