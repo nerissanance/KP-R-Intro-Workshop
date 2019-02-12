@@ -15,10 +15,11 @@ Other useful resources:
 - [Stack Overflow - R](http://stackoverflow.com/questions/tagged/r)  
 <br/> <br/> 
 
-*Learning objectives*
-This training consists of two (two-hour) sessions, and by the end of it, students will be comfortable enough in RStudio to open, clean, and visualize data, use R packages and know how to access help for their specific needs. 
+*Learning objectives* <br/>
+This training consists of two (two-hour) sessions, and by the end of it, we hope that you will be comfortable enough in RStudio to open, clean, and visualize data, use R packages and know how to access help for their specific needs. 
 <br/>
-By the end of the course, we hope that you will:
+<br/>
+Specifically, we hope that you will:
 <br/>
 - be able to understand and leverage the R Studio interface 
 - be able to recognize and utilize different data types and data structures
@@ -38,7 +39,7 @@ By the end of the course, we hope that you will:
 - Loading a csv file and SAS file into the environment 
 - Accessing the VDW and CLARITY using R (**PENDING**)
      <br/>  
- *Relevant chapters: 
+ *Relevant chapters:* 
  - Chapters 1 Intro
  - Chapter 27 R Markdown
  - Chapter 20 Vectors
@@ -52,7 +53,7 @@ By the end of the course, we hope that you will:
 - merge data with cbind/rbind and dplyr
 - graph with base r and ggplot
    <br/>  
- *Relevant chapters: 
+ *Relevant chapters:*
  - Chapter 5 data transformation
  - Chapter 3 Visualization
  - Chapter 28 Graphics for communication
