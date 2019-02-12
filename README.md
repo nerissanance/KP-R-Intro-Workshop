@@ -35,7 +35,6 @@ Specifically, we hope that you will:
 
 - Utilizing files in RStudio, creating an Rmd file, download, install packages and read them into your library, and read key documentation
 - Reviewing different data types, naming/calling syntax, subsetting syntax and data structures
-- Identifying different types of missing data 
 - Loading a csv file and SAS file into the environment 
 - Accessing the VDW and CLARITY using R (**PENDING**)
      <br/>  
