@@ -3,7 +3,7 @@
 Welcome to the KP DOR R fundamentals training! 
 
 
-Relevant textbook:
+Relevant text:
 <br/>
 [R for Data Science](https://r4ds.had.co.nz/)
 <br/> <br/> 
@@ -47,11 +47,11 @@ Specifically, we hope that you will:
  <br/><br/>
  **Part 2: Manipulating, summarizing and visualizing data**
  
-- employ some basic data manipulation techniques
-- understand missing data in R 
-- produce descriptive/summary statistics
-- merge data with cbind/rbind and dplyr
-- graph with base r and ggplot
+- employing some basic data manipulation techniques
+- understanding missing data in R 
+- producing descriptive/summary statistics
+- merging data with cbind/rbind and dplyr
+- graphing with base r and ggplot
    <br/>  
  *Relevant chapters:*
  - Chapter 5 data transformation
