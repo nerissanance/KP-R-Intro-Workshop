@@ -114,24 +114,22 @@ Package installation
 
 
 ```r
-install.packages(c("knitr", "rmarkdown", "swirl", "mlbench", "tidyverse"))
+install.packages(c("knitr", "rmarkdown", "swirl", "mlbench", "tidyverse", "rio"))
 ```
 
 
 
 The `library` function  
 ========================================================
-Before using a previously installed package, you must retreive it with `library()` when you begin a new R session. You do not need to reinstall packages each time you quit and restart your R session. 
+Before using an installed package, you must retreive it with `library()` when you begin a new R session. You do not need to reinstall packages each time you quit and restart your R session. These packages can now be used in our RStudio session!
 
 
 ```r
-library(ggplot2)
+library(tidyverse)
 library(knitr)
-library(psych)
 library(rmarkdown)
-library(reshape2)
-library(swirl)
-# these packages can now be used in our RStudio session!
+library(rio)
+library(mlbench)
 ```
 
 
@@ -149,6 +147,13 @@ The `?` symbol can be used to bring up the help pages:
 ?ggplot
 ?geometric.mean
 ```
+
+Global environment
+========================================================
+You define objects through `variable assignment` and they are stored in your `global environment`.  
+
+Your global environment is where all the objects (data sets, scalars, vectors, functions, etc.) are stored. It is 'global' because anything in it can be used throughout your session. 
+
 
 Variable assignment (`<-`)
 ========================================================
@@ -188,7 +193,7 @@ Object assignment (`<-`)
 ```r
 r <- 2
 
-#back to our equation:
+#Try an equation:
 
 Area <- pi * r^2
 
@@ -254,7 +259,10 @@ Naming R objects
 ========================================================
 Object names can be anything, but are always case sensitive. However, they cannot begin with a number and generally do not begin with symbols. However you choose to name your objects, be consistent and use brief descriptions of their contents.  
 
-Names must be __**unique**__. If you reuse an old name, the old definition will be overwritten.  
+Names must be __**unique**__. If you reuse an old name, the old definition will be overwritten. 
+
+Naming R objects  
+========================================================
 
 Let's overwrite the object `welcome_object` from above.
 
@@ -269,13 +277,22 @@ welcome_object
 
 ```r
 welcome_object <- "Welcome to Part 1"
+```
+
+
+Naming R objects  
+========================================================
+
+See how the definition of `welcome_object` changed in your global environment window? However, there is still only one 'welcome_object' in your global environment. 
+
+
+```r
 ls() 
 ```
 
 ```
 [1] "Area"           "numeric_object" "r"              "welcome_object"
 ```
-See how the definition of `welcome_object` changed in your global environment window? However, there are still only two objects in your global environment. 
 
 
 
@@ -319,6 +336,10 @@ ls()
 ```
 See how `numeric_object` disappeared from our global environment?
 
+
+
+Removing variables (`rm`)
+========================================================
 We can also wipe the entire environment with `rm(list = ls())` (or, click the broom icon in the upper right "global environment" pane)
 
 ```r
@@ -338,30 +359,24 @@ Double question marks ?? will lead you to coding walkthroughs called "vignettes"
 ```r
 ??psych
 ```
-You will often find that your questions are not answered by the help pages nor vignettes. In that case you should Google-search your question or error message along with the name of a free help website.  
-
-For example, to get help making boxplots, I might Google search "R how to make boxplots stack overflow"
+When all else fails, Google it!
 
 
 Atomic data types in R
 ========================================================
-Numeric, character, and logical (aka "boolean") data types all exist at the `atomic level`. Normally this means that they cannot be broken down any further and are the raw inputs for functions in R. Other R variables are frequently built upon these atomic types.
+Numeric, character, and logical (aka "boolean") data types all exist at the `atomic level`. 
 
+Normally this means that they cannot be broken down any further and are the raw inputs for functions in R. Other R variables are frequently built upon these atomic types.
 
+Numeric data type
+========================================================
 Numeric data are numbers and integers. You may also hear numeric data referred to as `float` or `double` data types. By default, R stores everything as `doubles` (64 bit floating point numbers) which makes R very memory hungry. 
 
 Define an object called `num` and then check its class
 
 ```r
 num <- 2 * pi
-num
-```
 
-```
-[1] 6.283185
-```
-
-```r
 class(num)
 ```
 
@@ -369,8 +384,11 @@ class(num)
 [1] "numeric"
 ```
 
+
+mathematical operators
+========================================================
 Standard mathematical operators apply to the creation of numeric data:
-`+`   `-`   `*`   `^`   `**`  `/`  `%*% (matrix multiplication)`  `%/% (integer division)`  `%% (modular division)`
+`+`   `-`   `*`   `^`   `**`  `/`  `%*% (matrix multiplication)`  `%/% (integer division)` 
 
 ```r
 5 + 2  
@@ -430,14 +448,6 @@ Standard mathematical operators apply to the creation of numeric data:
 ```
 
 ```r
-5 %% 2  
-```
-
-```
-[1] 1
-```
-
-```r
 5 %*% 2  
 ```
 
@@ -446,6 +456,7 @@ Standard mathematical operators apply to the creation of numeric data:
 [1,]   10
 ```
 
+Character data type
 ========================================================
 Character (aka string or text) data are always contained within quotation marks `" "`. Character handling in R is fairly close to character handling in a Unix terminal.  
 
@@ -468,11 +479,13 @@ class(char)
 [1] "character"
 ```
 
+Contatenating text (`paste`)
+========================================================
+You can also paste them together using the `paste` function:
+
+
 ```r
-#you can also paste them together using the `paste` function:
-
 char2 <- paste("This", "is", "character", "data")
-
 char2
 ```
 
@@ -505,7 +518,6 @@ split1 # a list is returned.
 [1] "This"      "is"        "slash"     "separated" "text"     
 ```
 
-Most functions require one or two arguments to be defined in order for it to properly run. You will find that functions are full of default, positional, and optional arguments that you can manipulate.  
 
 
 Logical type  
@@ -528,8 +540,11 @@ class(bool_object)
 ```
 [1] "logical"
 ```
-We recommend to always spell out `TRUE` and `FALSE` instead of abbreviating them `T` and `F` which might be mistaken for previously defined variables - therefore, you should not save anything as `T`, `F`, or `TRUE` or `FALSE`! Thus, there are certain words that do not make good variable names. R has many reserved words that you should avoid using. See `?reserved` for more information.
+We recommend to always spell out `TRUE` and `FALSE` instead of abbreviating them `T` and `F` which might be mistaken for previously defined variables.
 
+
+Logical type properties 
+========================================================
 Note that logical data also take on numeric properties. Remember that `TRUE` is stored as the numeral 1 and `FALSE` is stored as 0. 
 
 ```r
@@ -649,9 +664,12 @@ Challenge 1
 4. How do you check what types of data these variables are?  
 5. What does the `ls()` function do? Where else do you see this information?  
 6. Remove one of your numeric and one of your character variables.  
+
+Challenge 1
+========================================================
 7. Try to subract your remaining character variable from your numeric one. What happens? What might this tell you about data of different types?  
 8. Define a numeric object as 0 and check its class.  
-9. Define a boolean object as "FALSE" and check its class.  
+9. Define a boolean object as "FALSE" and check its class.
 10. Use `==` to compare your numeric and boolean object. Are they equivalent? Why or why not?  
 11. Define a character object that uses `paste()` to combine more than one word into a sentence.  
 12. Wipe your environment clean.  
@@ -698,7 +716,7 @@ There are several kinds of data structures in R. Data structures are collections
 4. dataframe  
 
 
-Vector
+Vectors
 ========================================================
 A **VECTOR** is an ordered group of the same kind of data. "Ordered" means that their position matters. Vectors are one-dimensional and homogenous, and are thus referred to by their type (e.g., character vector, numeric vector, logical vector).  
 
@@ -714,6 +732,9 @@ numeric_vector
 ```
 This numeric vector contains five elements.  
 
+
+Indexing vectors
+========================================================
 You can index a vector using square brackets (more on this in the subsetting section of Part 2). For example, to see what value lives in the third position of the object `numeric_vector`, you could type: 
 
 ```r
@@ -736,39 +757,6 @@ numeric_vector2
 ```
 
 
-Vector
-========================================================
-
-It doesn't matter what the datatype is for a vector, as long as it is all the same
-
-```r
-logical_vector <- c(TRUE, TRUE, FALSE, FALSE, TRUE)
-logical_vector
-```
-
-```
-[1]  TRUE  TRUE FALSE FALSE  TRUE
-```
-
-```r
-logical_vector2 <- c(logical_vector, c(FALSE, FALSE, FALSE))
-logical_vector2
-```
-
-```
-[1]  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE
-```
-
-You can also add and multiply vectors, but they need to be the same length
-
-```r
-logical_vector * logical_vector
-```
-
-```
-[1] 1 1 0 0 1
-```
-
 
 Generating random vectors (`seq`)
 ========================================================
@@ -782,7 +770,7 @@ length(logical_vector2)
 seq(from=0,to=length(logical_vector2),by=2)
 ```
 
-Sequence where `by = 1` (`:`)
+Sequences
 ========================================================
 R also gives you a shorthand operator for creating sequences in whole number increments of 1. This is the colon symbol `:`
 
@@ -804,14 +792,15 @@ sequence_object
 ```
 
 ```r
-0:length(logical_vector2)
+logical_vector <- c(TRUE, TRUE, FALSE, FALSE, TRUE)
+0:length(logical_vector)
 ```
 
 ```
-[1] 0 1 2 3 4 5 6 7 8
+[1] 0 1 2 3 4 5
 ```
 
-`set.seed`    
+set.seed    
 ========================================================
 You can also sample random groups of numbers. Use `set.seed()` to ensure that we all always get the same random draws from the parent universe, even on different machines
  
@@ -830,8 +819,11 @@ uniform
 [15] 3.133005 3.390534 4.084209 4.689436 5.267931 4.996230
 ```
 
+rnorm
+========================================================
+20 random samples from the normal distribution with a mean of 0 and standard deviation of 1:
+
 ```r
-# 20 random samples from the normal distribution with a mean of 0 and standard deviation of 1
 normal <- rnorm(20, 0, 1) 
 normal
 ```
@@ -963,6 +955,9 @@ _**It is worth emphasizing the importance of data frames in R!**_ Inside R, a **
 
 This is simply a spreadsheet!  
 
+
+Creating a data frame
+========================================================
 Let's create a dataframe called `animals` using the vectors we already created:
 
 We do this using `data.frame()`
@@ -973,6 +968,8 @@ animals <- data.frame(uniform, normal, integer, character, stringsAsFactors = FA
 # NOTE: `stringsAsFactors=FALSE` means that R will NOT try to interpret character data as factor type. More on this below. 
 ```
 
+Viewing data frames
+========================================================
 Take a peek at the `animals` data frame to see what it looks like:
 
 ```r
@@ -989,6 +986,8 @@ head(animals)
 6 5.810518 -0.74445302      10       Pig
 ```
 
+Column names
+========================================================
 We can change the names of the columns by passing into it a vector with our desired names
 
 ```r
@@ -1007,6 +1006,8 @@ head(animals)
 6 5.810518 -0.74445302     10  Pig
 ```
 
+Viewing dataframe structure
+========================================================
 We can check the structure of our data frame via `str()`
 
 ```r
@@ -1014,7 +1015,10 @@ str(animals)
 ```
 Here, we can see that a data frame is just a list of equal-length vectors! For readability purposes, `str()` displays columns from top to bottom, while the data are displayed left to right. 
 
-Learning about your data frame 
+
+More about your df
+========================================================
+How to learn more about your data frame: 
 
 
 ```r
@@ -1058,10 +1062,6 @@ Factor data type
 ========================================================
 Factor data are categorical types used to make comparisons between other data. Factors group the data by their "levels" (the different categorical groups within a factor).  
 
-For example, in our `animals` dataframe, we can coerce "Type" from character to factor data type. Cat, Dog, and Pig are the factor levels. If we might want to compare heights and weights between Cat, Dog, and Pigs, we set the character "Type" vector to factor data type. We can do so with `factor()`.  
-
-The dollar sign operator `$` is used to call a single vector from a data frame. This will be discussed more in Part 2 along with the rest of subsetting.
-
 ```r
 # "Name" is character data type. See how each column name is preceded by `$`?
 str(animals)   
@@ -1097,6 +1097,8 @@ str(animals)
  $ Type    : Factor w/ 3 levels "Cat","Dog","Pig": 1 1 3 3 2 3 1 2 3 2 ...
 ```
 
+Factor data type  
+========================================================
 Notice that R stores factors internally as integers and uses the character strings as labels. Also notice that by default R orders factors alphabetically and returns them when we call the "Type" vector.
 
 ```r

@@ -3,12 +3,12 @@ title: "KP R Intro, Part 1"
 author: "Nerissa Nance"
 date: "November 20, 2018"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     number_sections: yes
     toc: yes
     toc_float: yes
+  pdf_document:
+    toc: yes
   word_document:
     toc: yes
 ---
@@ -20,17 +20,14 @@ knitr::opts_chunk$set(echo = TRUE)
 --------------
 --------------
 
-#Part 1 learning objectives:
+#Part 1 learning objectives
 
 - Utilizing files in RStudio, creating an Rmd file, download, install packages and read them into your library, and read key documentation
 - Reviewing different data types, naming/calling syntax, subsetting syntax and data structures
 - Identifying different types of missing data 
 - Loading a csv file and SAS file into the environment 
  
- *Relevant chapters in [R for Data Science](https://r4ds.had.co.nz/) :* 
- - Chapters 1 Intro
- - Chapter 27 R Markdown
- - Chapter 20 Vectors
+(Relevant chapters in [R for Data Science](https://r4ds.had.co.nz/) : Chapter 1 Intro, Chapter 27 R Markdown, Chapter 20 Vectors)
 
 #Introduction
 
@@ -92,18 +89,18 @@ Packages can also be installed through the command line using `install.packages(
 
 To install the packages we will use in the workshop: 
 ```{r, eval=FALSE}
-install.packages(c("knitr", "psych", "rmarkdown", "swirl", "mlbench", "tidyverse"))
+install.packages(c("knitr", "rmarkdown", "swirl", "mlbench", "tidyverse", "rio"))
 ```
 
 ### The `library` function  
 Before using a previously installed package, you must retreive it with `library()` when you begin a new R session. You do not need to reinstall packages each time you quit and restart your R session. 
 
 ```{r}
-library(ggplot2)
+library(tidyverse)
 library(knitr)
-library(psych)
 library(rmarkdown)
-library(swirl)
+library(rio)
+library(mlbench)
 # these packages can now be used in our RStudio session!
 ```
 
@@ -124,7 +121,7 @@ The `?` symbol can be used to bring up the help pages:
 
 You define objects through `variable assignment` and they are stored in your `global environment`.  
 
-Your global environment is where all the objects (data sets, scalars, etc.) are stored. It is 'global' because anything in it can be used throughout your session. 
+Your global environment is where all the objects (data sets, scalars, vectors, functions, etc.) are stored. It is 'global' because anything in it can be used throughout your session. 
 
 ### Object assignment (`<-`)
  Objects are stored in R's memory and can be retrieved ("called") when you need them.  
@@ -148,7 +145,7 @@ ls()
 
 r <- 2
 
-#back to our equation:
+#Try an equation:
 
 Area <- pi * r^2
 
@@ -192,7 +189,7 @@ welcome_object
 welcome_object <- "Welcome to Part 1"
 ls() 
 ```
-See how the definition of `welcome_object` changed in your global environment window? However, there are still only two objects in your global environment. 
+See how the definition of `welcome_object` changed in your global environment window? However, there is still only one 'welcome_object' in your global environment. 
 
 
 ### Variable classes (`class`)
@@ -282,7 +279,7 @@ char2
 
 Note here that R is not a zero-indexed language - lists begin at the number 1. The one and only element in this object is the sentence "Hey momma I'm a string". 
 
-Character data have some useful functions such as  `substr` and `strsplit`. We'll use these to explore function arguments. Use your help commands to learn more about the commands!  
+Character data have some useful functions such as  `substr` ands `strsplit`. We'll use these to explore function arguments. Use your help commands to learn more about the commands!  
 
 ### Function arguments
 Arguments go inside of the parentheses of R functions. Unnamed arguments are things like the number 4. `split = " "` is what is called a named argument. This argument goes inside the parentheses of another function such as `strsplit`. 
@@ -346,8 +343,9 @@ FALSE >= TRUE # greater than or equal to
 9. Define a boolean object as "FALSE" and check its class.  
 10. Use `==` to compare your numeric and boolean object. Are they equivalent? Why or why not?  
 11. Define a character object that uses `paste()` to combine more than one word into a sentence.  
-12. Use `substr` to extract the first word of your sentence.  
-13. Wipe your environment clean.  
+12. Wipe your environment clean.  
+
+Extra credit: Use `substr` to extract the first word of your sentence (hint: look at the help file for usage)
  
 ```{r}
 ## YOUR CODE HERE
@@ -687,7 +685,7 @@ animals$Type
 
 
 
-##Importing csv data files using `read.csv`
+###Importing csv data files using `read.csv`
 
 Check first where your working directory is by typing:
 ```{r}
@@ -715,7 +713,7 @@ str(df.who)
 > `header = TRUE` will include the header row; `header = FALSE` will turn your header row into the first row of actual data. `na.strings = c(" ", 999)` indicates that blank cells and cells coded 999 allows you to specify data that should be automatically converted to `NA` upon importation. We do not have any here, so nothing is altered. 
 
 
-##Importing and exporting with the Rio package
+###Importing and exporting with the Rio package
 
 The Rio package simplifies importing/exporting by putting all data-specific import tools under one umbrella (popularly known as the "swiss army knife" of data importing and exporting)
  See [this helpful rio documentation as well](https://cran.r-project.org/web/packages/rio/vignettes/rio.html). 
@@ -751,7 +749,7 @@ class(df.who2$suicides_no)
 
 #Visualize data (Part I)
 
-We'll use this more in parts 2, but take a moment to look at the data you imported. You can use the `hist()` command to do a histogram and the `summary()` command to look at summary statistics. For example:
+We'll use this more in part 2, but take a moment to look at the data you imported. You can use the `hist()` command to do a histogram and the `summary()` command to look at summary statistics. For example:
 
 ```{r plotting}
 names(df.who)

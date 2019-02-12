@@ -114,15 +114,16 @@
 }
 
 \setlength{\droptitle}{-2em}
+
   \title{KP R Intro, Part 1}
-  \pretitle{\vspace{\droptitle}\centering\huge}
+    \pretitle{\vspace{\droptitle}\centering\huge}
   \posttitle{\par}
-  \author{Nerissa Nance}
-  \preauthor{\centering\large\emph}
+    \author{Nerissa Nance}
+    \preauthor{\centering\large\emph}
   \postauthor{\par}
-  \predate{\centering\large\emph}
+      \predate{\centering\large\emph}
   \postdate{\par}
-  \date{November 20, 2018}
+    \date{November 20, 2018}
 
 
 \begin{document}
@@ -132,25 +133,26 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
-Citations: A lot of the source material for this training came from
-D-lab training materials authored by D-Lab staff. The original content
-can be accessed here:
-{[}\url{https://github.com/dlab-berkeley/R-Fundamentals}{]} D-Lab works
-with Berkeley faculty, research staff, and students to advance
-data-intensive social science and humanities research. They're really
-cool, check them out!
-\href{http://dlab.berkeley.edu/calendar-node-field-date}{D-Lab
-Calendar}\\
-\href{http://dlab.berkeley.edu/working-groups}{D-lab Working Groups}\\
-Some of this also came from Chris Kennedy's ``Concise R'' series,
-accessed \href{https://github.com/ck37/concise-r}{here}
+\subsection{--------------}\label{section}
 
-Part 1 learning objectives:\\
-* Students will be able to structure and execute essential functions,
-including using Rmd files and utilizing read key documentation *
-Students will be able to recognize and utilize different data types and
-data structures * Students will be able to identify different types of
-missing data in R * Students will feel comfortable accessing data from R
+\section{Part 1 learning objectives}\label{part-1-learning-objectives}
+
+\begin{itemize}
+\tightlist
+\item
+  Utilizing files in RStudio, creating an Rmd file, download, install
+  packages and read them into your library, and read key documentation
+\item
+  Reviewing different data types, naming/calling syntax, subsetting
+  syntax and data structures
+\item
+  Identifying different types of missing data
+\item
+  Loading a csv file and SAS file into the environment
+\end{itemize}
+
+(Relevant chapters in \href{https://r4ds.had.co.nz/}{R for Data Science}
+: Chapter 1 Intro, Chapter 27 R Markdown, Chapter 20 Vectors)
 
 \section{Introduction}\label{introduction}
 
@@ -158,11 +160,12 @@ missing data in R * Students will feel comfortable accessing data from R
 Projects}\label{the-basics-navigating-rstudio-and-projects}
 
 Currently, you have the ``KP-R-Intro-Workshop'' project open (as you can
-see in the upper right-hand corner of your screen). Projects are handy
-because a project's folder is automatically set as the working
-directory, which allows us to not worry about explicitly setting the
-working directory. This can be more convenient when working on the same
-code across different computers.
+see in the upper right-hand corner of your screen).
+
+Projects are handy because a project's folder is automatically set as
+the working directory, which allows us to not worry about explicitly
+setting the working directory. This can be more convenient when working
+on the same code across different computers.
 
 We can see recent projects by selecting File -\textgreater{} Recent
 Projects in the upper left corner of RStudio, or by clicking the list of
@@ -250,17 +253,18 @@ package you wish to install.
 Packages can also be installed through the command line using
 \texttt{install.packages()}. The package name must be wrapped in
 quotation marks so that R knows it is searching for that particular
-package named \texttt{"psych"}, rather than previously defined data
-named psych:
+package named \texttt{"swirl"}, rather than previously defined data
+named swirl:
 
 \begin{quote}
 It is generally good to keep RStudio and your packages up to date!
-Install the packages we will use in the workshop:
 \end{quote}
+
+To install the packages we will use in the workshop:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{install.packages}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{, }\StringTok{"psych"}\NormalTok{, }\StringTok{"rmarkdown"}\NormalTok{, }\StringTok{"reshape2"}\NormalTok{, }\StringTok{"swirl"}\NormalTok{, }\StringTok{"mlbench"}\NormalTok{, }\StringTok{"dplyr"}\NormalTok{, }\StringTok{"tidyr"}\NormalTok{))}
+\KeywordTok{install.packages}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"knitr"}\NormalTok{, }\StringTok{"rmarkdown"}\NormalTok{, }\StringTok{"swirl"}\NormalTok{, }\StringTok{"mlbench"}\NormalTok{, }\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"rio"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -273,38 +277,33 @@ reinstall packages each time you quit and restart your R session.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------- tidyverse 1.2.1 --
+\end{verbatim}
+
+\begin{verbatim}
+## √ ggplot2 3.0.0     √ purrr   0.2.5
+## √ tibble  1.4.2     √ dplyr   0.7.6
+## √ tidyr   0.8.1     √ stringr 1.3.1
+## √ readr   1.1.1     √ forcats 0.3.0
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(knitr)}
-\KeywordTok{library}\NormalTok{(psych)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## Attaching package: 'psych'
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:ggplot2':
-## 
-##     %+%, alpha
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(rmarkdown)}
-\KeywordTok{library}\NormalTok{(reshape2)}
-\KeywordTok{library}\NormalTok{(swirl)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## | Hi! Type swirl() when you are ready to begin.
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(rio)}
+\KeywordTok{library}\NormalTok{(mlbench)}
 \CommentTok{# these packages can now be used in our RStudio session!}
 \end{Highlighting}
 \end{Shaded}
@@ -325,15 +324,20 @@ The \texttt{?} symbol can be used to bring up the help pages:
 \end{Highlighting}
 \end{Shaded}
 
-\subsubsection{\texorpdfstring{Variable assignment
-(\texttt{\textless{}-})}{Variable assignment (\textless{}-)}}\label{variable-assignment--}
-
-Variables are special data structures that allow you to enter data into
-R. Objects are stored in R's memory and can be retrieved (``called'')
-when you need them.
+\subsubsection{Global environment}\label{global-environment}
 
 You define objects through \texttt{variable\ assignment} and they are
 stored in your \texttt{global\ environment}.
+
+Your global environment is where all the objects (data sets, scalars,
+etc.) are stored. It is `global' because anything in it can be used
+throughout your session.
+
+\subsubsection{\texorpdfstring{Object assignment
+(\texttt{\textless{}-})}{Object assignment (\textless{}-)}}\label{object-assignment--}
+
+Objects are stored in R's memory and can be retrieved (``called'') when
+you need them.
 
 You define objects through variable assignment using the
 \textbf{assignment operator} \texttt{\textless{}-}. This is a ``less
@@ -354,7 +358,7 @@ information}:\\
 2) \texttt{\textless{}-}\\
 3) definition/assignment
 
-Let's define an object named \texttt{numeric\_oject} and define it as
+Let's define an object named \texttt{numeric\_object} and define it as
 the number 4:
 
 \begin{Shaded}
@@ -386,7 +390,8 @@ the number 4:
 ## [1] 12.56637
 \end{verbatim}
 
-\subsubsection{The R global environment}\label{the-r-global-environment}
+\subsubsection{Interacting with the global
+environment}\label{interacting-with-the-global-environment}
 
 We now have an object defined in our global environment!
 
@@ -448,12 +453,16 @@ code:
 ## [1] "Welcome"
 \end{verbatim}
 
-\subsubsection{Naming R variables}\label{naming-r-variables}
+\subsubsection{Naming R objects}\label{naming-r-objects}
 
 Object names can be anything, but are always case sensitive. However,
 they cannot begin with a number and generally do not begin with symbols.
 However you choose to name your objects, be consistent and use brief
 descriptions of their contents.
+
+Convention: we \textbf{highly} recommend that you do not use caps when
+naming objects. It makes it more cubersome to call objects later, and
+can lead to confusion and misnaming.
 
 Names must be \textbf{\textbf{unique}}. If you reuse an old name, the
 old definition will be overwritten.
@@ -565,10 +574,6 @@ Double question marks ?? will lead you to coding walkthroughs called
 \NormalTok{??psych}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## starting httpd help server ... done
-\end{verbatim}
 
 You will often find that your questions are not answered by the help
 pages nor vignettes. In that case you should Google-search your question
@@ -762,7 +767,7 @@ Note here that R is not a zero-indexed language - lists begin at the
 number 1. The one and only element in this object is the sentence ``Hey
 momma I'm a string''.
 
-Character data have some useful functions such as \texttt{substr} and
+Character data have some useful functions such as \texttt{substr} ands
 \texttt{strsplit}. We'll use these to explore function arguments. Use
 your help commands to learn more about the commands!
 
@@ -799,55 +804,6 @@ function such as \texttt{strsplit}.
 Most functions require one or two arguments to be defined in order for
 it to properly run. You will find that functions are full of default,
 positional, and optional arguments that you can manipulate.
-
-\subsubsection{\texorpdfstring{Simple string subset example
-(\texttt{substr})}{Simple string subset example (substr)}}\label{simple-string-subset-example-substr}
-
-\texttt{substr} lets you extract text from certain character positions
-in character data. Refer back to \texttt{char2}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{char2 <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"Hey"}\NormalTok{, }\StringTok{"momma"}\NormalTok{, }\StringTok{"I'm"}\NormalTok{, }\StringTok{"a"}\NormalTok{, }\StringTok{"string"}\NormalTok{)}
-\NormalTok{char2}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "Hey momma I'm a string"
-\end{verbatim}
-
-If we want to extract just the first four characters of the
-\texttt{char2} object we type:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{substr}\NormalTok{(char2, }\DataTypeTok{start =} \DecValTok{1}\NormalTok{, }\DataTypeTok{stop =} \DecValTok{4}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "Hey "
-\end{verbatim}
-
-``Hey'' (Hey + blankspace) is returned.
-
-You can use \texttt{substr()} and the assignment operator
-\texttt{\textless{}-} to redefine the first four characters in
-\texttt{char2} with the word ``Yes'' followed by a blankspace
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{substr}\NormalTok{(char2, }\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{) <-}\StringTok{ "Yes "}
-\NormalTok{char2 }
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "Yes momma I'm a string"
-\end{verbatim}
-
-What changed?
 
 \subsubsection{Logical type}\label{logical-type}
 
@@ -1060,10 +1016,11 @@ sign.
   Define a character object that uses \texttt{paste()} to combine more
   than one word into a sentence.\\
 \item
-  Use \texttt{substr} to extract the first word of your sentence.\\
-\item
   Wipe your environment clean.
 \end{enumerate}
+
+Extra credit: Use \texttt{substr} to extract the first word of your
+sentence (hint: look at the help file for usage)
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1545,6 +1502,17 @@ universe, even on different machines
 \end{Highlighting}
 \end{Shaded}
 
+\begin{verbatim}
+## Help on topic 'sample' was found in the following packages:
+## 
+##   Package               Library
+##   dplyr                 /Library/Frameworks/R.framework/Versions/3.5/Resources/library
+##   base                  /Library/Frameworks/R.framework/Resources/library
+## 
+## 
+## Using the first match ...
+\end{verbatim}
+
 Set the seed, and then choose our values:
 
 \begin{Shaded}
@@ -1981,7 +1949,7 @@ identical!
 
 \section{Importing and Exporting}\label{importing-and-exporting}
 
-\subsection{\texorpdfstring{Importing csv data files using
+\subsubsection{\texorpdfstring{Importing csv data files using
 \texttt{read.csv}}{Importing csv data files using read.csv}}\label{importing-csv-data-files-using-read.csv}
 
 Check first where your working directory is by typing:
@@ -1993,7 +1961,7 @@ Check first where your working directory is by typing:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "I:/R training/KP-R-Intro-Workshop"
+## [1] "/Users/BettyFriedan/Google Drive/KP-R-Intro-Workshop"
 \end{verbatim}
 
 (note: since we're using R projects, you should already know where your
@@ -2074,7 +2042,7 @@ be automatically converted to \texttt{NA} upon importation. We do not
 have any here, so nothing is altered.
 \end{quote}
 
-\subsection{Importing and exporting with the Rio
+\subsubsection{Importing and exporting with the Rio
 package}\label{importing-and-exporting-with-the-rio-package}
 
 The Rio package simplifies importing/exporting by putting all
@@ -2184,12 +2152,12 @@ helpful rio documentation as well}.
 \end{Highlighting}
 \end{Shaded}
 
-\section{Visualize data (teaser)}\label{visualize-data-teaser}
+\section{Visualize data (Part I)}\label{visualize-data-part-i}
 
-We'll use this more in parts 2 and 3, but take a moment to look at the
-data you imported. You can use the \texttt{hist()} command to do a
-histogram and the \texttt{summary()} command to look at summary
-statistics. For example:
+We'll use this more in part 2, but take a moment to look at the data you
+imported. You can use the \texttt{hist()} command to do a histogram and
+the \texttt{summary()} command to look at summary statistics. For
+example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2256,8 +2224,19 @@ R programming: A tour of statistical software design}\\
 -
 \href{https://us.sagepub.com/en-us/nam/an-introduction-to-r-for-spatial-analysis-and-mapping/book241031}{Brunsdon
 C, Comber L. 2015. An Introduction to R for Spatial Analysis and
-Mapping} - Contributions by Dlab affiliates Evan Muzzall, Rochelle
-Terman, Dillon Niederhut, Sam Abdel-Ghaffar
+Mapping}
+
+A lot of the source material for this training came from D-lab training
+materials authored by D-Lab staff. The original content can be accessed
+here: {[}\url{https://github.com/dlab-berkeley/R-Fundamentals}{]} D-Lab
+works with Berkeley faculty, research staff, and students to advance
+data-intensive social science and humanities research. They're really
+cool, check them out!
+\href{http://dlab.berkeley.edu/calendar-node-field-date}{D-Lab
+Calendar}\\
+\href{http://dlab.berkeley.edu/working-groups}{D-lab Working Groups}\\
+Some of this also came from Chris Kennedy's ``Concise R'' series,
+accessed \href{https://github.com/ck37/concise-r}{here}
 
 
 \end{document}
