@@ -4,23 +4,38 @@ author: Nerissa Nance
 date: 2/1/2019
 autosize: true
 
-Learning objectives
+Overall learning objectives
 ========================================================
-
-
-Part 1 learning objectives, students will:  
+By the end of this training, students will:  
 - be able to structure and execute essential functions, including using Rmd files and utilizing read key documentation
 - be able to recognize and utilize different data types and data structures
 - be able to identify different types of missing data in R
 - feel comfortable accessing data from R
 
+Part 1 objectives
+========================================================
+
+- Utilizing files in RStudio, creating an Rmd file, download, install packages and read them into your library, and read key documentation
+- Reviewing different data types, naming/calling syntax, subsetting syntax and data structures
+- Identifying different types of missing data 
+- Loading a csv file and SAS file into the environment 
+ 
+ 
+Reference chapters
+========================================================
+
+ Relevant chapters in [R for Data Science](https://r4ds.had.co.nz/):
+ 
+ - Chapters 1 Intro
+ - Chapter 27 R Markdown
+ - Chapter 20 Vectors
 
 The basics: navigating RStudio and projects
 ========================================================
 
-Currently, you have the "KP-R-Intro-Workshop" project open (as you can see in the upper right-hand corner of your screen). Projects are handy because a project's folder is automatically set as the working directory, which allows us to not worry about explicitly setting the working directory. This can be more convenient when working on the same code across different computers. 
+Currently, you have the "KP-R-Intro-Workshop" project open (as you can see in the upper right-hand corner of your screen). Projects are handy because a project's folder is automatically set as the working directory, which allows us to not worry about explicitly setting the working directory. 
 
-We can see recent projects by selecting File -> Recent Projects in the upper left corner of RStudio, or by clicking the list of recent projects in the upper right corner. If we click the name of the project it will switch to that project, or if we click the button it will open in a new session.
+We can see recent projects by selecting File -> Recent Projects in the upper left corner of RStudio, or by clicking the list of recent projects in the upper right corner. 
 
 The basics: navigating RStudio and projects
 ========================================================
@@ -36,18 +51,28 @@ Easy Challenge: close your project and then re-open it.
 RStudio interface
 ========================================================
 
-When we start RStudio we have no files open by default. Click File -> New File -> RScript to start a new R script (or program). This is a text file with all of the R commands you want to run for an analysis.
+When we start RStudio we have no files open by default. 
 
-As an alternative to an R script we can use a **markdown file**. R Markdown files combine R scripts with simple text formatting, which makes reports  (PDFs or HTMLs) easy to generate with embedded R output. 
+
+**Click File -> New File -> RScript to start a new R script (or program).**
+
+This is a text file with all of the R commands you want to run for an analysis.
 
 
 RStudio interface
 ========================================================
 
+As an alternative to an R script we can use a **markdown file**. 
+
+R Markdown files combine R scripts with simple text formatting, which makes reports  (PDFs or HTMLs) easy to generate with embedded R output. 
+
 Try making a new R script and R markdown right now in your new project directory, and save the files. 
 
-RStudio items to note:
 
+RStudio interface
+========================================================
+
+RStudio items to note:
 * Files show up as tabs in the editor window, usually the upper left.
 * The console is the R session where our commands are executed.
 * Environment tab in the upper right, and history tab.
@@ -76,9 +101,9 @@ Challenge
 Package installation
 ========================================================
 
-Let's install some packages that we will use during the training. You can install packages by clicking the "Packages" tab in the bottom-right window, clicking install, and then searching for the package you wish to install.
+Packages can be installed through the command line using `install.packages()`. 
 
-Packages can also be installed through the command line using `install.packages()`. The package name must be wrapped in quotation marks so that R knows it is searching for that particular package named `"psych"`, rather than previously defined data named psych:
+The package name must be wrapped in quotation marks so that R knows it is searching for that particular package named `"swirl"`, rather than previously defined data named swirl.
 
 
 Package installation
@@ -88,7 +113,7 @@ Package installation
 
 
 ```{r, eval=FALSE}
-install.packages(c("ggplot2", "knitr", "psych", "rmarkdown", "reshape2", "swirl", "mlbench", "dplyr", "tidyr"))
+install.packages(c("knitr", "rmarkdown", "swirl", "mlbench", "tidyverse"))
 ```
 
 
@@ -128,8 +153,17 @@ Variables are special data structures that allow you to enter data into R. Objec
 
 You define objects through `variable assignment` and they are stored in your `global environment`.  
 
-You define objects through variable assignment using the **assignment operator** `<-`. This is a "less than" `<` symbol immediately followed by a hyphen `-`
+Global environment
+========================================================
+You define objects through `variable assignment` and they are stored in your `global environment`.  
 
+Your global environment is where all the objects (data sets, scalars, etc.) are stored. It is 'global' because anything in it can be used throughout your session. 
+
+
+
+Object assignment (`<-`)
+========================================================
+You define objects using the **assignment operator** `<-`. This is a "less than" `<` symbol immediately followed by a hyphen `-`
 
 Let's define an object named `numeric_oject` and define it as the number 4:
 ```{r}
@@ -137,7 +171,12 @@ numeric_object <- 4
 
 # the ls() function will show us what is in our global environment
 ls()
+```
 
+
+Object assignment (`<-`)
+========================================================
+```{r other}
 
 r <- 2
 
@@ -149,11 +188,10 @@ Area
 ```
 
 
-The R global environment
+Interacting with the global environment
 ========================================================
 
 We now have an object defined in our global environment!
-
 
 "Call" (retrieve) the data contained wihtin the object by typing its name into your script and running the line of code
 ```{r}
@@ -175,7 +213,7 @@ welcome_object
 
 
 
-Naming R variables  
+Naming R objects  
 ========================================================
 Object names can be anything, but are always case sensitive. However, they cannot begin with a number and generally do not begin with symbols. However you choose to name your objects, be consistent and use brief descriptions of their contents.  
 
@@ -273,6 +311,12 @@ Let's create an object called `char` and define it with some character data. The
 char <- "This is character data"
 char
 class(char)
+
+#you can also paste them together using the `paste` function:
+
+char2 <- paste("This", "is", "character", "data")
+
+char2
 ```
 
 
@@ -289,26 +333,6 @@ split1 # a list is returned.
 
 Most functions require one or two arguments to be defined in order for it to properly run. You will find that functions are full of default, positional, and optional arguments that you can manipulate.  
 
-Simple string subset example (`substr`)
-========================================================
-`substr` lets you extract text from certain character positions in character data. Refer back to `char2`
-```{r}
-char2 <- paste("Hey", "momma", "I'm", "a", "string")
-char2
-```
-
-If we want to extract just the first four characters of the `char2` object we type:
-```{r}
-substr(char2, start = 1, stop = 4)
-```
-"Hey " (Hey + blankspace) is returned.  
-
-You can use `substr()` and the assignment operator `<-` to redefine the first four characters in `char2` with the word "Yes " followed by a blankspace
-```{r}
-substr(char2, 1, 4) <- "Yes "
-char2 
-```
-What changed?  
 
 Logical type  
 ========================================================
@@ -363,8 +387,7 @@ Challenge 1
 9. Define a boolean object as "FALSE" and check its class.  
 10. Use `==` to compare your numeric and boolean object. Are they equivalent? Why or why not?  
 11. Define a character object that uses `paste()` to combine more than one word into a sentence.  
-12. Use `substr` to extract the first word of your sentence.  
-13. Wipe your environment clean.  
+12. Wipe your environment clean.  
  
 
 

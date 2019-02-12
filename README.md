@@ -15,7 +15,7 @@ Other useful resources:
 - [Stack Overflow - R](http://stackoverflow.com/questions/tagged/r)  
 <br/> <br/> 
 
-Learning objectives
+*Learning objectives*
 This training consists of two (two-hour) sessions, and by the end of it, students will be comfortable enough in RStudio to open, clean, and visualize data, use R packages and know how to access help for their specific needs. 
 <br/>
 By the end of the course, we hope that you will:
