@@ -12,9 +12,6 @@ output:
 ---
 
 
-###Citations:
-A lot of the source code for this material came from D-lab training materials authored by D-Lab staff. The original content can be accessed here: [https://github.com/dlab-berkeley/R-Fundamentals]
-Contributions by Dlab staff: Evan Muzzall, Shinhye Choi, Rochelle Terman, Dillon Niederhut, Sam Abdel-Ghaffar.
 
 # **Challenge 1**
 1. Clear your working environment
@@ -36,13 +33,14 @@ knitr::opts_chunk$set(echo = TRUE)
 #install.packages("mlbench")
 library(mlbench)
 library(rio)
+library(tidyverse)
 ```
 
 Day 2 learning objectives:  
 
 * 1. Subsetting in base R  
 * 2. Missing data (NA)  
-* 3. Merging data frames in base R and dplyr
+* 3. Intro to dplyr: subsetting, filtering, merging
 * 4. Intro to plotting with ggplot2 
 
  
@@ -115,11 +113,7 @@ head(df.pid$age)
 
 ```
 
-> Type df.pid$ and press the TAB key - a handy list of the columns in your data will appear! 
 
-```{r, eval = F}
-df.pid$
-```
 
 # **Challenge 2**
 1. Practice by extracting `pressure` and `glucose` from the `df.pid` dataframe using the dollar sign `$` and plot them in a histogram using the `hist()` function.
@@ -194,7 +188,7 @@ dim(noage)
 
 
 
-### Subsetting with logical tests
+### Subsetting with logical tests in base r
 We can also use logical tests to subset our data. For example, what if we want to include only the _**rows**_ that have a value of 35 for "age"? We can use the relational operator `==`:
 ```{r, eval=FALSE}
 ?"=="
@@ -231,6 +225,25 @@ no41s <- df.pid[df.pid$age!=41,]
 table(no41s$age)
 ```
 
+##Subsetting with dplyr
+
+Dplyr is a powerful package from 'tidyverse' (a group of packages created/maintained by, among others, the statistician Hadley Wickham). It has a lot of really powerful commands for data manipulation and summary techniques. I highly recommend downloading the cheatsheet, accessed (here)[https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf]. 
+
+A note about chaining commands with the forward pipe operator '%>%':
+part of the magrittr package of tidyverse, this command can make code easier to write and read. We'll show an example here.
+
+You can also subset using the 'filter' command in dplyr:
+```{r}
+
+all41ordiab2 <- df.pid %>% filter(df.pid$age == 41 | df.pid$diabetes == "pos")
+head(all41ordiab2)
+
+#compare to other method
+dim(all41ordiab)
+dim(all41ordiab2)
+
+```
+>NOTE: as you see above, when you chain using the pipe operator, each object being piped is used as the FIRST argument of the next statement.
 
 
 # **Challenge 3**
@@ -241,7 +254,7 @@ table(no41s$age)
     * to a data frame named "vv" with only the observations from the "versicolor" or "virginica" species 
     * to a data frame called "petals20" that has only the first 20 observations of the  "Petal.Length" and "Petal.Width" variables
     
-Extra credit #1: Try also subsetting to a dataset that only has length values greater than the median length OR width values greater than the median width (hint: use `summary()` to peek at descriptive stats)
+Extra credit #1: Try also subsetting to a dataset that only has length values greater than the median length OR width values greater than the median width (hint: you can use `summary()` to peek at descriptive stats)
    
 ```{r}
 ## YOUR CODE HERE
@@ -315,70 +328,76 @@ dim(s_complete2)
 
 
 
-# Data summarization (`summary`, `describe` , `describeBy`,  `table`)
-Data can be summarized in a myriad of ways. Below are a few examples to get you started.
+# Data summarization in base r 
 
-`summary` provides a six-number summary of a data frame:
-```{r}
-summary(df.pid)
-
-# or of a single vector
-summary(df.pid$pressure)
-```
-
-`describe` and `describeBy` from the `psych` R package provide some other metrics. We are going to subset `animals` so that it only includes the numeric variables within the `describe` call. 
-
-Remember, we installed the 'psych' package on Day 1, so all we have to do is call it into our environment with `library`:
-```{r}
-library(psych)
-
-# this works, but some of the output might not be meaningful
-describe(df.pid) 
-
-#what is the 'diabetes' variable?
-str(df.pid)
-#it's a factor, so summary stats probably aren't helpful
-
-#let's just pick a few variables:
-describe(df.pid[ , c("pregnant", "glucose", "pressure", "insulin")]) 
-
-```
-
-We can also subset and save it for later use:
-```{r}
-
-names(df.pid)
-test_descriptives <- describe(df.pid[ , c("pregnant", "glucose", "pressure", "insulin")])
-
-test_descriptives
-
-export(test_descriptives, "test_descriptives.csv", col.names=TRUE)
-
-
-#Output summary statistics by one grouping variable:
-summary_sub <- describeBy(df.pid, group = as.factor(df.pid$diabetes))
-summary_sub
-
-```
-
-
-We can view frequencies for of categorical data with `table`
+We can view frequencies for of categorical data with `table`, and summary statistics of a continuous variable using `summary`. 
 ```{r}
 # get frequencies for one variable:
 table(df.pid$diabetes) 
 
 #get a cross tabulation of two variables:
 table(df.pid$diabetes, df.pid$pregnant) 
+
+#get summary stats of a continuous variable:
+summary(df.pid$glucose)
 ```
 
-**Challenge 4**
 
-1) Summarize the WHO suicide numbers by gender 
-2) What happens when you do this for all the variables? Why? How can you fix this?
-3) Save the output as a .csv file
+
+# Data summarization using dplyr
+
+dplyr is a powerful tool for summarizing data. 
+
+You can also use the `select()` command to look only at a specific column:
+
+```{rsum dplyr }
+
+
+df.pid %>% select (glucose) %>% summarize(mean_g=mean(glucose))
+
+#need to tell dplyr to remove NAs!
+
+df.pid %>% select (glucose) %>% summarize(mean_g=mean(glucose, na.rm=TRUE))
+
+# let's look at the distribution of all the numeric variables at once using the `summarise_if` function of dplyr:
+head(df.pid)
+summarise_if(df.pid, is.numeric, funs(mean,median), na.rm = TRUE)
+
+# you can also group by a certain variable, like diabetes status, using the 'group_by()' command
+
+ df.pid %>% group_by(diabetes) %>% summarise(mean_gluc=mean(glucose,na.rm = TRUE))
+
+```
+
+
+#Creating new variables with dplyr
+
+The mutate() command in dplyr allows you to create new variables in your dataset. Let's say, for example, we wanted to create a ratio between blood pressure and glucose levels:
+
+```{r}
+
+df.pid %>% mutate(gbp_ratio= pressure/glucose)
+
+#this prints the data, but we need to assign it in order to save it:
+df.pid  <- df.pid %>% mutate(gbp_ratio= pressure/glucose)
+
+
+summary(df.pid$gbp_ratio)
+
+```
+
+
+
+
+#**Challenge 4**
+
+1) Import "./data/whostats_suicide.sas7bdat" into your environment
+2) Keep only the statistics for Albania 
+3) Summarize the WHO suicide numbers by gender 
+4) Save the output as a .csv file
 
 Extra credit #1: why are these statistics not very useful? (again, peek at how the data is set up)
-Extra credit #2: look up the `summarise_each()` command in the dplyr package. How might you collapse the data using this command? (hint: check out the cheatsheet for the dplyr packge for help)
+Extra credit #2: How might you collapse the data to make it more useful? (hint: check out the cheatsheet for the dplyr packge for help)
 ```{r}
 #YOUR CODE HERE
 
@@ -457,7 +476,7 @@ table(is.na(joined$diabetes))
 
 ```
 
-**Challenge 5**
+#**Challenge 5**
 
 1. Combine df1 and df2 again using dplyr, but this time using the inner_join command. What is different from when you used left_join, and why? How can you tell?
 
@@ -567,3 +586,9 @@ Extra credit #2: try it on your own! Think about the data you have and what woul
 ```
 
  
+ 
+ 
+###Citations:
+A lot of the source code for this material came from D-lab training materials authored by D-Lab staff. The original content can be accessed here: [https://github.com/dlab-berkeley/R-Fundamentals]
+Contributions by Dlab staff: Evan Muzzall, Shinhye Choi, Rochelle Terman, Dillon Niederhut, Sam Abdel-Ghaffar.
+
