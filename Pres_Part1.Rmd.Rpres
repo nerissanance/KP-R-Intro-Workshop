@@ -4,20 +4,38 @@ author: Nerissa Nance
 date: 2/1/2019
 autosize: true
 
+Logging onto R Studio Server
+========================================================
+Use the number given to you to log on to the training accounts for R Studio Server. Eventually, you will have your own account on the larger server we will have. For now, though, go to the following website:
+<br/><br/>
+> **dords-rtraining.kaiser.org:8787/**  
+
+<br/><br/>
+and log in with the following credentials (replacing the '#' with the number you have been given):
+<br/>
+
+>username: **train#**  
+>  
+>password: **dstrain#**
+
+
 Overall learning objectives
 ========================================================
 By the end of this training, students will:  
-- be able to structure and execute essential functions, including using Rmd files and utilizing read key documentation
+<br/>
+- be able to understand and leverage the R Studio interface 
 - be able to recognize and utilize different data types and data structures
 - be able to identify different types of missing data in R
-- feel comfortable accessing data from R
+- feel comfortable accessing data from R 
+- feel comfortable merging and performing some basic data manipulations
+- be able to visualize data
+<br/><br/><br/>
 
 Part 1 objectives
 ========================================================
 
 - Utilizing files in RStudio, creating an Rmd file, download, install packages and read them into your library, and read key documentation
 - Reviewing different data types, naming/calling syntax, subsetting syntax and data structures
-- Identifying different types of missing data 
 - Loading a csv file and SAS file into the environment 
  
  
@@ -29,6 +47,24 @@ Reference chapters
  - Chapters 1 Intro
  - Chapter 27 R Markdown
  - Chapter 20 Vectors
+
+R: a software environment and programming language
+========================================================
+
+R is a programming language and an open-source software environment for data manipulation, analysis and graphics. R grew out of the S programming language, created by John Chambers and colleagues at Bell Labs.
+
+R has become increasingly popular, mainly because it's:  
+- free
+- open source
+- powerful
+- extensible 
+
+<br/><br/>
+
+Of note, however, it was not developed by computer scientists and has some logical inconsistencies that other languages, such as Python, do not. <br/><br/>
+For this reason, many packages have been built to circumnavigate these inconsistencies. In particular, Tidyverse (developed by Hadley Wickham and colleagues at the University of Auckland) is a popular suite of packages that tackle data cleaning and visualization.
+
+
 
 The basics: navigating RStudio and projects
 ========================================================

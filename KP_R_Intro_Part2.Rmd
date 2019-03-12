@@ -1,5 +1,5 @@
 ---
-title: 'KP R Intro Day 2: Data manipulation, summarization and graphing'
+title: 'KP R Intro, Part 2: Data manipulation, summarization and graphing'
 author: "Nerissa Nance"
 date: "September 5, 2018"
 output:
@@ -96,21 +96,6 @@ length(unique(df.pid$age))
 head(df.pid, n = 10)
 # show the last "n" rows
 tail(df.pid, n = 4) 
-```
-
-
-# Subsetting in base R
-Efficiently subsetting your data will save you time and stress. Fortunately, there are several different ways to subset data in base R.
-
-### Subsetting in base R (`$`)
-Remember from Part 1 that the dollar sign operator `$` will extract only a single vector/column within the data frame:
-```{r, eval=FALSE}
-?"$" # Remember to wrap symbols in quotation marks to view their help pages
-```
-```{r}
-#Returns only the "age" vector from the `df.pid` data frame.
-head(df.pid$age) 
-
 ```
 
 

@@ -1,5 +1,5 @@
 ---
-title: "KP R Intro, Part 1"
+title: "KP R Intro, Part 1: Intro to RStudio, Rmd files, data types and importing/exporting"
 author: "Nerissa Nance"
 date: "November 20, 2018"
 output:
@@ -62,6 +62,13 @@ RStudio items to note:
 * Environment tab in the upper right, and history tab.
 * Files tab in bottom right, plus plots, help, etc.
 * We can click the "run" button to run the current R line in the editor.
+
+### RStudio Script challenge
+
+Find out your working directory by executing the following command:
+```{r}
+getwd()
+```
  
 
 ### Basic R markdown file.
@@ -128,7 +135,7 @@ Your global environment is where all the objects (data sets, scalars, vectors, f
 
 You define objects through variable assignment using the **assignment operator** `<-`. This is a "less than" `<` symbol immediately followed by a hyphen `-`
 
-> You will also see that `=` is frequently used in place of the assignment operator. This works the same, but we recommend using the assignment operator for consistency. Arguments and functions frequently use `=` and it is best to consistently assign your variables with `<-` until you understand the basics.  
+> You will also see that `=` is frequently used in place of the assignment operator. This works the same, but we recommend using the assignment operator for consistency.  
 
 **Object definition/variable assignment requires three pieces of information**:  
 1) object_name  
@@ -174,11 +181,13 @@ welcome_object
 ```
 
 ### Naming R objects  
-Object names can be anything, but are always case sensitive. However, they cannot begin with a number and generally do not begin with symbols. However you choose to name your objects, be consistent and use brief descriptions of their contents.  
+Object names can be anything, but are always **case sensitive**. However, they cannot begin with a number and generally do not begin with symbols. However you choose to name your objects, be consistent and use brief descriptions of their contents.  
 
 Convention: we **highly** recommend that you do not use caps when naming objects. It makes it more cubersome to call objects later, and can lead to confusion and misnaming.
 
 Names must be __**unique**__. If you reuse an old name, the old definition will be overwritten.  
+
+Some words are already reserved by R (for more information, type `?reserved` in your console), and some have stored default values (like pi) which can be overwritten if you choose (for more informaiton, see `?Constants`).
 
 Let's overwrite the object `welcome_object` from above.
 ```{r}
@@ -392,18 +401,18 @@ class(char2)
 "Type coercion" refers to changing the data from one type to another. You can change data types with `as.` and then the data type you wish to convert to.  
 [Brunsdon and Comber 2015, page 102](https://us.sagepub.com/en-us/nam/an-introduction-to-r-for-spatial-analysis-and-mapping/book241031) also offer an excellent summary table of data types in R.
 
+Some of the more common data types include:
+
 Type        | Test          | Conversion
 ----------- | ------------- | ----------
 character   | is.character  | as.character
-complex     | is.complex    | as.complex
-double      | is.double     | as.double
-expression  | is.expression | as.expression
 integer     | is.integer    | as.integer
 list        | is.list       | as.list
 logical     | is.logical    | as.logical
 numeric     | is.numeric    | as.numeric
-single      | is.single     | as.single
-raw         | is.raw        | as.raw
+double      | is.double     | as.double
+
+
 
 ### Type coercion example (`as.numeric`)  
 ```{r}
@@ -647,7 +656,8 @@ Factor data are categorical types used to make comparisons between other data. F
 
 For example, in our `animals` dataframe, we can coerce "Type" from character to factor data type. Cat, Dog, and Pig are the factor levels. If we might want to compare heights and weights between Cat, Dog, and Pigs, we set the character "Type" vector to factor data type. We can do so with `factor()`.  
 
-The dollar sign operator `$` is used to call a single vector from a data frame. This will be discussed more in Part 2 along with the rest of subsetting.
+The dollar sign operator `$` is used to call a single vector from a data frame. 
+
 ```{r}
 # "Name" is character data type. See how each column name is preceded by `$`?
 str(animals)   
@@ -685,7 +695,7 @@ animals$Type
 
 
 
-###Importing csv data files using `read.csv`
+###Importing and exporting csv data files using `read.csv` and `write.csv`
 
 Check first where your working directory is by typing:
 ```{r}
@@ -706,6 +716,8 @@ df.who <- read.csv("./data/who_suicide_statistics.csv",
 dim(df.who)
 head(df.who)
 str(df.who)
+
+
 ```
 
 > Notice that `stringsAsFactors = FALSE`. If set to `TRUE`, R will try to guess which **character** vectors should automatically be converted to factors. This is problematic because 1) R is not always good at guessing and 2) R defaults to alphabetical and increasing numeric factor level sorting. This might not matter for your data, but it is recommended to set `stringsAsFactors = FALSE` and manually convert your desired character vectors to factors.
@@ -736,20 +748,38 @@ df.who2 <- import("./data/whostats_suicide.sas7bdat")
  class(df.who$suicides_no)
 class(df.who2$suicides_no)
 ```
- 
+>Moral of the story: beware formatting, esp. variable class changes!
 
 # **Challenge 3**
-1. Save the "animals" data frame as a .csv file named "animals.csv". How many basic arguments should you use to save using the `write.csv` function? 
-2. Import the "animals" data frame using the rio package. 
+1. Save the "animals" data frame as a .csv file named "animals.csv". 
+2. Import the "animals" data frame using the rio package and the read.csv command. 
 3. Compare the two data frames. Are they the same? Why or why not?
 ```{r}
 ## YOUR CODE HERE
 
 ```
 
+
+
+
+# Subsetting in base R
+Efficiently subsetting your data will save you time and stress. Fortunately, there are several different ways to subset data in base R.
+
+### Subsetting in base R (`$`)
+Remember from Part 1 that the dollar sign operator `$` will extract only a single vector/column within the data frame:
+```{r, eval=FALSE}
+?"$" # Remember to wrap symbols in quotation marks to view their help pages
+```
+```{r}
+#Returns only the "age" vector from the `df.pid` data frame.
+head(animals$Type) 
+
+```
+
+
 #Visualize data (Part I)
 
-We'll use this more in part 2, but take a moment to look at the data you imported. You can use the `hist()` command to do a histogram and the `summary()` command to look at summary statistics. For example:
+We'll use this more in part 2, but take a moment to look at the data you imported. You can use the `hist()` command to do a histogram and the `summary()` command to look at summary statistics (using the `$` to subset to the variable you are interested in). For example:
 
 ```{r plotting}
 names(df.who)
@@ -760,6 +790,9 @@ summary(df.who$suicides_no)
 plot(df.who$year, df.who$suicides)
 
 ```
+
+
+
 
 # **Challenge 4** Homework (optional)
 swirl is a package that helps you learn R by using R. Visit the [swirl](http://swirlstats.com/) homepage to learn more
@@ -775,8 +808,6 @@ Acknowledgements
 - [Wickham H. 2014. Advanced R](http://adv-r.had.co.nz/)  
 - [Lander J. 2013. R for everyone: Advanced analytics and graphics](http://www.jaredlander.com/r-for-everyone/)  
 - [Matloff N. 2011. The art of R programming: A tour of statistical software design](https://www.nostarch.com/artofr.htm)  
-- [Brunsdon C, Comber L. 2015. An Introduction to R for Spatial Analysis and Mapping](https://us.sagepub.com/en-us/nam/an-introduction-to-r-for-spatial-analysis-and-mapping/book241031)
-
 
 A lot of the source material for this training came from D-lab training materials authored by D-Lab staff. The original content can be accessed here: [https://github.com/dlab-berkeley/R-Fundamentals]
 D-Lab works with Berkeley faculty, research staff, and students to advance data-intensive social science and humanities research. They're really cool, check them out!
