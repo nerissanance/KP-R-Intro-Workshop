@@ -59,10 +59,9 @@ R has become increasingly popular, mainly because it's:
 - powerful
 - extensible 
 
-<br/><br/>
-
-Of note, however, it was not developed by computer scientists and has some logical inconsistencies that other languages, such as Python, do not. <br/><br/>
-For this reason, many packages have been built to circumnavigate these inconsistencies. In particular, Tidyverse (developed by Hadley Wickham and colleagues at the University of Auckland) is a popular suite of packages that tackle data cleaning and visualization.
+<br/>
+Of note, however, it was not developed by computer scientists and has some logical inconsistencies that other languages, such as Python, do not. 
+For this reason, many packages have been built to circumnavigate these inconsistencies. In particular, Tidyverse (developed by Hadley Wickham and colleagues) is a popular suite of packages that tackle data cleaning and visualization (more about that in part II).
 
 
 
@@ -116,6 +115,14 @@ RStudio items to note:
 * We can click the "run" button to run the current R line in the editor.
 
 
+A note about Github and Gitlab
+========================================================
+
+Github is a version control software that allows you to track how your code changes over time. Gitlab has many of the same features as Github. Kaiser has its own Gitlab enterprise account, which allows us 
+
+You can get your Gitlab account by emailing Jingrong Yang. You can connect your Gitlab account to your RStudio by following instructions in this helpful happygitwithr tutorial: https://happygitwithr.com/ 
+
+![happygitwithr](https://happygitwithr.com/img/watch-me-diff-watch-me-rebase-smaller.png)
 
 Basic R markdown file
 ========================================================
@@ -124,6 +131,8 @@ File -> New -> R Markdown
 To write R code we need to start an R block with three backticks followed by r in braces (squiggly brackets - { and }). We can write commands inside of those brackets to change settings.
 
 Task: everyone google "RMarkdown cheat sheet" and save that PDF.
+
+![cheatsheet](https://jules32.github.io/rmarkdown-website-tutorial/images/Rmd_cheatsheet.png)
 
 Challenge
 ========================================================
@@ -187,6 +196,8 @@ Global environment
 You define objects through `variable assignment` and they are stored in your `global environment`.  
 
 Your global environment is where all the objects (data sets, scalars, vectors, functions, etc.) are stored. It is 'global' because anything in it can be used throughout your session. 
+
+![image credit:youtube creator academy](https://community.rstudio.com/uploads/default/original/2X/1/1cb5a846c251ed1781c84c80b92809703d50357a.png)
 
 
 Variable assignment (`<-`)
