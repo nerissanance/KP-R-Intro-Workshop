@@ -1,7 +1,7 @@
 ---
 title: "KP R Intro, Part 1: Intro to RStudio, Rmd files, data types and importing/exporting"
 author: "Nerissa Nance"
-date: "November 20, 2018"
+date: "March 12, 2019"
 output:
   html_document:
     number_sections: yes
@@ -42,18 +42,16 @@ Let's try creating a new project.
 
 * Create a new project: File -> New Project
 * Choose new directory or existing directory as preferred.
-* Click "open in new session" to have multiple RStudio projects open.
+* Click "open in new session" to have multiple RStudio projects open (if you're using PC RStudio).
 
-Easy Challenge: close your project and then re-open it.
+Easy Challenge: close your project and open "KP-R-Intro-Workshop" back again.
 
 
 ### RStudio interface
 
-When we start RStudio we have no files open by default. Click File -> New File -> RScript to start a new R script (or program). This is a text file with all of the R commands you want to run for an analysis.
+When we start RStudio we have no files open by default. Click File -> New File -> RScript to start a new R script (or program). This is a text file that you can fill with code or comments(to comment, start the line with a #).
 
 As an alternative to an R script we can use a **markdown file**. R Markdown files combine R scripts with simple text formatting, which makes reports  (PDFs or HTMLs) easy to generate with embedded R output. 
-
-Try making a new R script and R markdown right now in your new project directory, and save the files. 
 
 RStudio items to note:
 
@@ -70,6 +68,12 @@ Find out your working directory by executing the following command:
 getwd()
 ```
  
+### A note about Github and Gitlab
+
+Github is a version control software that allows you to track how your code changes over time. Gitlab has many of the same features as Github. Kaiser has its own Gitlab enterprise account, which allows us 
+
+You can get your Gitlab account by emailing Jingrong Yang. You can connect your Gitlab account to your RStudio by following instructions in this helpful happygitwithr [tutorial](https://happygitwithr.com/) 
+
 
 ### Basic R markdown file.
 
@@ -77,22 +81,22 @@ File -> New -> R Markdown
 
 To write R code we need to start an R block with three backticks followed by r in braces (squiggly brackets - { and }). We can write commands inside of those brackets to change settings.
 
-Task: everyone google "RMarkdown cheat sheet" and save that PDF.
+You can save that PDF version [here](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf).
 
 Challenge:
 
 * Create a header line called "R Training Day 1", with size 1 (aka "header 1").
 * Write this equation in the notes area: Area = pi * r^2
 * In the first chunk of code, write an equation (eg. 2 + 2)
-* Compile as a PDF (or html if you prefer).
+* Compile as html.
 
 
 ### Package installation
 Let's install some packages that we will use during the training. You can install packages by clicking the "Packages" tab in the bottom-right window, clicking install, and then searching for the package you wish to install.
 
-Packages can also be installed through the command line using `install.packages()`. The package name must be wrapped in quotation marks so that R knows it is searching for that particular package named `"swirl"`, rather than previously defined data named swirl:
+Packages can also be installed through the command line using `install.packages()`. The package name must be wrapped in quotation marks so that R knows it is searching for that particular package named `"swirl"`, rather than previously defined data named swirl.
 
-> It is generally good to keep RStudio and your packages up to date! 
+> Packages only need to be installed once, though it is generally good to keep RStudio and your packages up to date. 
 
 To install the packages we will use in the workshop: 
 ```{r, eval=FALSE}
@@ -119,14 +123,13 @@ The `?` symbol can be used to bring up the help pages:
 ?summary
 ?describe
 ?plot
-?ggplot
-?geometric.mean
+
 ```
 
 
 ###Global environment
 
-You define objects through `variable assignment` and they are stored in your `global environment`.  
+You define objects through `variable assignment` and they are stored in your `global environment` on the top right of the RStudio interface.
 
 Your global environment is where all the objects (data sets, scalars, vectors, functions, etc.) are stored. It is 'global' because anything in it can be used throughout your session. 
 
@@ -135,7 +138,7 @@ Your global environment is where all the objects (data sets, scalars, vectors, f
 
 You define objects through variable assignment using the **assignment operator** `<-`. This is a "less than" `<` symbol immediately followed by a hyphen `-`
 
-> You will also see that `=` is frequently used in place of the assignment operator. This works the same, but we recommend using the assignment operator for consistency.  
+> You will also see that `=` is frequently used in place of the assignment operator. In most cases, they can be used interchangeably, but we recommend using the assignment operator for consistency.  
 
 **Object definition/variable assignment requires three pieces of information**:  
 1) object_name  
@@ -191,11 +194,11 @@ Some words are already reserved by R (for more information, type `?reserved` in 
 
 Let's overwrite the object `welcome_object` from above.
 ```{r}
-welcome_object <- "Welcome to class" 
+welcome_object <- "welcome to class" 
 welcome_object
 
 
-welcome_object <- "Welcome to Part 1"
+welcome_object <- "welcome to part 1"
 ls() 
 ```
 See how the definition of `welcome_object` changed in your global environment window? However, there is still only one 'welcome_object' in your global environment. 
@@ -207,7 +210,7 @@ Each variable in R has a `class` that summarizes the type of the data stored wit
 > NOTE! "numeric" is the default data type for numbers in R:
 
 ```{r}
-# this is numeric (NOT integer) data type!
+# numeric (NOT integer) data type!
 class(numeric_object) 
 # character type
 class(welcome_object) 
@@ -236,7 +239,7 @@ Double question marks ?? will lead you to coding walkthroughs called "vignettes"
 ```
 You will often find that your questions are not answered by the help pages nor vignettes. In that case you should Google-search your question or error message along with the name of a free help website.  
 
-For example, to get help making boxplots, I might Google search "R how to make boxplots stack overflow"
+For example, to get help making boxplots, I might Google search "R how to make boxplots stack overflow".
 
 
 
@@ -247,7 +250,7 @@ Numeric, character, and logical (aka "boolean") data types all exist at the `ato
 ### Numeric type
 Numeric data are numbers and integers. You may also hear numeric data referred to as `float` or `double` data types. By default, R stores everything as `doubles` (64 bit floating point numbers) which makes R very memory hungry. 
 
-Define an object called `num` and then check its class
+Define an object called `num` and then check its class:
 ```{r}
 num <- 2 * pi
 num
@@ -279,27 +282,6 @@ char
 class(char)
 ```
 
-### Contatenating text (`paste`)
-Use `paste()` to combine/concatenate character data. This will paste together separate words to larger texts. 
-```{r}
-char2 <- paste("Hey", "momma", "I'm", "a", "string")
-char2
-```
-
-Note here that R is not a zero-indexed language - lists begin at the number 1. The one and only element in this object is the sentence "Hey momma I'm a string". 
-
-Character data have some useful functions such as  `substr` ands `strsplit`. We'll use these to explore function arguments. Use your help commands to learn more about the commands!  
-
-### Function arguments
-Arguments go inside of the parentheses of R functions. Unnamed arguments are things like the number 4. `split = " "` is what is called a named argument. This argument goes inside the parentheses of another function such as `strsplit`. 
-```{r}
-char4 <- "This/is/slash/separated/text"
-char4
-split1 <- strsplit(char4, split = "/")
-split1 # a list is returned. 
-```
-
-Most functions require one or two arguments to be defined in order for it to properly run. You will find that functions are full of default, positional, and optional arguments that you can manipulate.  
 
 
 ### Logical type  
@@ -338,30 +320,6 @@ TRUE != FALSE  # not
 TRUE > FALSE # greater than
 FALSE >= TRUE # greater than or equal to
 ```
-
-
-# **Challenge 1**
-1. What is the three-piece recipe for variable definition? What piece goes where?  
-2. Define two numeric variables.  
-3. Define two character variables.  
-4. How do you check what types of data these variables are?  
-5. What does the `ls()` function do? Where else do you see this information?  
-6. Remove one of your numeric and one of your character variables.  
-7. Try to subract your remaining character variable from your numeric one. What happens? What might this tell you about data of different types?  
-8. Define a numeric object as 0 and check its class.  
-9. Define a boolean object as "FALSE" and check its class.  
-10. Use `==` to compare your numeric and boolean object. Are they equivalent? Why or why not?  
-11. Define a character object that uses `paste()` to combine more than one word into a sentence.  
-12. Wipe your environment clean.  
-
-Extra credit: Use `substr` to extract the first word of your sentence (hint: look at the help file for usage)
- 
-```{r}
-## YOUR CODE HERE
-
-
-```
-
 > See the below tables to help you remember your logical operations and functions.  
 
 [Brunsdon and Comber 2015, page 15](https://us.sagepub.com/en-us/nam/an-introduction-to-r-for-spatial-analysis-and-mapping/book241031) offer a useful summary table of logical operators in R. These are useful for comparing two data variables to each other:    
@@ -380,24 +338,32 @@ Logical operator | Description
 
 [Brunsdon and Comber 2015, page 102](https://us.sagepub.com/en-us/nam/an-introduction-to-r-for-spatial-analysis-and-mapping/book241031) also offer an excellent summary table of logical functions in R.
 
-Logical function | Description
----------------- | -----------
-any(x)           | `TRUE` if any in a vector of conditions `x` is true
-all(x)           | `TRUE` if all of a vector of conditions `x` is true
-is.numeric(x)    | `TRUE` if `x` contains a numeric value
-is.character(x)  | `TRUE` if `x` contains a character value
-is.logical(x)    | `TRUE` if `x` contains a true or false value  
 
-Often it is handy to see what types of data you are working with. Similar to `class()` we can see what data type an object is with `is.type`. A logical response is returned:
+# **Challenge 1**
+1. What is the three-piece recipe for variable definition? What piece goes where?  
+2. Define two numeric variables.  
+3. Define two character variables.  
+4. How do you check what types of data these variables are?  
+5. What does the `ls()` function do? Where else do you see this information?  
+6. Remove one of your numeric variables.  
+7. Try to subract your remaining character variable from your numeric one. What happens? What might this tell you about data of different types?  
+8. Define a numeric object as 0 and check its class.  
+9. Define a boolean object as "FALSE" and check its class.  
+10. Use `==` to compare your numeric and boolean object. Are they equivalent? Why or why not?  
+11. Wipe your environment clean.  
+ 
+ 
 ```{r}
-is.numeric(num) 
-is.logical(bool_object)
+## YOUR CODE HERE
 
-is.logical(char2)
-class(char2)
+
 ```
 
+
+
 ### Data testing and type coercion (`as.type`)
+Similar to `class`, you can check whether your data is a certain type using the `is.` commands.
+
 "Type coercion" refers to changing the data from one type to another. You can change data types with `as.` and then the data type you wish to convert to.  
 [Brunsdon and Comber 2015, page 102](https://us.sagepub.com/en-us/nam/an-introduction-to-r-for-spatial-analysis-and-mapping/book241031) also offer an excellent summary table of data types in R.
 
@@ -455,9 +421,8 @@ Why did this fail? Can R change character data to numbers? Why not? (hint: R has
 
 # **Challenge 2**
 1. Create a character object and check its type using `is.character` and `class`. What is the difference between these two methods?    
-2. Try to change ("coerce") this object to another data type using `as.integer`, `as.numeric`, and `as.logical`.  
-3. Create an object of class "integer". Remember, there are two ways to do this!  
-4. Why is 1 == "1" true?   Why is -1 < FALSE true?   Why is "one" < 2 false?  
+2. Create a numerical object that takes a value that contains decimals. Now change ("coerce") this object into an integer value using the command `as.integer`. What happens, and why?
+
 ```{r}
 ## YOUR CODE HERE
 
@@ -472,7 +437,7 @@ There are several kinds of data structures in R. Data structures are collections
 3. matrix  
 4. dataframe  
 
-### 3.1 Vector
+### Vector
 A **VECTOR** is an ordered group of the same kind of data. "Ordered" means that their position matters. Vectors are one-dimensional and homogenous, and are thus referred to by their type (e.g., character vector, numeric vector, logical vector).  
 
 Create a numeric vector by combining/concatenating elements with `c()`  

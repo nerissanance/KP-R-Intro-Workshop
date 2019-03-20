@@ -1,22 +1,22 @@
-KP R Intro Training Part I
+KP R Intro Training, Part I
 ========================================================
 author: Nerissa Nance
-date: 2/1/2019
+date: 3/12/2019
 autosize: true
 
 Logging onto R Studio Server
 ========================================================
-Use the number given to you to log on to the training accounts for R Studio Server. Eventually, you will have your own account on the larger server we will have. For now, though, go to the following website:
+First thing's first! To access the materials, log on to the training accounts for R Studio Server. Eventually, you will have your own account on the larger R server that is being installed. For now, though, go to the following website:
 <br/><br/>
 > **dords-rtraining.kaiser.org:8787/**  
 
 <br/><br/>
-and log in with the following credentials (replacing the '#' with the number you have been given):
+and log in with the following credentials:
 <br/>
 
->username: **train#**  
+>username: **train2**  
 >  
->password: **dstrain#**
+>password: **dstrain2**
 
 
 Overall learning objectives
@@ -59,10 +59,12 @@ R has become increasingly popular, mainly because it's:
 - powerful
 - extensible 
 
-<br/>
-Of note, however, it was not developed by computer scientists and has some logical inconsistencies that other languages, such as Python, do not. 
-For this reason, many packages have been built to circumnavigate these inconsistencies. In particular, Tidyverse (developed by Hadley Wickham and colleagues) is a popular suite of packages that tackle data cleaning and visualization (more about that in part II).
+Base R vs. tidyverse vs. data.table
+========================================================
 
+- Of note, however, R was not developed by computer scientists and has some logical inconsistencies that other languages, such as Python, do not. 
+- For this reason, many packages have been built to circumnavigate inconsistencies in 'base r' (the built-in syntax of the software). In particular, [**Tidyverse**](https://www.tidyverse.org/) (developed/maintained by Hadley Wickham and colleagues) is a very popular suite of packages that tackle data cleaning and visualization (more about that in part II).
+- [**Data.table**](https://cran.r-project.org/web/packages/data.table/data.table.pdf) is another package used for data manipulation that has succinct syntax and runs efficiently on large datasets. We won't cover it in this intro course, but you may see it in the intermediate class or out in the world.
 
 
 The basics: navigating RStudio and projects
@@ -72,15 +74,18 @@ Currently, you have the "KP-R-Intro-Workshop" project open (as you can see in th
 
 We can see recent projects by selecting File -> Recent Projects in the upper left corner of RStudio, or by clicking the list of recent projects in the upper right corner. 
 
+To go back to this project, you would click "KP-R-Intro-Workshop" in the dropdown menu.
+
+![screenshot](Capture1.PNG)
+
 The basics: navigating RStudio and projects
 ========================================================
 Let's try creating a new project.
 
 * Create a new project: File -> New Project
 * Choose new directory or existing directory as preferred.
-* Click "open in new session" to have multiple RStudio projects open.
 
-Easy Challenge: close your project and then re-open it.
+Easy Challenge: close your project and open "KP-R-Intro-Workshop" back again.
 
 
 RStudio interface
@@ -91,7 +96,7 @@ When we start RStudio we have no files open by default.
 
 **Click File -> New File -> RScript to start a new R script (or program).**
 
-This is a text file with all of the R commands you want to run for an analysis.
+This is a text file that you can fill with code or comments(to comment, start the line with a #).
 
 
 RStudio interface
@@ -101,7 +106,7 @@ As an alternative to an R script we can use a **markdown file**.
 
 R Markdown files combine R scripts with simple text formatting, which makes reports  (PDFs or HTMLs) easy to generate with embedded R output. 
 
-Try making a new R script and R markdown right now in your new project directory, and save the files. 
+Open the file "KP_R_Intro_Part1.Rmd", found under the "files" tab in the bottom right window of the RStudio interface. That's an example of an Rmd File. Navigate to line ~50, under the heading "R Studio Interface". 
 
 
 RStudio interface
@@ -113,6 +118,8 @@ RStudio items to note:
 * Environment tab in the upper right, and history tab.
 * Files tab in bottom right, plus plots, help, etc.
 * We can click the "run" button to run the current R line in the editor.
+
+How can you find your working directory? (Hint, see .Rmd file, line 68)
 
 
 A note about Github and Gitlab
@@ -130,17 +137,18 @@ File -> New -> R Markdown
 
 To write R code we need to start an R block with three backticks followed by r in braces (squiggly brackets - { and }). We can write commands inside of those brackets to change settings.
 
-Task: everyone google "RMarkdown cheat sheet" and save that PDF.
+You can save the PDF version be clicking [here](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf).
 
 ![cheatsheet](https://jules32.github.io/rmarkdown-website-tutorial/images/Rmd_cheatsheet.png)
 
 Challenge
 ========================================================
+In the new markdown file you opened:
 
 * Create a header line called "R Training Day 1", with size 1 (aka "header 1").
 * Write this equation in the notes area: Area = pi * r^2
 * In the first chunk of code, write an equation (eg. 2 + 2)
-* Compile as a PDF (or html if you prefer).
+* Compile as html.
 
 
 Package installation
@@ -150,17 +158,9 @@ Packages can be installed through the command line using `install.packages()`.
 
 The package name must be wrapped in quotation marks so that R knows it is searching for that particular package named `"swirl"`, rather than previously defined data named swirl.
 
+(You already have the packages you needed installed on your training account).
 
-Package installation
-========================================================
-
-> It is generally good to keep RStudio and your packages up to date! Install the packages we will use in the workshop: 
-
-
-```{r, eval=FALSE}
-install.packages(c("knitr", "rmarkdown", "swirl", "mlbench", "tidyverse", "rio"))
-```
-
+Packages only need to be installed once!
 
 
 The `library` function  
@@ -187,13 +187,11 @@ The `?` symbol can be used to bring up the help pages:
 ?summary
 ?describe
 ?plot
-?ggplot
-?geometric.mean
 ```
 
 Global environment
 ========================================================
-You define objects through `variable assignment` and they are stored in your `global environment`.  
+You define objects through `variable assignment` and they are stored in your `global environment` on the top right of the RStudio interface.  
 
 Your global environment is where all the objects (data sets, scalars, vectors, functions, etc.) are stored. It is 'global' because anything in it can be used throughout your session. 
 
@@ -216,9 +214,9 @@ Your global environment is where all the objects (data sets, scalars, etc.) are 
 
 Object assignment (`<-`)
 ========================================================
-You define objects using the **assignment operator** `<-`. This is a "less than" `<` symbol immediately followed by a hyphen `-`
+You define objects using the **assignment operator** `<-`. This is a "less than" `<` symbol immediately followed by a hyphen `-`. 
 
-Let's define an object named `numeric_oject` and define it as the number 4:
+Let's define an object named `numeric_oject` and define it as the number 4 (~line 140 of the .Rmd):
 ```{r}
 numeric_object <- 4
 
@@ -229,6 +227,11 @@ ls()
 
 Object assignment (`<-`)
 ========================================================
+
+Run this in the Rmd file by either:
+1) hitting the green triangle at the top right of the code chunk; or
+2) holding down Ctrl and pressing Enter each time you want to run one line.
+
 ```{r other}
 
 r <- 2
@@ -252,6 +255,9 @@ numeric_object
 print(numeric_object)
 # 4 is returned
 ```
+
+Interacting with the global environment
+========================================================
 
 Let's try another example, this time using character data. Note that character data is **always** contained within quotation marks `" "` 
 ```{r}
@@ -277,11 +283,11 @@ Naming R objects
 
 Let's overwrite the object `welcome_object` from above.
 ```{r}
-welcome_object <- "Welcome to class" 
+welcome_object <- "welcome to class" 
 welcome_object
 
 
-welcome_object <- "Welcome to Part 1"
+welcome_object <- "welcome to part 1"
 ```
 
 
@@ -346,11 +352,13 @@ Numeric, character, and logical (aka "boolean") data types all exist at the `ato
 
 Normally this means that they cannot be broken down any further and are the raw inputs for functions in R. Other R variables are frequently built upon these atomic types.
 
+![image](https://i2.wp.com/opensourceforu.com/wp-content/uploads/2017/04/Atom-editor.jpg?resize=640%2C337)
+
 Numeric data type
 ========================================================
 Numeric data are numbers and integers. You may also hear numeric data referred to as `float` or `double` data types. By default, R stores everything as `doubles` (64 bit floating point numbers) which makes R very memory hungry. 
 
-Define an object called `num` and then check its class
+Define an object called `num` and then check its class (~line 253 in your .Rmd):
 ```{r}
 num <- 2 * pi
 
@@ -360,18 +368,14 @@ class(num)
 
 mathematical operators
 ========================================================
-Standard mathematical operators apply to the creation of numeric data:
-`+`   `-`   `*`   `^`   `**`  `/`  `%*% (matrix multiplication)`  `%/% (integer division)` 
+Standard mathematical operators apply to the creation of numeric data (line ~262 of .Rmd):
+
 ```{r}
 5 + 2  
 5 - 2  
 5 * 2  
 5 ^ 2  
-# same as ^ :
-5 ** 2  
-5 / 2  
-5 %/% 2 
-5 %*% 2  
+
 ```
 
 Character data type
@@ -383,27 +387,6 @@ Let's create an object called `char` and define it with some character data. The
 char <- "This is character data"
 char
 class(char)
-```
-
-Contatenating text (`paste`)
-========================================================
-You can also paste them together using the `paste` function:
-
-```{r}
-char2 <- paste("This", "is", "character", "data")
-char2
-```
-
-
-
-Function arguments
-========================================================
-Arguments go inside of the parentheses of R functions. Unnamed arguments are things like the number 4. `split = " "` is what is called a named argument. This argument goes inside the parentheses of another function such as `strsplit`. 
-```{r}
-char4 <- "This/is/slash/separated/text"
-char4
-split1 <- strsplit(char4, split = "/")
-split1 # a list is returned. 
 ```
 
 
@@ -453,26 +436,12 @@ FALSE >= TRUE # greater than or equal to
 
 Challenge 1
 ========================================================
-1. What is the three-piece recipe for variable definition? What piece goes where?  
-2. Define two numeric variables.  
-3. Define two character variables.  
-4. How do you check what types of data these variables are?  
-5. What does the `ls()` function do? Where else do you see this information?  
-6. Remove one of your numeric and one of your character variables.  
-
-Challenge 1
-========================================================
-7. Try to subract your remaining character variable from your numeric one. What happens? What might this tell you about data of different types?  
-8. Define a numeric object as 0 and check its class.  
-9. Define a boolean object as "FALSE" and check its class.
-10. Use `==` to compare your numeric and boolean object. Are they equivalent? Why or why not?  
-11. Define a character object that uses `paste()` to combine more than one word into a sentence.  
-12. Wipe your environment clean.  
+Now take a moment to complete "challenge 1" (~line 326) in your .Rmd file. 
  
 
 
 
-Data testing and type coercion (`as.type`)
+Data testing and type coercion (`is.type` and `as.type`)
 ========================================================
 "Type coercion" refers to changing the data from one type to another. You can change data types with `as.` and then the data type to which you wish to convert.
  
@@ -491,13 +460,32 @@ single      | is.single     | as.single
 raw         | is.raw        | as.raw
 
 
+Type coercion example (`as.numeric`)  
+========================================================
+```{r}
+# Create some character data
+char_data <- "9"
+class(char_data)
+
+# Coerce this character data to numeric data type
+as.numeric(char_data)
+class(char_data)
+```
+
+What happened here? Why did `char_data` not change classes? (hint: we did not overwrite the object!)
+
+
+Type coercion example (`as.numeric`)  
+========================================================
+```{r}
+char.data <- as.numeric(char_data)
+class(char.data)
+char.data
+```
  
 Challenge 2
 ========================================================
-1. Create a character object and check its type using `is.character` and `class`. What is the difference between these two methods?    
-2. Try to change ("coerce") this object to another data type using `as.integer`, `as.numeric`, and `as.logical`.  
-3. Create an object of class "integer". Remember, there are two ways to do this!  
-4. Why is 1 == "1" true?   Why is -1 < FALSE true?   Why is "one" < 2 false?  
+Now take a moment to complete "challenge 2" (~line 422) in your .Rmd file. 
 
 
 
@@ -637,7 +625,7 @@ Data frame
 ========================================================
 _**It is worth emphasizing the importance of data frames in R!**_ Inside R, a **DATA FRAME** is a list of equal-length vectors. These vectors can be of different types. Data frames are thus heterogenous like lists.  
 
-This is simply a spreadsheet!  
+Data frames are equivalent to datasets in SAS or other software. We will work mostly with dataframes for the rest of the course. 
 
 
 Creating a data frame
@@ -648,8 +636,8 @@ We do this using `data.frame()`
 
 ```{r}
 animals <- data.frame(uniform, normal, integer, character, stringsAsFactors = FALSE)
-# NOTE: `stringsAsFactors=FALSE` means that R will NOT try to interpret character data as factor type. More on this below. 
 ```
+NOTE: `stringsAsFactors=FALSE` means that R will NOT try to interpret character data as factor type.  
 
 Viewing data frames
 ========================================================
@@ -687,10 +675,7 @@ dim(animals)
 
 # View column names:
 colnames(animals)
-
-# View row names (we did not change these, so they default to character type)
-rownames(animals)
-class(rownames(animals))
+ 
 ```
 
 
@@ -698,12 +683,10 @@ Factor data type
 ========================================================
 Factor data are categorical types used to make comparisons between other data. Factors group the data by their "levels" (the different categorical groups within a factor).  
 ```{r}
-# "Name" is character data type. See how each column name is preceded by `$`?
-str(animals)   
+ 
  class(animals$Type)
 animals$Type <- factor(animals$Type)
-# "Name" is now factor data type!
-str(animals)  
+  class(animals$Type) 
 
 ```
 
@@ -722,7 +705,6 @@ Each animal type (Cat, Dog, and Pig) within the factor `animals$Type` vector are
 
 If we want to change how R stores the factor levels, we can specify their levels using the `levels()` argument. For example:
 ```{r}
-animals$Type  
 
 # What if we want to change the factor level sort to Levels: Dog Pig Cat?
 animals$Type <- factor(animals$Type, levels = c("Dog", "Pig", "Cat"))
@@ -733,9 +715,32 @@ animals$Type
 
 
 
+Importing and exporting csv data files using `read.csv` and `write.csv`
+========================================================
+One way to import and export data is using the base r commands `read.csv` and `write.csv`.
+
+Check first where your working directory is by typing:
+```{r}
+getwd()
+```
+(note: since we're using R projects, you should already know where your wd is, because it's set up automatically).
+
+
+Importing and exporting csv data files using `read.csv` and `write.csv`
+========================================================
+
+You can import data using the read.csv command. Take a moment to look at the help file for syntax tips by typing `?read.csv` into your console.
+
+```{r}
+df.who <- read.csv("./data/who_suicide_statistics.csv",  header = TRUE,  stringsAsFactors = FALSE, na.strings = " ")
+
+```
+Notice that `stringsAsFactors = FALSE`. If set to `TRUE`, R will try to guess which **character** vectors should automatically be converted to factors...not ideal, as R is not great at guessing!
 
 Importing and exporting with the Rio package
 ========================================================
+
+Using base R is fine, but to use it, you need to specify a different extension each time, and sometimes download additional packages depending on the data you have (eg. SAS datasets).
 
 The Rio package simplifies importing/exporting by putting all data-specific import tools under one umbrella (popularly known as the "swiss army knife" of data importing and exporting)
  See [this helpful rio documentation as well](https://cran.r-project.org/web/packages/rio/vignettes/rio.html). 
@@ -754,35 +759,49 @@ df.who <- import("./data/whostats_suicide.sas7bdat")
 Challenge 3
 ========================================================
 
-1. Save the "animals" data frame as a .csv file named "animals.csv". How many basic arguments should you use to save using the `write.csv` function? 
-2. Import the "animals" data frame using the rio package. 
-3. Compare the two data frames. Are they the same? Why or why not?
+Now take a moment to complete "challenge 3" (~line 718) in your .Rmd file. 
+
+
+
+Subsetting in base R using `$`
+========================================================
+Efficiently subsetting your data will save you time and stress. Fortunately, there are several different ways to subset data in base R.We will review more in Part 2, but one important way is using the`$` operator, which will extract only a single vector/column within the data frame. You was this in some of the previous code already. Here is another example:
+
+```{r}
+#Returns only the "age" vector from the `df.pid` data frame.
+head(animals$Type) 
+
+```
  
 
-Visualize data 
+Summarizing data 
 ========================================================
 
-We'll use this more in parts 2 and 3, but take a moment to look at the data you imported. You can use the `hist()` command to do a histogram and the `summary()` command to look at summary statistics. For example:
+We'll review summarization in more detail in part 2, but take a moment to look at the data you imported. You can use the `hist()` command to do a histogram and the `summary()` command to look at summary statistics. For example:
 
-```{r plotting}
+```{r}
 names(df.who)
 
 class(df.who$suicides_no)
-
+#first, make sure it is numeric!
 df.who$suic_no_num <- as.numeric(df.who$suicides_no)
-
-hist(df.who$suic_no_num)
 
 summary(df.who$suic_no_num)
 
+```
 
-
+Visualize data 
+========================================================
+We'll review visualization in more detail in part 2, but let's look at an example of plotting using the base r `hist()` function:
+```{r}
+hist(df.who$suic_no_num)
 ```
 
 Challenge 4 Homework (optional)
 ========================================================
 
-swirl is a package that helps you learn R by using R. Visit the [swirl](http://swirlstats.com/) homepage to learn more
+swirl is a package that helps you learn R by using R. Visit the [swirl](http://swirlstats.com/) homepage to learn more.
+
 ```{r, eval=FALSE}
 library(swirl)
 swirl()
@@ -792,3 +811,15 @@ swirl()
 > NOTE: type `bye()` to exist swirl. 
 
 
+
+Acknowledgements
+========================================================
+- [Wickham H. 2014. Advanced R](http://adv-r.had.co.nz/)  
+- [Lander J. 2013. R for everyone: Advanced analytics and graphics](http://www.jaredlander.com/r-for-everyone/)  
+- [Matloff N. 2011. The art of R programming: A tour of statistical software design](https://www.nostarch.com/artofr.htm)  
+
+A lot of the source material for this training came from D-lab training materials authored by D-Lab staff. The original content can be accessed here: [https://github.com/dlab-berkeley/R-Fundamentals]
+D-Lab works with Berkeley faculty, research staff, and students to advance data-intensive social science and humanities research. They're really cool, check them out!
+ [D-Lab Calendar](http://dlab.berkeley.edu/calendar-node-field-date)  
+ [D-lab Working Groups](http://dlab.berkeley.edu/working-groups)  
+Some of this also came from Chris Kennedy's "Concise R" series, accessed [here](https://github.com/ck37/concise-r)
