@@ -31,6 +31,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #Introduction
 
+This will be a review of the 'Part 0' training slides that you reviewed before this class.
+
 ### The basics: Navigating RStudio and Projects
 Currently, you have the "KP-R-Intro-Workshop" project open (as you can see in the upper right-hand corner of your screen). 
 
@@ -157,9 +159,9 @@ r <- 2
 
 #Try an equation:
 
-Area <- pi * r^2
+area <- pi * r^2
 
-Area
+area
 ```
 
 ### Interacting with the global environment
@@ -186,11 +188,11 @@ welcome_object
 ### Naming R objects  
 Object names can be anything, but are always **case sensitive**. However, they cannot begin with a number and generally do not begin with symbols. However you choose to name your objects, be consistent and use brief descriptions of their contents.  
 
-Convention: we **highly** recommend that you do not use caps when naming objects. It makes it more cubersome to call objects later, and can lead to confusion and misnaming.
+Convention: we **highly** recommend that you do not use caps when naming objects. It makes it more cubersome to call objects later, and can lead to confusion and misnaming. You can also use either a '.' or '_' to seprate words in a name. In these examples, we will use '_', because this is more similar to SAS naming conventions. 
 
 Names must be __**unique**__. If you reuse an old name, the old definition will be overwritten.  
 
-Some words are already reserved by R (for more information, type `?reserved` in your console), and some have stored default values (like pi) which can be overwritten if you choose (for more informaiton, see `?Constants`).
+Some words are already reserved by R (for more information, type `?Reserved` in your console), and some have stored default values (like pi) which can be overwritten if you choose (for more informaiton, see `?Constants`).
 
 Let's overwrite the object `welcome_object` from above.
 ```{r}
@@ -391,9 +393,9 @@ as.numeric(char_data)
 class(char_data)
 # What happened here? Why did `char_data` not change classes? (hint: we did not overwrite the object!)
 
-char.data <- as.numeric(char_data)
-class(char.data)
-char.data
+char_data2 <- as.numeric(char_data)
+class(char_data2)
+char_data2
 ```
 
 ### Type coercion example 2 (`as.integer`)
@@ -410,12 +412,12 @@ int
 Now, create some character data and try to convert it to integer type:
 ```{r}
 # Create a new object
-char.num <- "three"
-char.num   #Note that the word three is contained within " " 
-class(char.num)
+chartonum <- "three"
+chartonum   #Note that the word three is contained within " " 
+class(chartonum)
 
 # What happens if we try to coerce character to numeric data type? 
-as.integer(char.num)
+as.integer(chartonum)
 ```
 Why did this fail? Can R change character data to numbers? Why not? (hint: R has no protocol for automatically coerce words to numbers). As you can see, trying to coerce data types can lead to weird behavior sometimes. 
 
