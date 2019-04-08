@@ -1,0 +1,297 @@
+KP R Intro Training, Part 0 (pre-training)
+========================================================
+author: Nerissa Nance
+date: 3/12/2019
+autosize: true
+
+
+
+Overall learning objectives
+========================================================
+By the end of this training, students will:  
+<br/>
+-  understand and leverage the R Studio interface 
+-  recognize and utilize different data types and data structures
+-  identify different types of missing data in R
+-  access data from R 
+-  merge and perform some basic data manipulations
+-  visualize data
+<br/><br/><br/>
+
+ 
+
+R: a software environment and programming language
+========================================================
+
+R is a programming language and an open-source software environment for data manipulation, analysis and graphics. R grew out of the S programming language, created by John Chambers and colleagues at Bell Labs.
+
+R has become increasingly popular, mainly because it's:  
+- free
+- open source
+- powerful
+- extensible 
+
+Base R and package development
+========================================================
+
+- Of note, however, R was not developed by computer scientists and has some logical inconsistencies that other languages, such as Python, do not. 
+- For this reason, many *packages* (self-contained functions for specific purposes) have been built to circumnavigate inconsistencies in 'base r' (the built-in syntax of the software). In particular, [**Tidyverse**](https://www.tidyverse.org/) (developed/maintained by Hadley Wickham and colleagues) is a very popular suite of packages that tackles data cleaning and visualization (more about that in part II).
+- [**Data.table**](https://cran.r-project.org/web/packages/data.table/data.table.pdf) is another package used for data manipulation that has succinct syntax and runs efficiently on large datasets. We won't cover it in this intro course, but you may see it in the intermediate class or out in the world.
+
+R vs. R Studio
+========================================================
+
+R Studio Desktop vs R Studio Server  
+========================================================
+
+Logging onto R Studio Server
+========================================================
+First thing's first! To access the materials, log on to the training accounts for R Studio Server. Eventually, you will have your own account on the larger R server that is being installed. For now, though, go to the following website in a NEW browser window (explain this):
+<br/><br/>
+> **dords-rtraining.kaiser.org:8787/**  
+
+<br/><br/>
+and log in with the following credentials (replace [number] with the number you were assigned in my email):
+<br/>
+
+>username: **train[number]**  
+>  
+>password: **dstrain[number]**
+
+
+RStudio interface
+========================================================
+
+When we start RStudio we have no files open by default. 
+<br/>
+
+**Click File -> New File -> RScript to start a new R script.**
+<br/>
+
+a Script file in R is equivalent to a program file in SAS; it is essentially a text file that can contain code and comments.<br/><br/>
+To comment, start the line with a #.
+
+
+RStudio interface
+========================================================
+
+As an alternative to an R script we can use a **markdown file**. 
+
+R Markdown files combine R scripts with simple text formatting, which makes reports  (PDFs or HTMLs) easy to generate with embedded R output. 
+
+Open the file "KP_R_Intro_Part1.Rmd", found under the "files" tab in the bottom right window of the RStudio interface. That's an example of an Rmd File. 
+
+
+RStudio interface
+========================================================
+
+ADD PICTURE HERE
+
+RStudio items to note:
+* Files show up as tabs in the editor window, usually the upper left.
+* The console is the R session where our commands are executed.
+* Environment tab in the upper right, and history tab.
+* Files tab in bottom right, plus plots, help, etc.
+* We can click the "run" button to run the current R line in the editor.
+
+How can you find your working directory?  
+
+
+The basics: navigating RStudio and projects
+========================================================
+
+Currently, you have the "KP-R-Intro-Workshop" project open (as you can see in the upper right-hand corner of your screen). Projects are "self-contained", i.e. each project has its own (automatically set) working directory and all files are automatically saved in your project session. This is handy because you can work on multiple projects without worrying about cross-contamination between projects.
+<br/>
+<br/> 
+
+
+The basics: navigating RStudio and projects
+========================================================
+To navigate projects:<br/> 
+1) To see a list of recent projects: Click on the "Recent Projects" drop down in the upper right corner (highlighted in yellow)<br/> 
+2) To close current project: Click on the "Recent Projects" drop down and select "Close Projects"<br/> 
+3) Now click "KP-R-Intro-Workshop" in the dropdown menu to go back to the project.
+<br/> 
+![screenshot](Capture1.PNG)
+
+
+The basics: navigating RStudio and projects
+========================================================
+Let's try creating a new project.
+
+* Create a new project: File -> New Project
+* Choose new directory or existing directory as preferred.
+
+Easy Challenge: close your project and open "KP-R-Intro-Workshop" back again.
+
+
+
+
+A note about Github and Gitlab
+========================================================
+
+Github is a version control software that allows you to track how your code changes over time. Gitlab has many of the same features as Github. For Kaiser, we can ONLY sync our projects to the institutional Gitlab. 
+
+You can get your Gitlab account by emailing Jingrong Yang. You can connect your Gitlab account to your RStudio by following instructions in this helpful happygitwithr tutorial: https://happygitwithr.com/ 
+
+![happygitwithr](https://happygitwithr.com/img/watch-me-diff-watch-me-rebase-smaller.png)
+
+
+
+Package installation
+========================================================
+
+Packages can be installed through the command line using `install.packages()`. 
+
+The package name must be wrapped in quotation marks so that R knows it is searching for that particular package named `"swirl"`, rather than previously defined data named swirl.
+
+(You already have the packages you needed installed on your training account).
+
+Packages only need to be installed once!
+
+
+The `library` function  
+========================================================
+Before using an installed package, you must retreive it with `library()` when you begin a new R session. You do not need to reinstall packages each time you quit and restart your R session. These packages can now be used in our RStudio session!
+
+```{r}
+library(tidyverse)
+library(knitr)
+library(rmarkdown)
+library(rio)
+library(mlbench)
+
+```
+
+
+
+Getting help 
+========================================================
+The `?` symbol can be used to bring up the help pages:  
+```{r, eval=FALSE}
+?update.packages
+?read.csv
+?summary
+?describe
+?plot
+```
+
+Global environment
+========================================================
+You define objects through `variable assignment` and they are stored in your `global environment` on the top right of the RStudio interface.  
+
+Your global environment is where all the objects (data sets, scalars, vectors, functions, etc.) are stored. It is 'global' because anything in it can be used throughout your session. 
+
+![image credit:youtube creator academy](https://community.rstudio.com/uploads/default/original/2X/1/1cb5a846c251ed1781c84c80b92809703d50357a.png)
+
+
+Variable assignment (`<-`)
+========================================================
+Variables are special data structures that allow you to enter data into R. Objects are stored in R's memory and can be retrieved ("called") when you need them.  
+
+You define objects through `variable assignment` and they are stored in your `global environment`.  
+
+Global environment
+========================================================
+You define objects through `variable assignment` and they are stored in your `global environment`.  
+
+Your global environment is where all the objects (data sets, scalars, etc.) are stored. It is 'global' because anything in it can be used throughout your session. 
+
+
+
+Object assignment (`<-`)
+========================================================
+You define objects using the **assignment operator** `<-`. This is a "less than" `<` symbol immediately followed by a hyphen `-`. 
+
+Let's define an object named `numeric_oject` and define it as the number 4 (~line 140 of the .Rmd):
+```{r}
+numeric_object <- 4
+
+# the ls() function will show us what is in our global environment
+ls()
+```
+
+
+Object assignment (`<-`)
+========================================================
+
+Run this in the Rmd file by either:
+1) hitting the green triangle at the top right of the code chunk; or
+2) holding down Ctrl and pressing Enter each time you want to run one line.
+
+```{r other}
+
+r <- 2
+
+#Try an equation:
+
+area <- pi * r^2
+
+area
+```
+
+
+Interacting with the global environment
+========================================================
+
+We now have an object defined in our global environment!
+
+"Call" (retrieve) the data contained wihtin the object by typing its name into your script and running the line of code
+```{r}
+numeric_object 
+print(numeric_object)
+# 4 is returned
+```
+
+Interacting with the global environment
+========================================================
+
+Let's try another example, this time using character data. Note that character data is **always** contained within quotation marks `" "` 
+```{r}
+welcome_object <- "Welcome"
+ls()
+```
+
+We now have four objects in our global environment. Call the data contained within the object by typing its name and running the line of code:
+```{r}
+welcome_object
+```
+
+
+
+Naming R objects  
+========================================================
+Object names can be anything, but are always case sensitive. However, they cannot begin with a number and generally do not begin with symbols. However you choose to name your objects, be consistent and use brief descriptions of their contents.  
+
+Convention: we **highly** recommend that you do not use caps when naming objects. It makes it more cubersome to call objects later, and can lead to confusion and misnaming. You can also use either a '.' or '_' to seprate words in a name. In these examples, we will use '_', because this is more similar to SAS naming conventions. 
+
+Names must be __**unique**__. If you reuse an old name, the old definition will be overwritten.  
+
+
+Naming R objects  
+========================================================
+
+Some words are already reserved by R (for more information, type `?Reserved` in your console), and some have stored default values (like pi) which can be overwritten if you choose (for more informaiton, see `?Constants`).
+
+Let's overwrite the object `welcome_object` from above.
+
+```{r}
+welcome_object <- "welcome to class" 
+welcome_object
+
+
+welcome_object <- "welcome to part 1"
+```
+
+
+Naming R objects  
+========================================================
+
+See how the definition of `welcome_object` changed in your global environment window? However, there is still only one 'welcome_object' in your global environment. 
+
+```{r}
+ls() 
+```
+
+
+
