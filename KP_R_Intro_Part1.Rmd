@@ -85,18 +85,11 @@ To write R code we need to start an R block with three backticks followed by r i
 
 You can save that PDF version [here](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf).
 
-Challenge:
-
-* Create a header line called "R Training Day 1", with size 1 (aka "header 1").
-* Write this equation in the notes area: Area = pi * r^2
-* In the first chunk of code, write an equation (eg. 2 + 2)
-* Compile as html.
-
 
 ### Package installation
 Let's install some packages that we will use during the training. You can install packages by clicking the "Packages" tab in the bottom-right window, clicking install, and then searching for the package you wish to install.
 
-Packages can also be installed through the command line using `install.packages()`. The package name must be wrapped in quotation marks so that R knows it is searching for that particular package named `"swirl"`, rather than previously defined data named swirl.
+Packages can also be installed through the console using `install.packages()`. The package name must be wrapped in quotation marks so that R knows it is searching for that particular package named `"swirl"`, rather than previously defined data named swirl.
 
 > Packages only need to be installed once, though it is generally good to keep RStudio and your packages up to date. 
 
@@ -834,10 +827,17 @@ plot(df.who$year, df.who$suicides)
 
 ```
 
+#**Challenge 5** (Extra credit)
+
+* Create a NEW markdown file called "test"
+* Add a header with the title "R Training Day 1" with size 1 (aka "header 1")
+* In the first chunk of code, load the dataset mtcars (hint: `data(mtcars)`)
+* Read about the dataset in the help file `?mtcars`
+* In the second chunk of code, graph a scatterplot of weight and mpg--what does this tell you about the relationship between the two variables? Write dow na few sentences of explanation in the notes section (i.e. the white area)
+* Compile as html.
 
 
-
-# **Challenge 5** Homework (optional)
+# **Challenge 6** Homework (optional)
 swirl is a package that helps you learn R by using R. Visit the [swirl](http://swirlstats.com/) homepage to learn more
 ```{r, eval=FALSE}
 library(swirl)
