@@ -1,5 +1,5 @@
 ---
-title: "KP R Intro, Part 1: Intro to RStudio, Rmd files, data types and importing/exporting"
+title: "KP R Intro, Part 1: Intro to RStudio, Rmd files, data types, subsetting and importing/exporting"
 author: "Nerissa Nance"
 date: "March 12, 2019"
 output:
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 - Utilizing files in RStudio, creating an Rmd file, download, install packages and read them into your library, and read key documentation
 - Reviewing different data types, naming/calling syntax, subsetting syntax and data structures
-- Identifying different types of missing data 
+- Subsetting data
 - Loading a csv file and SAS file into the environment 
  
 (Relevant chapters in [R for Data Science](https://r4ds.had.co.nz/) : Chapter 1 Intro, Chapter 27 R Markdown, Chapter 20 Vectors)
