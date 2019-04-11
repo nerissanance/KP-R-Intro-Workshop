@@ -652,12 +652,13 @@ animals$type
  
 #Data manipulation
 
-In R, there are many ways to do the same thing. "Base r" is the built-in language of R, and it allows you to perform data manipulation and visualization. The syntax for base r can be a little confusing/daunting at times, however. In part because of this, Tidyverse was born. Tidyverse (developed by Hadley Wickham and colleagues) is a suite of packages that we loaded into our environment at the beginning of this Rmd file. These packages allow for easy data manipulation and visualization, and are often preferred by programmers. The Syntax is relatively intuitive, and consists of several commands that we will review over the next days:
+In R, there are many ways to do the same thing. "Base r" is the built-in language of R, and it allows you to perform data manipulation and visualization. The syntax for base r can be a little confusing/daunting at times, however. In part because of this, Tidyverse was born. Tidyverse (developed by Hadley Wickham and colleagues) is a suite of packages that we loaded into our environment at the beginning of this Rmd file. These packages allow for easy data manipulation and visualization, and are often preferred by programmers. The Syntax is relatively intuitive, and consists of several commands that we will review during this training:
 
 - filter
 - select
 - summarize
 - mutate
+- join
 
 You can downlaod a handy cheatsheet dplyr, which is the primary package of tidyverse that handles data manipulation, here[https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf].
 
