@@ -36,9 +36,9 @@ library(rio)
 library(tidyverse)
 ```
 
-Day 2 learning objectives:  
+Part 2 learning objectives:  
 
-* 1. More dplyr: summarizing, merging  
+* 1. More dplyr: summarizing, computing new variables, merging  
 * 2. Missing data (NA)  
 * 3. Plotting with ggplot2 
 
