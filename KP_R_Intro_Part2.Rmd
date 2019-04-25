@@ -133,7 +133,7 @@ dplyr is a powerful tool for summarizing data.
 
 You can also use the `select()` command to look only at a specific column:
 
-```{rsum dplyr }
+```{r}
 
 
 df_pid %>% select (glucose) %>% summarize(mean_g=mean(glucose))
