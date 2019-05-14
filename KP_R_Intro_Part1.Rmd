@@ -628,14 +628,14 @@ str(animals)
 
 ```
 
-Notice that R stores factors internally as integers and uses the character strings as labels. Also notice that by default R orders factors alphabetically and returns them when we call the "Type" vector.
+Notice that R stores factors internally as integers and uses the character strings as labels. Also notice that by default R orders factors alphabetically and returns them when we call the "type" vector.
 ```{r}
 animals$type
-levels(animals$Type)
+levels(animals$type)
 ```
 
 ##### Changing factor "levels"
-Each animal type (Cat, Dog, and Pig) within the factor `animals$Type` vector are the factor levels. 
+Each animal type (Cat, Dog, and Pig) within the factor `animals$type` vector are the factor levels. 
 
 If we want to change how R stores the factor levels, we can specify their levels using the `levels()` argument. For example:
 ```{r}
@@ -809,7 +809,7 @@ The dollar sign operator `$` will extract only a single vector/column within the
 ```
 ```{r}
 #Returns only the "age" vector from the `df.pid` data frame.
-head(animals$Type) 
+head(animals$type) 
 
 ```
 
