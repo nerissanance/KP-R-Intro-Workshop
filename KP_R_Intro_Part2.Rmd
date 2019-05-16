@@ -212,12 +212,14 @@ table(is.na(df_pid$pressure))
 
 ## Recoding missing data
 Make a copy of `df_pid` named df.copy so we do not alter the original, then recode NA values and replace them with the median value:
+
+(hint: look up the arguments to ifelse() in the helpfile `?ifelse`)
 ```{r}
 df_copy <- df_pid
 
-df_copy$pressure[is.na(df_copy$pressure)] <- median(df_copy$pressure, na.rm=TRUE)
+df_copy <- df_copy %>% mutate(pressure2=ifelse(is.na(pressure), median(pressure, na.rm=T), pressure))
   
-table(is.na(df_copy$pressure))
+table(is.na(df_copy$pressure2))
 
 
 ```
@@ -250,7 +252,7 @@ dim(s_complete2)
 1) Import "./data/whostats_suicide.sas7bdat" into your environment
 2) Keep only the statistics for Albania for 2008
 3) Summarize the WHO suicide numbers and population numbers by gender 
-(Note: Look at the data! It's given by age group, so we will need to create a sum of these by using the `summarize()` function and the `sum` command)
+(Note: Look at the data! It's given by age group, so we will need to create a sum of these by using the `summarize()` function and the `sum` command. Also, in order to sum numbers, the data must be numeric!)
 4) Save the output as a .csv file
 
 Extra credit #1: create a new variable for the proportion or percent of suicides for each group relative to the population.

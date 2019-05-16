@@ -3,14 +3,14 @@ title: "KP R Intro, Part 1: Intro to RStudio, Rmd files, data types, subsetting 
 author: "Nerissa Nance"
 date: "March 12, 2019"
 output:
+  word_document:
+    toc: yes
+  pdf_document:
+    toc: yes
   html_document:
     number_sections: yes
     toc: yes
     toc_float: yes
-  pdf_document:
-    toc: yes
-  word_document:
-    toc: yes
 ---
  
 ```{r setup, include=FALSE}
